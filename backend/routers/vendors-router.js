@@ -10,9 +10,9 @@ vendorsRouter
   .get(getVendors)
   .all(handle405s);
 
-// vendorsRouter
-//   .route("/:vendor_id")
-//   .get(getVendorById)
-//   .all(handle405s);
+vendorsRouter
+  .route("/:vendor_id")
+  .get(getVendorById)
+  .all(handle405s);
 
 module.exports = vendorsRouter;

@@ -24,7 +24,30 @@ describe("server", () => {
     describe("/users", () => {
       describe("/user_id", () => {
         describe("GET", () => {
-          it("status 200: returns an object with key of user and expected value", () => {});
+          it("status:200, returns an object with key of user and expected value", () => {
+            return request
+              .get("/api/users/1")
+              .expect(200)
+              .then(({ body }) => {
+                expect(body).to.be.an("object");
+                expect(body).to.contain.keys(
+                  "user_id",
+                  "username",
+                  "realname",
+                  "phone_num",
+                  "email",
+                  "age"
+                );
+              });
+          });
+          it("status:404, invalid user id", () => {
+            return request
+              .get("/api/users/mike")
+              .expect(404)
+              .then(({ body: { msg } }) => {
+                expect(msg).to.equal("Not Found");
+              });
+          });
         });
       });
     });
@@ -42,18 +65,34 @@ describe("server", () => {
             });
         });
       });
-      // describe("/vendor_id", () => {
-      //   describe("GET", () => {
-      //     // it("status 200: returns an object with key of vendor and expected value", () => {
-      //     //   return request
-      //     //     .get("/api/vendors/1")
-      //     //     .expect(200)
-      //     //     .then(res => {
-      //     //       expect(res.body.vendor.vendor_id).to.equal("1");
-      //     //     });
-      //     // });
-      //   });
-      // });
+      describe("/vendor_id", () => {
+        describe("GET", () => {
+          it("status 200: returns an object with key of vendor and expected value", () => {
+            return request
+              .get("/api/vendors/1")
+              .expect(200)
+              .then(res => {
+                expect(res.body.vendor.vendor_id).to.equal(1);
+              });
+          });
+          it("status: 404 for valid but non existent vendor_id", () => {
+            return request
+              .get("/api/vendors/99")
+              .expect(404)
+              .then(res => {
+                expect(res.body.msg).to.equal("Vendor Does Not Exist");
+              });
+          });
+          it("status: 400 for invalid vendor_id datatype", () => {
+            return request
+              .get("/api/vendors/obviouslynotavendor")
+              .expect(400)
+              .then(res => {
+                expect(res.body.msg).to.equal("Bad Request");
+              });
+          });
+        });
+      });
     });
   });
 });
