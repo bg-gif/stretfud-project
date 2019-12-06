@@ -80,9 +80,7 @@ describe("server", () => {
             .expect(200)
             .then(response => {
               expect(response.body).to.have.own.property("vendors");
-              expect(response.body.vendors[0]).to.have.own.property(
-                "vendor_id"
-              );
+              expect(response.body.vendors[0]).to.have.own.property("username");
             });
         });
       });
@@ -99,14 +97,14 @@ describe("server", () => {
           return Promise.all[promiseArr];
         });
       });
-      describe("/vendor_id", () => {
+      describe("/username", () => {
         describe("GET", () => {
           it("status 200: returns an object with key of vendor and expected value", () => {
             return request
-              .get("/api/vendors/1")
+              .get("/api/vendors/oppri")
               .expect(200)
               .then(res => {
-                expect(res.body.vendor.vendor_id).to.equal(1);
+                expect(res.body.vendor.username).to.equal("oppri");
               });
           });
           it("status: 404 for valid but non existent vendor_id", () => {
@@ -115,14 +113,6 @@ describe("server", () => {
               .expect(404)
               .then(res => {
                 expect(res.body.msg).to.equal("Vendor Does Not Exist");
-              });
-          });
-          it("status: 400 for invalid vendor_id datatype", () => {
-            return request
-              .get("/api/vendors/obviouslynotavendor")
-              .expect(400)
-              .then(res => {
-                expect(res.body.msg).to.equal("Bad Request");
               });
           });
         });
