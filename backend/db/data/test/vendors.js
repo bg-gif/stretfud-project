@@ -1,7 +1,8 @@
 module.exports = [
   {
+    username: 'oppri',
     ownername: 'optimus prime',
-    vendorname: 'george prime',
+    businessname: 'george prime',
     cuisine: 'steak house',
     location: '53.796329, -1.542809',
     opening_times: '9am - 9pm',
@@ -13,8 +14,9 @@ module.exports = [
     password: 'password'
   },
   {
+    username: 'grimlock',
     ownername: 'grimlock',
-    vendorname: 'laurence grimlock',
+    businessname: 'laurence grimlock',
     cuisine: 'bbq',
     location: '53.794764, -1.542165',
     opening_times: '3am - 5am',
@@ -26,8 +28,9 @@ module.exports = [
     password: 'password'
   },
   {
+    username: 'hotrod',
     ownername: 'hotrod',
-    vendorname: 'rod caliente',
+    businessname: 'rod caliente',
     cuisine: 'south korean hotpot',
     location: '53.795715, -1.545040',
     opening_times: '12pm - 10pm',
@@ -38,8 +41,9 @@ module.exports = [
     password: 'password'
   },
   {
+    username: 'ironhide',
     ownername: 'ironhide',
-    vendorname: 'pilar ferrous',
+    businessname: 'pilar ferrous',
     cuisine: 'hogroast',
     location: '53.793522, -1.545630',
     opening_times: '6am - 6pm',
