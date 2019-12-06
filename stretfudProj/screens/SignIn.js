@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, Picker } from 'react-native';
+import { StyleSheet, Text, View, Picker } from 'react-native';
+import SignInForm from '../components/SignInForm';
 
 class SignIn extends React.Component {
   static navigationOptions = {
@@ -7,23 +8,17 @@ class SignIn extends React.Component {
   };
 
   state = {
-    signInType: ''
+    signInType: '',
+    textValue: '',
+    errorMsg: false
   };
 
   componentDidMount() {
     this.setState({ signInType: 'user' });
   }
 
-  handleChange = (itemValue, itemIndex) => {
+  handleChange = itemValue => {
     this.setState({ signInType: itemValue });
-  };
-
-  handlePress = () => {
-    const { signInType } = this.state;
-    const destination =
-      signInType === 'user' ? 'UserHomePage' : 'VendorHomePage';
-
-    this.props.navigation.navigate(destination);
   };
 
   render() {
@@ -34,11 +29,15 @@ class SignIn extends React.Component {
           selectedValue={this.state.signInType}
           style={styles.picker}
           onValueChange={this.handleChange}
+          itemStyle={styles.pickerItem}
         >
           <Picker.Item label="User" value="user" />
           <Picker.Item label="Vendor" value="vendor" />
         </Picker>
-        <Button title="sign in" onPress={this.handlePress} />
+        <SignInForm
+          signInType={this.state.signInType}
+          navigation={this.props.navigation}
+        />
       </View>
     );
   }
@@ -47,11 +46,31 @@ class SignIn extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: 'column',
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center'
   },
-  picker: { height: 50, width: 100 }
+  picker: {
+    height: 88,
+    width: 100,
+    borderWidth: 1,
+    borderColor: 'black',
+    borderRadius: 25
+  },
+  pickerItem: { height: 88 },
+  TextInput: {
+    height: 40,
+    width: 200,
+    borderColor: 'gray',
+    borderWidth: 1
+  },
+  badText: {
+    height: 40,
+    width: 200,
+    borderColor: 'red',
+    borderWidth: 1
+  }
 });
 
 export default SignIn;
