@@ -4,6 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "migrate-make": "knex migrate:make",
+    "dev": "psql -f ./db/setup.sql && npm run seed && nodemon listen.js",
+    "setup-dbs": "psql -f ./db/setup.sql",
+    "start": "node listen.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
