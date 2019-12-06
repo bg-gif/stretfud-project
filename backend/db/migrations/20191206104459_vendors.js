@@ -3,6 +3,7 @@ exports.up = function(knex) {
     table.increments('vendor_id');
     table.string('vendorname').notNullable();
     table.string('ownername').notNullable();
+    table.string('password').notNullable();
     table.string('phone_num');
     table.string('cuisine').notNullable();
     table.string('email');

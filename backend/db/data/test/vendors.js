@@ -9,7 +9,8 @@ module.exports = [
     phone_num: '01602 616666',
     email: 'optimus_prime@autobots.com',
     menu:
-      'https://images-na.ssl-images-amazon.com/images/I/81UUigUhffL._SL1500_.jpg'
+      'https://images-na.ssl-images-amazon.com/images/I/81UUigUhffL._SL1500_.jpg',
+    password: 'password'
   },
   {
     ownername: 'grimlock',
@@ -21,7 +22,8 @@ module.exports = [
     phone_num: '02175 346325',
     email: 'grimlock@autobots.com',
     menu:
-      'https://i.ebayimg.com/00/s/MzM5WDQwMA==/z/OsAAAOSwPc9WtzRH/$_35.JPG?set_id=89040003C1'
+      'https://i.ebayimg.com/00/s/MzM5WDQwMA==/z/OsAAAOSwPc9WtzRH/$_35.JPG?set_id=89040003C1',
+    password: 'password'
   },
   {
     ownername: 'hotrod',
@@ -32,7 +34,8 @@ module.exports = [
     open_status: false,
     phone_num: '01645 346273',
     email: 'hotrod@autobots.com',
-    menu: 'https://s3.amazonaws.com/tf.images/reduced-image_13638_106.jpg'
+    menu: 'https://s3.amazonaws.com/tf.images/reduced-image_13638_106.jpg',
+    password: 'password'
   },
   {
     ownername: 'ironhide',
@@ -43,6 +46,7 @@ module.exports = [
     open_status: false,
     phone_num: '01564 568473',
     email: 'ironhide@autobots.com',
-    menu: 'https://s3.amazonaws.com/tf.images/reduced-image_10937_106.jpg'
+    menu: 'https://s3.amazonaws.com/tf.images/reduced-image_10937_106.jpg',
+    password: 'password'
   }
 ];
