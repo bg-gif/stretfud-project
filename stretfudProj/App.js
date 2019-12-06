@@ -3,17 +3,30 @@ import { StackNavigator, createAppContainer } from 'react-navigation';
 import { createSwitchNavigator } from 'react-navigation';
 import SignOut from './screens/SignOut';
 import SignIn from './screens/SignIn';
+import UserHome from './screens/UserHome';
+import VendorHome from './screens/VendorHome';
+import { createStackNavigator } from 'react-navigation-stack';
+import SingleVendor from './screens/SingleVendor';
+//import UserStack from './UserStack';
 //import SignInPage  from './routes';
 
-const RootStack = createSwitchNavigator(
+const UserStack = createStackNavigator({
+  Home: UserHome,
+  SingleVendor: SingleVendor
+});
+
+const RootSwitch = createSwitchNavigator(
   {
     SignIn: { screen: SignIn },
-    SignOut: { screen: SignOut }
+    UserHomePage: UserStack,
+    VendorHomePage: { screen: VendorHome }
   },
-  { initialRouteName: 'SignIn' }
+  {
+    initialRouteName: 'SignIn'
+  }
 );
 
-const AppContainer = createAppContainer(RootStack);
+const AppContainer = createAppContainer(RootSwitch);
 
 export default class App extends React.Component {
   render() {

@@ -1,11 +1,19 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
+import SignOut from './SignOut';
 
 class UserHome extends Component {
   render() {
     return (
       <View style={styles.container}>
         <Text>User Home Page</Text>
+        <SignOut navigation={this.props.navigation} />
+        <Button
+          title="Vendor"
+          onPress={() => {
+            this.props.navigation.navigate('SingleVendor');
+          }}
+        />
       </View>
     );
   }

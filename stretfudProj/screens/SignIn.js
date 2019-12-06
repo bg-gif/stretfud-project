@@ -2,6 +2,10 @@ import React from 'react';
 import { StyleSheet, Text, View, Button, Picker } from 'react-native';
 
 class SignIn extends React.Component {
+  static navigationOptions = {
+    tabBarLabel: 'StetFud'
+  };
+
   state = {
     signInType: ''
   };
@@ -12,6 +16,14 @@ class SignIn extends React.Component {
 
   handleChange = (itemValue, itemIndex) => {
     this.setState({ signInType: itemValue });
+  };
+
+  handlePress = () => {
+    const { signInType } = this.state;
+    const destination =
+      signInType === 'user' ? 'UserHomePage' : 'VendorHomePage';
+
+    this.props.navigation.navigate(destination);
   };
 
   render() {
@@ -26,12 +38,7 @@ class SignIn extends React.Component {
           <Picker.Item label="User" value="user" />
           <Picker.Item label="Vendor" value="vendor" />
         </Picker>
-        <Button
-          title="sign in"
-          onPress={() => {
-            this.props.navigation.navigate('SignOut');
-          }}
-        />
+        <Button title="sign in" onPress={this.handlePress} />
       </View>
     );
   }

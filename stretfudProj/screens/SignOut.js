@@ -4,9 +4,12 @@ import { StyleSheet, Text, View, Button } from 'react-native';
 class SignOut extends React.Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text>This is sign out page</Text>
-      </View>
+      <Button
+        onPress={() => {
+          this.props.navigation.navigate('SignIn');
+        }}
+        title="Sign Out"
+      ></Button>
     );
   }
 }
