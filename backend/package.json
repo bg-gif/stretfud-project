@@ -4,6 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "seed": "knex seed:run",
+    "migrate-latest": "knex migrate:latest",
+    "migrate-rollback": "knex migrate:rollback",
     "migrate-make": "knex migrate:make",
     "dev": "psql -f ./db/setup.sql && npm run seed && nodemon listen.js",
     "setup-dbs": "psql -f ./db/setup.sql",
