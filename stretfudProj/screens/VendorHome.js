@@ -8,6 +8,12 @@ class VendorHome extends Component {
       <View style={styles.container}>
         <Text>User Vendor Page</Text>
         <SignOut navigation={this.props.navigation} />
+        <Button
+          title="Edit Menu"
+          onPress={() => {
+            this.props.navigation.navigate('Menu');
+          }}
+        />
       </View>
     );
   }

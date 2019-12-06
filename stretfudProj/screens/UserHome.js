@@ -9,7 +9,7 @@ class UserHome extends Component {
         <Text>User Home Page</Text>
         <SignOut navigation={this.props.navigation} />
         <Button
-          title="Vendor"
+          title="See Vendor"
           onPress={() => {
             this.props.navigation.navigate('SingleVendor');
           }}

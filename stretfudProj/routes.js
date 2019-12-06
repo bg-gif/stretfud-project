@@ -1,23 +1,16 @@
-import React from 'react';
 import { createStackNavigator } from 'react-navigation-stack';
 
-/* Sreens */
-// import SingleVendor from './screens/singleVendor';
-// import Menu from './screens/menu';
-import SignIn from './screens/SignIn.js';
-// import SignUp from './screens/signUp';
-// import UserHome from './screens/userHome';
-// import VendorHome from './screens/vendorHome';
+import UserHome from './screens/UserHome';
+import SingleVendor from './screens/SingleVendor';
+import VendorHome from './screens/VendorHome';
+import Menu from './screens/Menu';
 
-const SignInPage = createStackNavigator({
-  SignIn: {
-    screen: SignIn,
-    navigationOptions: { title: 'Sign In', headerStyle }
-  }
+export const UserStack = createStackNavigator({
+  Home: UserHome,
+  SingleVendor
 });
 
-export default SignInPage;
-
-// export const createRootNavigator = ()=>{
-//   return
-// }
+export const VendorStack = createStackNavigator({
+  Home: VendorHome,
+  Menu
+});
