@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import SignOut from './SignOut';
 
 class VendorHome extends Component {
@@ -20,17 +20,39 @@ class VendorHome extends Component {
     menu: 'www.joesmenu.com'
   };
 
+  handleStatus = () => {
+    this.setState(currentState => {
+      return { openStatus: !currentState.openStatus };
+    });
+  };
+
   render() {
-    const { businessName } = this.state;
+    const { businessName, openStatus } = this.state;
     return (
       <View style={styles.container}>
         <Text>{businessName}</Text>
-        <Button
-          title="Edit Menu"
+        <TouchableOpacity
+          style={{
+            alignItems: 'center',
+            backgroundColor: openStatus ? 'green' : 'red',
+            padding: 10
+          }}
+          onPress={this.handleStatus}
+        >
+          <Text>Open Status : {openStatus ? 'OPEN' : 'CLOSED'}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{
+            alignItems: 'center',
+            backgroundColor: '#dddddd',
+            padding: 10
+          }}
           onPress={() => {
             this.props.navigation.navigate('Menu');
           }}
-        />
+        >
+          <Text>Edit Menu</Text>
+        </TouchableOpacity>
         {/* <SignOut navigation={this.props.navigation} /> */}
       </View>
     );
