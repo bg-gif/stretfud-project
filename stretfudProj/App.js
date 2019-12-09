@@ -11,7 +11,12 @@ const RootSwitch = createSwitchNavigator(
     VendorHomePage: VendorStack
   },
   {
-    initialRouteName: 'SignIn'
+    initialRouteName: 'SignIn',
+    defaultNavigationOptions: {
+      headerStyle: { backgroundColor: '#f56111' },
+      headerTintColor: '#fff',
+      headerTitleStyle: { fontWeight: 'bold' }
+    }
   }
 );
 
