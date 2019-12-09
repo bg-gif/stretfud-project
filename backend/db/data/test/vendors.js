@@ -4,7 +4,7 @@ module.exports = [
     ownername: "optimus prime",
     businessname: "george prime",
     cuisine: "steak house",
-    location: "53.796329, -1.542809",
+    location: "54.796329, -1.642809",
     opening_times: "9am - 9pm",
     open_status: false,
     phone_num: "01602 616666",

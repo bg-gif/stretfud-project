@@ -16,7 +16,6 @@ exports.postUserMod = user => {
     .insert(user)
     .returning("*")
     .then(user => {
-      console.log(user, "user in mod");
       return user[0];
     });
 };

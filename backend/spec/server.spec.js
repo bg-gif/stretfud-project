@@ -198,6 +198,16 @@ describe("server", () => {
               expect(response.body.vendors[0]).to.have.own.property("username");
             });
         });
+        it("takes a query of location with the coordinates and returns only those vendors within a mile", () => {
+          return request
+            .get("/api/vendors?location=53.794945,-1.54645")
+            .expect(200)
+            .then(response => {
+              console.log(response.body, "<<<<<<<<<res.body of filtered");
+              expect(response.body).to.have.own.property("vendors");
+              expect(response.body.vendors).to.have.length(3);
+            });
+        });
       });
       describe("POST", () => {
         it("status:201, returns posted vendor", () => {
@@ -223,7 +233,7 @@ describe("server", () => {
       });
       describe("INVALID METHODS", () => {
         it("status:405, responds with method not allowed", () => {
-          const methodArr = ["post", "patch", "put", "delete"];
+          const methodArr = ["patch", "put", "delete"];
           const promiseArr = methodArr.map(method => {
             return request[method]("/api/vendors")
               .expect(405)
@@ -246,7 +256,7 @@ describe("server", () => {
           });
           it("status: 404 for valid but non existent vendor_id", () => {
             return request
-              .get("/api/vendors/99")
+              .get("/api/vendors/steve")
               .expect(404)
               .then(res => {
                 expect(res.body.msg).to.equal("Vendor Does Not Exist");
@@ -257,7 +267,7 @@ describe("server", () => {
           it("status:405, responds with method not allowed", () => {
             const methodArr = ["post", "patch", "put", "delete"];
             const promiseArr = methodArr.map(method => {
-              return request[method]("/api/vendors/1")
+              return request[method]("/api/vendors/oppri")
                 .expect(405)
                 .then(({ body: { msg } }) => {
                   expect(msg).to.equal("Method not allowed");
