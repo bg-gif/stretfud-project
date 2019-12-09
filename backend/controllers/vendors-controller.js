@@ -1,19 +1,15 @@
 const {
   fetchVendors,
   fetchVendorByUsername,
-<<<<<<< HEAD
-  sendVendor
-} = require("../models/vendors-model");
-const { filterVendors } = require("../utils/utils");
-=======
   sendVendor,
   patchVendor
-} = require('../models/vendors-model');
->>>>>>> 474c6fec06551278e86fb097bcf252e3eb755d8e
+} = require("../models/vendors-model");
+
+const { filterVendors } = require("../utils/utils");
 
 exports.getVendors = (req, res, next) => {
   let location = req.query.location;
-  console.log(location, "<<<<<<<<<location in vendors controller");
+
   fetchVendors()
     .then(vendors => {
       if (!location) {
@@ -57,7 +53,7 @@ exports.patchVendor = (req, res, next) => {
     .then(([vendor]) => {
       const { location, open_status, menu } = req.body;
       if (!location && !open_status && !menu) {
-        return Promise.reject({ status: 400, msg: 'Bad Request' });
+        return Promise.reject({ status: 400, msg: "Bad Request" });
       }
       res.status(200).send({ vendor });
     })
