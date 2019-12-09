@@ -3,7 +3,8 @@ const { handle405s } = require('../errors/index');
 const {
   getVendors,
   getVendorByUsername,
-  postVendor
+  postVendor,
+  patchVendor
 } = require('../controllers/vendors-controller');
 
 vendorsRouter
@@ -15,6 +16,7 @@ vendorsRouter
 vendorsRouter
   .route('/:username')
   .get(getVendorByUsername)
+  .patch(patchVendor)
   .all(handle405s);
 
 module.exports = vendorsRouter;

@@ -1,4 +1,8 @@
-const { fetchUserById, postUserMod } = require("../models/users-model.js");
+const {
+  fetchUserById,
+  postUserMod,
+  updateUserByUsername
+} = require('../models/users-model.js');
 
 exports.getUserById = (req, res, next) => {
   const { username } = req.params;
@@ -10,10 +14,24 @@ exports.getUserById = (req, res, next) => {
 };
 
 exports.postUser = (req, res, next) => {
-  let user = req.body;
+  const user = req.body;
   postUserMod(user)
     .then(newUser => {
       res.status(201).send({ user: newUser });
+    })
+    .catch(next);
+};
+
+exports.patchUserByUsername = (req, res, next) => {
+  const username = req.params.username;
+  const update = req.body;
+  updateUserByUsername(username, update)
+    .then(([user]) => {
+      const { email, phone_num } = req.body;
+      if (!email && !phone_num) {
+        return Promise.reject({ status: 400, msg: 'Bad Request' });
+      }
+      res.status(200).send({ user });
     })
     .catch(next);
 };
