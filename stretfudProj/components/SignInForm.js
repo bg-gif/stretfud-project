@@ -1,27 +1,23 @@
-import React from 'react';
-import {
-  TextInput,
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet
-} from 'react-native';
+import React from "react";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import InputAdder from "./InputAdder";
 
 class SignInForm extends React.Component {
   state = {
-    username: '',
+    username: "",
+    password: "",
     errorMsg: false
   };
 
-  handleTextChange = username => {
-    this.setState({ username: username, errorMsg: false });
+  handleTextChange = (value, key) => {
+    this.setState({ [key]: value, errorMsg: false });
   };
 
   handlePress = () => {
     const { signInType, navigation } = this.props;
     const { username } = this.state;
     const destination =
-      signInType === 'user' ? 'UserHomePage' : 'VendorHomePage';
+      signInType === "user" ? "UserHomePage" : "VendorHomePage";
     if (!username) {
       return this.setState({ errorMsg: true });
     }
@@ -30,14 +26,20 @@ class SignInForm extends React.Component {
   };
 
   render() {
+    const { username, password } = this.state;
     return (
       <View>
-        <Text>Username:</Text>
-        <TextInput
-          onChangeText={this.handleTextChange}
-          style={this.state.errorMsg ? styles.badText : styles.TextInput}
-        ></TextInput>
-        {this.state.errorMsg && <Text>Please enter some deets</Text>}
+        <InputAdder
+          name="username"
+          handleTextChange={this.handleTextChange}
+          value={username}
+        />
+        <InputAdder
+          name="password"
+          handleTextChange={this.handleTextChange}
+          value={password}
+        />
+
         <TouchableOpacity onPress={this.handlePress}>
           <Text>sign in</Text>
         </TouchableOpacity>
@@ -49,29 +51,29 @@ class SignInForm extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'column',
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center'
+    flexDirection: "column",
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center"
   },
   picker: {
     height: 88,
     width: 100,
     borderWidth: 1,
-    borderColor: 'black',
+    borderColor: "black",
     borderRadius: 25
   },
   pickerItem: { height: 88 },
   TextInput: {
     height: 40,
     width: 200,
-    borderColor: 'gray',
+    borderColor: "gray",
     borderWidth: 1
   },
   badText: {
     height: 40,
     width: 200,
-    borderColor: 'red',
+    borderColor: "red",
     borderWidth: 1
   }
 });
