@@ -23,3 +23,15 @@ exports.sendVendor = user => {
     .insert(user)
     .returning('*');
 };
+
+exports.patchVendor = (update, username) => {
+  const { location, open_status, menu } = update;
+  return knex('vendors')
+    .where({ username })
+    .modify(query => {
+      if (location) query.update({ location });
+      if (open_status) query.update({ open_status });
+      if (menu) query.update({ menu });
+    })
+    .returning('*');
+};
