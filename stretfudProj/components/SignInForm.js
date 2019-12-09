@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import InputAdder from "./InputAdder";
+import * as Crypto from "expo-crypto";
 
 class SignInForm extends React.Component {
   state = {
@@ -15,14 +16,16 @@ class SignInForm extends React.Component {
 
   handlePress = () => {
     const { signInType, navigation } = this.props;
-    const { username } = this.state;
+    const { username, password } = this.state;
     const destination =
       signInType === "user" ? "UserHomePage" : "VendorHomePage";
     if (!username) {
       return this.setState({ errorMsg: true });
     }
-
-    navigation.navigate(destination);
+    Crypto.digestStringAsync("SHA-1", password).then(response => {
+      console.log(response); // will need to send hashed password to backend and await validation response
+      navigation.navigate(destination);
+    });
   };
 
   render() {

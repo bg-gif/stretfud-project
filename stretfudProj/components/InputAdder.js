@@ -5,6 +5,7 @@ const InputAdder = ({ name, handleTextChange, value }) => {
   const handleChange = text => {
     handleTextChange(text, name);
   };
+
   return (
     <View>
       <Text>{name}</Text>
