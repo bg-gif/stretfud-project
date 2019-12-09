@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import InputAdder from "./InputAdder";
 import * as Crypto from "expo-crypto";
+import UserContext, { UserProvider } from "./UserContext";
 
 class SignInForm extends React.Component {
   state = {
@@ -23,7 +24,8 @@ class SignInForm extends React.Component {
       return this.setState({ errorMsg: true });
     }
     Crypto.digestStringAsync("SHA-1", password).then(response => {
-      console.log(response); // will need to send hashed password to backend and await validation response
+      // console.log(response); // will need to send hashed password to backend and await validation response
+      UserContext.username = username;
       navigation.navigate(destination);
     });
   };
@@ -31,22 +33,24 @@ class SignInForm extends React.Component {
   render() {
     const { username, password } = this.state;
     return (
-      <View>
-        <InputAdder
-          name="username"
-          handleTextChange={this.handleTextChange}
-          value={username}
-        />
-        <InputAdder
-          name="password"
-          handleTextChange={this.handleTextChange}
-          value={password}
-        />
+      <UserProvider value={username}>
+        <View>
+          <InputAdder
+            name="username"
+            handleTextChange={this.handleTextChange}
+            value={username}
+          />
+          <InputAdder
+            name="password"
+            handleTextChange={this.handleTextChange}
+            value={password}
+          />
 
-        <TouchableOpacity onPress={this.handlePress}>
-          <Text>sign in</Text>
-        </TouchableOpacity>
-      </View>
+          <TouchableOpacity onPress={this.handlePress}>
+            <Text>sign in</Text>
+          </TouchableOpacity>
+        </View>
+      </UserProvider>
     );
   }
 }

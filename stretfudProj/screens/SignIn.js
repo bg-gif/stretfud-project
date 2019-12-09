@@ -1,20 +1,23 @@
-import React from 'react';
-import { StyleSheet, Text, View, Picker } from 'react-native';
-import SignInForm from '../components/SignInForm';
+import React from "react";
+import { StyleSheet, Text, View, Picker } from "react-native";
+import SignInForm from "../components/SignInForm";
+import { UserConsumer } from "../components/UserContext";
+import { withUserHOC } from "../components/UserContext";
 
 class SignIn extends React.Component {
+  static contextType = UserConsumer;
   static navigationOptions = {
-    tabBarLabel: 'StetFud'
+    tabBarLabel: "StetFud"
   };
 
   state = {
-    signInType: '',
-    textValue: '',
+    signInType: "",
+    textValue: "",
     errorMsg: false
   };
 
   componentDidMount() {
-    this.setState({ signInType: 'user' });
+    this.setState({ signInType: "user" });
   }
 
   handleChange = itemValue => {
@@ -22,6 +25,7 @@ class SignIn extends React.Component {
   };
 
   render() {
+    console.log(this.props, "<<< in SignIn");
     return (
       <View style={styles.container}>
         <Text>This is sign in page</Text>
@@ -46,31 +50,31 @@ class SignIn extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'column',
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center'
+    flexDirection: "column",
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center"
   },
   picker: {
     height: 88,
     width: 100,
     borderWidth: 1,
-    borderColor: 'black',
+    borderColor: "black",
     borderRadius: 25
   },
   pickerItem: { height: 88 },
   TextInput: {
     height: 40,
     width: 200,
-    borderColor: 'gray',
+    borderColor: "gray",
     borderWidth: 1
   },
   badText: {
     height: 40,
     width: 200,
-    borderColor: 'red',
+    borderColor: "red",
     borderWidth: 1
   }
 });
 
-export default SignIn;
+export default withUserHOC(SignIn);

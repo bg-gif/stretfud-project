@@ -3,6 +3,8 @@ import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import SignOut from "./SignOut";
 import StatusSetter from "../components/StatusSetter";
 import LocationSetter from "../components/LocationSetter";
+import * as api from "../utils/utils";
+import { withUserHOC } from "../components/UserContext";
 
 class VendorHome extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -23,6 +25,10 @@ class VendorHome extends Component {
     menu: "www.joesmenu.com"
   };
 
+  componentDidMount() {
+    api.fetchVendor();
+  }
+
   handleStatus = () => {
     this.setState(currentState => {
       return { openStatus: !currentState.openStatus };
@@ -35,9 +41,18 @@ class VendorHome extends Component {
   };
 
   render() {
+    //const { params } = this.props.navigation.state;
+    console.dir(this.props.user.username);
+    //console.log(this.props.navigation.state.params);
+    const {
+      navigation,
+      user: { username }
+    } = this.props;
+
     const { businessName, openStatus, currentLocation, email } = this.state;
     return (
       <View style={styles.container}>
+        <Text>username: {username}</Text>
         <Text>{businessName}</Text>
         <Text>{email}</Text>
         <StatusSetter
@@ -72,4 +87,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default VendorHome;
+export default withUserHOC(VendorHome);
