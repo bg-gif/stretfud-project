@@ -1,17 +1,19 @@
-const vendorsRouter = require("express")();
-const { handle405s } = require("../errors/index");
+const vendorsRouter = require('express')();
+const { handle405s } = require('../errors/index');
 const {
   getVendors,
-  getVendorByUsername
-} = require("../controllers/vendors-controller");
+  getVendorByUsername,
+  postVendor
+} = require('../controllers/vendors-controller');
 
 vendorsRouter
-  .route("/")
+  .route('/')
   .get(getVendors)
+  .post(postVendor)
   .all(handle405s);
 
 vendorsRouter
-  .route("/:username")
+  .route('/:username')
   .get(getVendorByUsername)
   .all(handle405s);
 
