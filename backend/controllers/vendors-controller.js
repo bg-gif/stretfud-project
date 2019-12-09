@@ -1,4 +1,7 @@
-const { fetchVendors, fetchVendorById } = require("../models/vendors-model");
+const {
+  fetchVendors,
+  fetchVendorByUsername
+} = require("../models/vendors-model");
 
 exports.getVendors = (req, res, next) => {
   fetchVendors()
@@ -8,9 +11,9 @@ exports.getVendors = (req, res, next) => {
     .catch(next);
 };
 
-exports.getVendorById = (req, res, next) => {
-  let vendorId = req.params.vendor_id;
-  fetchVendorById(vendorId)
+exports.getVendorByUsername = (req, res, next) => {
+  let username = req.params.username;
+  fetchVendorByUsername(username)
     .then(vendor => {
       if (vendor.length === 0) {
         return Promise.reject({

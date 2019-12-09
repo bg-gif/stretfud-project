@@ -9,10 +9,10 @@ exports.fetchVendors = () => {
     });
 };
 
-exports.fetchVendorById = vendorId => {
+exports.fetchVendorByUsername = Username => {
   return knex("vendors")
     .select("*")
-    .where({ "vendors.vendor_id": vendorId })
+    .where({ "vendors.username": Username })
     .then(vendor => {
       return vendor;
     });
