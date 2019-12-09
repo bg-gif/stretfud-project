@@ -220,6 +220,140 @@ describe('server', () => {
               expect(vendor).to.include.key('created_at');
             });
         });
+        it('status:400, bad request on no username', () => {
+          return request
+            .post('/api/vendors')
+            .send({
+              ownername: 'Carl Berens',
+              cuisine: 'mexican',
+              location: '54.338936, -1.434165',
+              opening_times: '12-7pm',
+              phone_num: '01609 777770',
+              menu:
+                'https://www.tejanos.co.uk/wp-content/uploads/2018/01/Steak-House-Square.jpg',
+              businessname: 'Tejanos',
+              password: 'password'
+            })
+            .expect(400)
+            .then(({ body: { msg } }) => {
+              expect(msg).to.equal('Bad Request');
+            });
+        });
+        it('status:400, bad request on no cuisine', () => {
+          return request
+            .post('/api/vendors')
+            .send({
+              username: 'TejanosBoss',
+              ownername: 'Carl Berens',
+              location: '54.338936, -1.434165',
+              opening_times: '12-7pm',
+              phone_num: '01609 777770',
+              menu:
+                'https://www.tejanos.co.uk/wp-content/uploads/2018/01/Steak-House-Square.jpg',
+              businessname: 'Tejanos',
+              password: 'password'
+            })
+            .expect(400)
+            .then(({ body: { msg } }) => {
+              expect(msg).to.equal('Bad Request');
+            });
+        });
+        it('status:400, bad request on no ownername', () => {
+          return request
+            .post('/api/vendors')
+            .send({
+              username: 'TejanosBoss',
+              cuisine: 'mexican',
+              location: '54.338936, -1.434165',
+              opening_times: '12-7pm',
+              phone_num: '01609 777770',
+              menu:
+                'https://www.tejanos.co.uk/wp-content/uploads/2018/01/Steak-House-Square.jpg',
+              businessname: 'Tejanos',
+              password: 'password'
+            })
+            .expect(400)
+            .then(({ body: { msg } }) => {
+              expect(msg).to.equal('Bad Request');
+            });
+        });
+        it('status:400, bad request on no location', () => {
+          return request
+            .post('/api/vendors')
+            .send({
+              username: 'TejanosBoss',
+              ownername: 'Carl Berens',
+              cuisine: 'mexican',
+              opening_times: '12-7pm',
+              phone_num: '01609 777770',
+              menu:
+                'https://www.tejanos.co.uk/wp-content/uploads/2018/01/Steak-House-Square.jpg',
+              businessname: 'Tejanos',
+              password: 'password'
+            })
+            .expect(400)
+            .then(({ body: { msg } }) => {
+              expect(msg).to.equal('Bad Request');
+            });
+        });
+        it('status:400, bad request on no opening times', () => {
+          return request
+            .post('/api/vendors')
+            .send({
+              username: 'TejanosBoss',
+              ownername: 'Carl Berens',
+              cuisine: 'mexican',
+              location: '54.338936, -1.434165',
+              phone_num: '01609 777770',
+              menu:
+                'https://www.tejanos.co.uk/wp-content/uploads/2018/01/Steak-House-Square.jpg',
+              businessname: 'Tejanos',
+              password: 'password'
+            })
+            .expect(400)
+            .then(({ body: { msg } }) => {
+              expect(msg).to.equal('Bad Request');
+            });
+        });
+        it('status:400, bad request on no password', () => {
+          return request
+            .post('/api/vendors')
+            .send({
+              username: 'TejanosBoss',
+              ownername: 'Carl Berens',
+              cuisine: 'mexican',
+              location: '54.338936, -1.434165',
+              opening_times: '12-7pm',
+              phone_num: '01609 777770',
+              menu:
+                'https://www.tejanos.co.uk/wp-content/uploads/2018/01/Steak-House-Square.jpg',
+              businessname: 'Tejanos'
+            })
+            .expect(400)
+            .then(({ body: { msg } }) => {
+              expect(msg).to.equal('Bad Request');
+            });
+        });
+        it('status:400, bad request on posting pre existing username', () => {
+          return request
+            .post('/api/vendors')
+            .send({
+              username: 'oppri',
+              ownername: 'Carl Berens',
+              cuisine: 'mexican',
+              location: '54.338936, -1.434165',
+              opening_times: '12-7pm',
+              phone_num: '01609 777770',
+              menu:
+                'https://www.tejanos.co.uk/wp-content/uploads/2018/01/Steak-House-Square.jpg',
+              businessname: 'Tejanos',
+              password: 'password'
+            })
+            .expect(400)
+            .then(({ body: { msg } }) => {
+              expect(msg).to.equal('Bad Request');
+            });
+        });
       });
       describe('INVALID METHODS', () => {
         it('status:405, responds with method not allowed', () => {

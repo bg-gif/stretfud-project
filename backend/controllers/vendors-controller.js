@@ -31,7 +31,6 @@ exports.postVendor = (req, res, next) => {
   let vendor = req.body;
   sendVendor(vendor)
     .then(([vendor]) => {
-      console.log(vendor);
       res.status(201).send({ vendor });
     })
     .catch(next);
