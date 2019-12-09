@@ -1,6 +1,7 @@
 const {
   fetchVendors,
-  fetchVendorByUsername
+  fetchVendorByUsername,
+  sendVendor
 } = require('../models/vendors-model');
 
 exports.getVendors = (req, res, next) => {
@@ -28,5 +29,8 @@ exports.getVendorByUsername = (req, res, next) => {
 
 exports.postVendor = (req, res, next) => {
   let vendor = req.body;
-  console.log(vendor);
+  sendVendor(vendor).then(([vendor]) => {
+    console.log(vendor);
+    res.status(201).send({ vendor });
+  });
 };
