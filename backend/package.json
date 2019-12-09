@@ -11,7 +11,10 @@
     "dev": "psql -f ./db/setup.sql && npm run seed && nodemon listen.js",
     "setup-dbs": "psql -f ./db/setup.sql",
     "start": "node listen.js",
-    "test": "mocha spec/server.spec.js"
+    "test": "mocha spec/server.spec.js",
+    "seed:prod": "NODE_ENV=production DB_URL=$(heroku config:get DATABASE_URL) knex seed:run",
+    "migrate-latest: prod": "NODE_ENV=production DB_URL=$(heroku config:get DATABASE_URL) knex migrate:latest",
+    "migrate-rollback:prod": "NODE_ENV=production DB_URL=$(heroku config:get DATABASE_URL) knex migrate:rollback"
   },
   "author": "",
   "license": "ISC",

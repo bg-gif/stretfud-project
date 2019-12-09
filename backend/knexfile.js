@@ -1,5 +1,5 @@
 const { DB_URL } = process.env;
-const ENV = process.env.NODE_ENV || 'test';
+const ENV = process.env.NODE_ENV || 'devlopment';
 const { username, password } = require('./private/config');
 
 const baseConfig = {
