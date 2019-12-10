@@ -11,7 +11,7 @@ module.exports = [
     email: 'steakysteve@gmail.com',
     menu:
       'https://d1csarkz8obe9u.cloudfront.net/posterpreviews/menu-flyer-template-5632286b490608db0301a085b91cde86_screen.jpg?ts=1561491978',
-    password: 'password'
+    password: '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8'
   },
   {
     username: 'frankgrimes',
@@ -25,7 +25,7 @@ module.exports = [
     email: 'frankgrimes@gmail.com',
     menu:
       'https://www.biggsribs.com/static/dinner-menu-1-88f2910939be89ec5166924a7ef49f0e.jpg',
-    password: 'password'
+    password: '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8'
   },
   {
     username: 'rodneyp',
@@ -39,7 +39,7 @@ module.exports = [
     email: 'hotrod@gmail.com',
     menu:
       'https://www.petros-restaurant.co.uk/wp-content/uploads/2019/01/menu-dec18.png',
-    password: 'password'
+    password: '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8'
   },
   {
     username: 'bezzat',
@@ -53,7 +53,7 @@ module.exports = [
     email: 'BTrotski@gmail.com',
     menu:
       'https://d3ciwvs59ifrt8.cloudfront.net/ddd30df4-a6a6-45ff-84fe-201da10f3558/f15c5eea-bdc5-4afc-b218-e9deee2f87a6.jpg',
-    password: 'password'
+    password: '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8'
   },
   {
     username: 'amannyh',
@@ -67,6 +67,6 @@ module.exports = [
     email: 'AmanHK@gmail.com',
     menu:
       'https://d1csarkz8obe9u.cloudfront.net/posterpreviews/chalkboard-breakfast-menu-digital-display-video-design-template-14b69c3106b4a641546e57dbebd83c47.jpg?ts=1567084272',
-    password: 'password'
+    password: '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8'
   }
 ];
