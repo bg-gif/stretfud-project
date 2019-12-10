@@ -12,6 +12,7 @@ import Constants from "expo-constants";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
 import { fetchVendorsByLocation } from "../utils/api";
+import ToggleSwitch from "toggle-switch-react-native";
 
 const geolib = require("geolib");
 
@@ -103,6 +104,7 @@ export default class App extends Component {
           {vendors.map(vendor => {
             const coords = vendor.location.split(",");
             const openStatus = vendor.open_status ? "Open" : "Closed";
+            const color = vendor.open_status ? "#008000" : "#d3d3d3";
             return (
               <Marker
                 key={vendor.username}
@@ -112,6 +114,7 @@ export default class App extends Component {
                 }}
                 title={vendor.businessname}
                 description={vendor.cuisine}
+                pinColor={color}
               >
                 <MapView.Callout
                   onPress={() => {

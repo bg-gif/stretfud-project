@@ -5,35 +5,46 @@ import {
   View,
   Button,
   Image,
-  Dimensions
+  Dimensions,
+  TouchableHighlight
 } from "react-native";
-import ImageZoom from "react-native-image-pan-zoom";
-import SignOut from "./SignOut";
 
 class SingleVendor extends Component {
   pinZoomLayoutRef = React.createRef();
   render() {
-    const { vendor } = this.props.navigation.state.params;
+    const {
+      businessname,
+      opening_times,
+      cuisine,
+      email,
+      phone_num,
+      open_status,
+      menu
+    } = this.props.navigation.state.params.vendor;
+    const open = open_status ? "Open" : "Closed";
     return (
       <View style={styles.container}>
-        <Text>{vendor.businessname}</Text>
-        <ImageZoom
-          cropWidth={Dimensions.get("window").width}
-          cropHeight={Dimensions.get("window").height}
-          imageWidth={200}
-          imageHeight={200}
+        <Text>{businessname}</Text>
+        <Text>{cuisine}</Text>
+        <Text>{open}</Text>
+        <Text>Opening Times: {opening_times}</Text>
+        <Text>Phone: {phone_num}</Text>
+        <Text>E-mail: {email}</Text>
+        <TouchableHighlight
+          onPress={() => {
+            console.log("pressed");
+            this.props.navigation.navigate("ViewMenu", { menu });
+          }}
         >
           <Image
-            source={{ uri: vendor.menu }}
+            source={{ uri: menu }}
             style={{
               width: 200,
               height: 200,
               resizeMode: "stretch"
             }}
           />
-        </ImageZoom>
-
-        <SignOut navigation={this.props.navigation} />
+        </TouchableHighlight>
       </View>
     );
   }
