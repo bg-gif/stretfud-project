@@ -11,7 +11,8 @@ exports.updateVendorInfo = ({ username, location, open_status, menu }) => {
   return axios
     .patch(`${base_URL}/vendors/${username}`, {
       open_status: open_status,
-      location
+      location,
+      menu
     })
     .then(({ data }) => {
       return data.vendor;
