@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import InputAdder from "./InputAdder";
 import * as Crypto from "expo-crypto";
 import UserContext, { UserProvider } from "./UserContext";
+import * as api from "../utils/api";
 
 class SignInForm extends React.Component {
   state = {
@@ -23,15 +24,23 @@ class SignInForm extends React.Component {
     if (!username) {
       return this.setState({ errorMsg: true });
     }
-    Crypto.digestStringAsync("SHA-1", password).then(response => {
-      // console.log(response); // will need to send hashed password to backend and await validation response
+    Crypto.digestStringAsync("SHA-1", password).then(hashedPassword => {
       UserContext.username = username;
-      navigation.navigate(destination);
+      api
+        .postLoginAuth({ username, password: hashedPassword }, signInType)
+        .then(varification => {
+          if (varification.msg === "Verified") {
+            navigation.navigate(destination);
+          }
+        })
+        .catch(err => {
+          this.setState({ errorMsg: true });
+        });
     });
   };
 
   render() {
-    const { username, password } = this.state;
+    const { username, password, errorMsg } = this.state;
     return (
       <UserProvider value={username}>
         <View>
@@ -45,7 +54,7 @@ class SignInForm extends React.Component {
             handleTextChange={this.handleTextChange}
             value={password}
           />
-
+          {errorMsg && <Text>Username or Password InCorrect</Text>}
           <TouchableOpacity onPress={this.handlePress}>
             <Text>sign in</Text>
           </TouchableOpacity>
