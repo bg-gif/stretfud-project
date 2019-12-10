@@ -1,19 +1,19 @@
-import React, { Component } from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import SignOut from "./SignOut";
-import StatusSetter from "../components/StatusSetter";
-import LocationSetter from "../components/LocationSetter";
-import * as api from "../utils/utils";
-import { withUserHOC } from "../components/UserContext";
+import React, { Component } from 'react';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import SignOut from './SignOut';
+import StatusSetter from '../components/StatusSetter';
+import LocationSetter from '../components/LocationSetter';
+import * as api from '../utils/utils';
+import { withUserHOC } from '../components/UserContext';
 
 class VendorHome extends Component {
   state = {
-    businessName: "Joes Burgers",
-    email: "joe@joesbugrers.com",
+    businessName: 'Joes Burgers',
+    email: 'joe@joesbugrers.com',
     openStatus: false,
-    currentLocation: "",
-    openingTimes: "",
-    menu: "www.joesmenu.com"
+    currentLocation: '',
+    openingTimes: '',
+    menu: 'www.joesmenu.com'
   };
 
   componentDidMount() {
@@ -34,9 +34,7 @@ class VendorHome extends Component {
         open_status: !this.state.openStatus
       })
       .then(updatedVendor => {
-        this.setState(() => {
-          return { openStatus: updatedVendor.open_status };
-        });
+        this.setState({ openStatus: updatedVendor.open_status });
       });
   };
 
@@ -69,15 +67,15 @@ class VendorHome extends Component {
           openStatus={openStatus}
         />
         <LocationSetter handleLocation={this.handleLocation} />
-        {currentLocation !== "" && <Text>New Location Set!</Text>}
+        {currentLocation !== '' && <Text>New Location Set!</Text>}
         <TouchableOpacity
           style={{
-            alignItems: "center",
-            backgroundColor: "#dddddd",
+            alignItems: 'center',
+            backgroundColor: '#dddddd',
             padding: 10
           }}
           onPress={() => {
-            this.props.navigation.navigate("Menu");
+            this.props.navigation.navigate('Menu');
           }}
         >
           <Text>Edit Menu</Text>
@@ -90,9 +88,9 @@ class VendorHome extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center"
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 });
 
