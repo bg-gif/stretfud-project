@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import SignOut from "./SignOut";
 import StatusSetter from "../components/StatusSetter";
 import LocationSetter from "../components/LocationSetter";
-import * as api from "../utils/utils";
+import * as api from "../utils/api";
 import { withUserHOC } from "../components/UserContext";
+import { formatLocation } from "../utils/utils";
+import Loader from "../components/Loader";
+import ErrorAlerter from "../components/ErrorAlerter";
 
 class VendorHome extends Component {
   state = {
@@ -13,7 +15,7 @@ class VendorHome extends Component {
     openStatus: false,
     currentLocation: "",
     openingTimes: "",
-    menu: "www.joesmenu.com"
+    isLoading: true
   };
 
   componentDidMount() {
@@ -22,47 +24,68 @@ class VendorHome extends Component {
         businessName: vendor.businessname,
         email: vendor.email,
         openStatus: vendor.open_status,
-        openingTimes: vendor.opening_times
+        openingTimes: vendor.opening_times,
+        isLoading: false
       });
     });
   }
 
   handleStatus = () => {
+    let strStatus = !this.state.openStatus;
+    strStatus = strStatus.toString();
+
     api
       .updateVendorInfo({
         username: this.props.user.username,
-        open_status: !this.state.openStatus
+        open_status: strStatus
       })
       .then(updatedVendor => {
-        this.setState(() => {
-          return { openStatus: updatedVendor.open_status };
-        });
+        this.setState({ openStatus: updatedVendor.open_status });
+      })
+      .catch(err => {
+        ErrorAlerter("Open Status could not be updated");
       });
   };
 
   handleLocation = ({ location }) => {
-    this.setState({ currentLocation: location });
+    api
+      .updateVendorInfo({
+        username: this.props.user.username,
+        location: formatLocation(location)
+      })
+      .then(updatedVendor => {
+        this.setState({
+          currentLocation: updatedVendor.location
+        });
+      })
+      .catch(err => {
+        ErrorAlerter("Location could not be updated");
+      });
   };
 
   render() {
-    // const {
-    //   navigation,
-    //   user: { username }
-    // } = this.props;
+    const {
+      navigation,
+      user: { username }
+    } = this.props;
 
     const {
       businessName,
       openStatus,
       currentLocation,
       email,
-      openingTimes
+      openingTimes,
+      isLoading
     } = this.state;
+
+    if (isLoading) return <Loader />;
     return (
       <View style={styles.container}>
-        <Text>username: {this.props.user.username}</Text>
+        <Text>username: {username}</Text>
         <Text>{businessName}</Text>
         <Text>{email}</Text>
         <Text>{openingTimes}</Text>
+        <Text>{currentLocation}</Text>
         <StatusSetter
           handleStatus={this.handleStatus}
           openStatus={openStatus}
@@ -76,10 +99,10 @@ class VendorHome extends Component {
             padding: 10
           }}
           onPress={() => {
-            this.props.navigation.navigate("Menu");
+            navigation.navigate("Menu", username);
           }}
         >
-          <Text>Edit Menu</Text>
+          <Text>View/Edit Menu</Text>
         </TouchableOpacity>
       </View>
     );

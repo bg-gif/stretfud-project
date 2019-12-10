@@ -27,7 +27,6 @@ class SignIn extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>This is sign in page</Text>
         <Picker
           selectedValue={this.state.signInType}
           style={styles.picker}
