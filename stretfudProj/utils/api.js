@@ -15,9 +15,6 @@ exports.updateVendorInfo = ({ username, location, open_status, menu }) => {
     })
     .then(({ data }) => {
       return data.vendor;
-    })
-    .catch(err => {
-      console.log(err, "<<< error");
     });
 };
 

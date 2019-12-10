@@ -1,19 +1,18 @@
-import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import StatusSetter from '../components/StatusSetter';
-import LocationSetter from '../components/LocationSetter';
-import * as api from '../utils/api';
-import { withUserHOC } from '../components/UserContext';
-import { formatLocation } from '../utils/utils';
+import React, { Component } from "react";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import StatusSetter from "../components/StatusSetter";
+import LocationSetter from "../components/LocationSetter";
+import * as api from "../utils/api";
+import { withUserHOC } from "../components/UserContext";
+import { formatLocation } from "../utils/utils";
 
 class VendorHome extends Component {
   state = {
-    businessName: 'Joes Burgers',
-    email: 'joe@joesbugrers.com',
+    businessName: "Joes Burgers",
+    email: "joe@joesbugrers.com",
     openStatus: false,
-    currentLocation: '',
-    openingTimes: '',
-    menu: 'www.joesmenu.com'
+    currentLocation: "",
+    openingTimes: ""
   };
 
   componentDidMount() {
@@ -57,10 +56,10 @@ class VendorHome extends Component {
   };
 
   render() {
-    // const {
-    //   navigation,
-    //   user: { username }
-    // } = this.props;
+    const {
+      navigation,
+      user: { username }
+    } = this.props;
 
     const {
       businessName,
@@ -71,7 +70,7 @@ class VendorHome extends Component {
     } = this.state;
     return (
       <View style={styles.container}>
-        <Text>username: {this.props.user.username}</Text>
+        <Text>username: {username}</Text>
         <Text>{businessName}</Text>
         <Text>{email}</Text>
         <Text>{openingTimes}</Text>
@@ -81,18 +80,18 @@ class VendorHome extends Component {
           openStatus={openStatus}
         />
         <LocationSetter handleLocation={this.handleLocation} />
-        {currentLocation !== '' && <Text>New Location Set!</Text>}
+        {currentLocation !== "" && <Text>New Location Set!</Text>}
         <TouchableOpacity
           style={{
-            alignItems: 'center',
-            backgroundColor: '#dddddd',
+            alignItems: "center",
+            backgroundColor: "#dddddd",
             padding: 10
           }}
           onPress={() => {
-            this.props.navigation.navigate('Menu');
+            navigation.navigate("Menu", username);
           }}
         >
-          <Text>Edit Menu</Text>
+          <Text>View/Edit Menu</Text>
         </TouchableOpacity>
       </View>
     );
@@ -102,9 +101,9 @@ class VendorHome extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center'
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center"
   }
 });
 
