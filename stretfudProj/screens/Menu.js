@@ -8,16 +8,18 @@ import {
 } from "react-native";
 import * as api from "../utils/api";
 import InputAdder from "../components/InputAdder";
+import Loader from "../components/Loader";
 // import { TouchableOpacity } from 'react-native-gesture-handler';
 
 class Menu extends Component {
   state = {
-    menu: ""
+    menu: "",
+    isLoading: true
   };
 
   componentDidMount() {
     api.fetchVendor(this.props.navigation.state.params).then(vendor => {
-      this.setState({ menu: vendor.menu });
+      this.setState({ menu: vendor.menu, isLoading: false });
     });
   }
 
@@ -37,10 +39,10 @@ class Menu extends Component {
   };
 
   render() {
-    const { menu } = this.state;
+    const { menu, isLoading } = this.state;
+    if (isLoading) return <Loader />;
     return (
       <ScrollView>
-        <Text>Edit Menu Page</Text>
         {menu !== "" && (
           <Image source={{ uri: menu }} style={{ width: 300, height: 300 }} />
         )}

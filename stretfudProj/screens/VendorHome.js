@@ -5,6 +5,7 @@ import LocationSetter from "../components/LocationSetter";
 import * as api from "../utils/api";
 import { withUserHOC } from "../components/UserContext";
 import { formatLocation } from "../utils/utils";
+import Loader from "../components/Loader";
 
 class VendorHome extends Component {
   state = {
@@ -12,7 +13,8 @@ class VendorHome extends Component {
     email: "joe@joesbugrers.com",
     openStatus: false,
     currentLocation: "",
-    openingTimes: ""
+    openingTimes: "",
+    isLoading: true
   };
 
   componentDidMount() {
@@ -21,7 +23,8 @@ class VendorHome extends Component {
         businessName: vendor.businessname,
         email: vendor.email,
         openStatus: vendor.open_status,
-        openingTimes: vendor.opening_times
+        openingTimes: vendor.opening_times,
+        isLoading: false
       });
     });
   }
@@ -66,8 +69,10 @@ class VendorHome extends Component {
       openStatus,
       currentLocation,
       email,
-      openingTimes
+      openingTimes,
+      isLoading
     } = this.state;
+    if (isLoading) return <Loader />;
     return (
       <View style={styles.container}>
         <Text>username: {username}</Text>
