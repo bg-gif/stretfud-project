@@ -18,3 +18,11 @@ exports.updateVendorInfo = ({ username, location, open_status, menu }) => {
       console.log(err, "<<< error");
     });
 };
+
+exports.fetchVendorsByLocation = (lat, long) => {
+  return axios
+    .get(`${base_URL}/vendors?=${lat},${long}`)
+    .then(({ data: { vendors } }) => {
+      return vendors;
+    });
+};

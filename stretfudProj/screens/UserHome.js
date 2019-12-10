@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { StyleSheet, Text, View, Button } from "react-native";
 import SignOut from "./SignOut";
 import { withUserHOC } from "../components/UserContext";
+import Map from "../components/Map";
 
 class UserHome extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -13,9 +14,11 @@ class UserHome extends Component {
       headerTitleStyle: { fontWeight: "bold" }
     };
   };
+
   render() {
     return (
       <View style={styles.container}>
+        <Map navigation={this.props.navigation} />
         <Text>User Home Page</Text>
         <SignOut navigation={this.props.navigation} />
         <Button

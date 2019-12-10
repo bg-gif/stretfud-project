@@ -41,7 +41,6 @@ class VendorHome extends Component {
   };
 
   handleLocation = ({ location }) => {
-    console.log(location);
     this.setState({ currentLocation: location });
   };
 
