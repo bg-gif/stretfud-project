@@ -6,6 +6,7 @@ import * as api from "../utils/api";
 import { withUserHOC } from "../components/UserContext";
 import { formatLocation } from "../utils/utils";
 import Loader from "../components/Loader";
+import ErrorAlerter from "../components/ErrorAlerter";
 
 class VendorHome extends Component {
   state = {
@@ -40,12 +41,13 @@ class VendorHome extends Component {
       })
       .then(updatedVendor => {
         this.setState({ openStatus: updatedVendor.open_status });
+      })
+      .catch(err => {
+        ErrorAlerter("Open Status could not be updated");
       });
   };
 
   handleLocation = ({ location }) => {
-    //const newLoaction = formatLocation(location);
-
     api
       .updateVendorInfo({
         username: this.props.user.username,
@@ -55,6 +57,9 @@ class VendorHome extends Component {
         this.setState({
           currentLocation: updatedVendor.location
         });
+      })
+      .catch(err => {
+        ErrorAlerter("Location could not be updated");
       });
   };
 
@@ -72,6 +77,7 @@ class VendorHome extends Component {
       openingTimes,
       isLoading
     } = this.state;
+
     if (isLoading) return <Loader />;
     return (
       <View style={styles.container}>

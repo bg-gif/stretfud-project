@@ -9,7 +9,7 @@ import {
 import * as api from "../utils/api";
 import InputAdder from "../components/InputAdder";
 import Loader from "../components/Loader";
-// import { TouchableOpacity } from 'react-native-gesture-handler';
+import ErrorAlerter from "../components/ErrorAlerter";
 
 class Menu extends Component {
   state = {
@@ -35,6 +35,9 @@ class Menu extends Component {
       })
       .then(vendor => {
         this.setState({ menu: vendor.menu });
+      })
+      .catch(err => {
+        ErrorAlerter("Menu could not be updated");
       });
   };
 

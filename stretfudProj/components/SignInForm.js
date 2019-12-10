@@ -4,16 +4,17 @@ import InputAdder from "./InputAdder";
 import * as Crypto from "expo-crypto";
 import UserContext, { UserProvider } from "./UserContext";
 import * as api from "../utils/api";
+import ErrorAlerter from "./ErrorAlerter";
 
 class SignInForm extends React.Component {
   state = {
     username: "",
     password: "",
-    errorMsg: false
+    isEmpty: false
   };
 
   handleTextChange = (value, key) => {
-    this.setState({ [key]: value, errorMsg: false });
+    this.setState({ [key]: value, isEmpty: false });
   };
 
   handlePress = () => {
@@ -21,8 +22,8 @@ class SignInForm extends React.Component {
     const { username, password } = this.state;
     const destination =
       signInType === "user" ? "UserHomePage" : "VendorHomePage";
-    if (!username) {
-      return this.setState({ errorMsg: true });
+    if (!username || !password) {
+      return this.setState({ isEmpty: true });
     }
     Crypto.digestStringAsync("SHA-1", password).then(hashedPassword => {
       UserContext.username = username;
@@ -34,13 +35,13 @@ class SignInForm extends React.Component {
           }
         })
         .catch(err => {
-          this.setState({ errorMsg: true });
+          ErrorAlerter("Username or Password is incorrect");
         });
     });
   };
 
   render() {
-    const { username, password, errorMsg } = this.state;
+    const { username, password, isEmpty } = this.state;
     return (
       <UserProvider value={username}>
         <View>
@@ -54,7 +55,7 @@ class SignInForm extends React.Component {
             handleTextChange={this.handleTextChange}
             value={password}
           />
-          {errorMsg && <Text>Username or Password InCorrect</Text>}
+          {isEmpty && <Text>Please input Username or Password</Text>}
           <TouchableOpacity onPress={this.handlePress}>
             <Text>sign in</Text>
           </TouchableOpacity>
