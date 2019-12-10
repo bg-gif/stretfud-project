@@ -14,19 +14,33 @@ exports.fetchUserById = username => {
 exports.postUserMod = user => {
   return connection('users')
     .insert(user)
-    .returning('username', 'realname', 'phone_num', 'email', 'age')
+    .returning('*')
     .then(([user]) => {
-      return user;
+      const { username, realname, phone_num, email, age, created_at } = user;
+      return { username, realname, phone_num, email, age, created_at };
     });
+};
+
+exports.fetchUserInfo = username => {
+  return connection('users')
+    .select('username', 'password')
+    .where({ username });
 };
 
 exports.updateUserByUsername = (username, update) => {
   const { phone_num, email } = update;
+  if (!email && !phone_num) {
+    return Promise.reject({ status: 400, msg: 'Bad Request' });
+  }
   return connection('users')
     .where({ username })
     .modify(query => {
       if (phone_num) query.update({ phone_num });
       if (email) query.update({ email });
     })
-    .returning('*');
+    .returning('*')
+    .then(([user]) => {
+      const { username, realname, phone_num, email, age } = user;
+      return { username, realname, phone_num, email, age };
+    });
 };

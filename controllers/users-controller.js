@@ -26,11 +26,7 @@ exports.patchUserByUsername = (req, res, next) => {
   const username = req.params.username;
   const update = req.body;
   updateUserByUsername(username, update)
-    .then(([user]) => {
-      const { email, phone_num } = req.body;
-      if (!email && !phone_num) {
-        return Promise.reject({ status: 400, msg: 'Bad Request' });
-      }
+    .then(user => {
       res.status(200).send({ user });
     })
     .catch(next);

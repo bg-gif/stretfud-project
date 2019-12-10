@@ -3,9 +3,9 @@ const {
   fetchVendorByUsername,
   sendVendor,
   patchVendor
-} = require("../models/vendors-model");
+} = require('../models/vendors-model');
 
-const { filterVendors } = require("../utils/utils");
+const { filterVendors } = require('../utils/utils');
 
 exports.getVendors = (req, res, next) => {
   let location = req.query.location;
@@ -40,8 +40,8 @@ exports.getVendorByUsername = (req, res, next) => {
 exports.postVendor = (req, res, next) => {
   let vendor = req.body;
   sendVendor(vendor)
-    .then(([vendor]) => {
-      res.status(201).send({ vendor });
+    .then(response => {
+      res.status(201).send({ vendor: response });
     })
     .catch(next);
 };
@@ -50,12 +50,8 @@ exports.patchVendor = (req, res, next) => {
   let update = req.body;
   let username = req.params.username;
   patchVendor(update, username)
-    .then(([vendor]) => {
-      const { location, open_status, menu } = req.body;
-      if (!location && !open_status && !menu) {
-        return Promise.reject({ status: 400, msg: "Bad Request" });
-      }
-      res.status(200).send({ vendor });
+    .then(response => {
+      res.status(200).send({ vendor: response });
     })
     .catch(next);
 };
