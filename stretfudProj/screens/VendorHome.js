@@ -7,15 +7,6 @@ import * as api from "../utils/utils";
 import { withUserHOC } from "../components/UserContext";
 
 class VendorHome extends Component {
-  static navigationOptions = ({ navigation }) => {
-    return {
-      headerRight: () => <SignOut navigation={navigation} />,
-      title: "Home",
-      headerStyle: { backgroundColor: "#f56111" },
-      headerTintColor: "#fff",
-      headerTitleStyle: { fontWeight: "bold" }
-    };
-  };
   state = {
     businessName: "Joes Burgers",
     email: "joe@joesbugrers.com",
@@ -37,9 +28,16 @@ class VendorHome extends Component {
   }
 
   handleStatus = () => {
-    this.setState(currentState => {
-      return { openStatus: !currentState.openStatus };
-    });
+    api
+      .updateVendorInfo({
+        username: this.props.user.username,
+        open_status: !this.state.openStatus
+      })
+      .then(updatedVendor => {
+        this.setState(() => {
+          return { openStatus: updatedVendor.open_status };
+        });
+      });
   };
 
   handleLocation = ({ location }) => {
@@ -48,10 +46,10 @@ class VendorHome extends Component {
   };
 
   render() {
-    const {
-      navigation,
-      user: { username }
-    } = this.props;
+    // const {
+    //   navigation,
+    //   user: { username }
+    // } = this.props;
 
     const {
       businessName,
@@ -62,7 +60,7 @@ class VendorHome extends Component {
     } = this.state;
     return (
       <View style={styles.container}>
-        <Text>username: {username}</Text>
+        <Text>username: {this.props.user.username}</Text>
         <Text>{businessName}</Text>
         <Text>{email}</Text>
         <Text>{openingTimes}</Text>
@@ -79,7 +77,7 @@ class VendorHome extends Component {
             padding: 10
           }}
           onPress={() => {
-            navigation.navigate("Menu");
+            this.props.navigation.navigate("Menu");
           }}
         >
           <Text>Edit Menu</Text>

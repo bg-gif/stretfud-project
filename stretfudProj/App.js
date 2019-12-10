@@ -7,9 +7,9 @@ import UserContext, { UserProvider } from "./components/UserContext";
 
 const RootSwitch = createSwitchNavigator(
   {
-    SignIn: { screen: SignIn },
-    UserHomePage: { screen: UserStack },
-    VendorHomePage: { screen: VendorStack, params: { paramName: "test" } }
+    SignIn: SignIn,
+    UserHomePage: UserStack,
+    VendorHomePage: VendorStack
   },
   {
     initialRouteName: "SignIn",

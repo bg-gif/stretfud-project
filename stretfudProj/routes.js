@@ -1,16 +1,42 @@
+import React from "react";
 import { createStackNavigator } from "react-navigation-stack";
 
 import UserHome from "./screens/UserHome";
 import SingleVendor from "./screens/SingleVendor";
 import VendorHome from "./screens/VendorHome";
 import Menu from "./screens/Menu";
+import SignOut from "./screens/SignOut";
 
-export const UserStack = createStackNavigator({
-  Home: UserHome,
-  SingleVendor
-});
+export const UserStack = createStackNavigator(
+  {
+    Home: UserHome,
+    SingleVendor
+  },
+  {
+    defaultNavigationOptions: ({ navigation }) => {
+      return {
+        headerRight: () => <SignOut navigation={navigation} />,
+        headerStyle: { backgroundColor: "#f56111" },
+        headerTintColor: "#fff",
+        headerTitleStyle: { fontWeight: "bold" }
+      };
+    }
+  }
+);
 
-export const VendorStack = createStackNavigator({
-  Home: VendorHome,
-  Menu
-});
+export const VendorStack = createStackNavigator(
+  {
+    Home: VendorHome,
+    Menu
+  },
+  {
+    defaultNavigationOptions: ({ navigation }) => {
+      return {
+        headerRight: () => <SignOut navigation={navigation} />,
+        headerStyle: { backgroundColor: "#f56111" },
+        headerTintColor: "#fff",
+        headerTitleStyle: { fontWeight: "bold" }
+      };
+    }
+  }
+);

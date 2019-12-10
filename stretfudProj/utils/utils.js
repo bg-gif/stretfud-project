@@ -6,3 +6,15 @@ exports.fetchVendor = username => {
     return data.vendor;
   });
 };
+
+exports.updateVendorInfo = ({ username, location, open_status, menu }) => {
+  return axios
+    .patch(`${base_URL}/vendors/${username}`, { open_status })
+    .then(({ data }) => {
+      console.log(data.vendor);
+      return data.vendor;
+    })
+    .catch(err => {
+      console.log(err, "<<< error");
+    });
+};
