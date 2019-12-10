@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import SignOut from './SignOut';
 import StatusSetter from '../components/StatusSetter';
 import LocationSetter from '../components/LocationSetter';
-import * as api from '../utils/utils';
+import * as api from '../utils/api';
 import { withUserHOC } from '../components/UserContext';
+import { formatLocation } from '../utils/utils';
 
 class VendorHome extends Component {
   state = {
@@ -28,10 +28,13 @@ class VendorHome extends Component {
   }
 
   handleStatus = () => {
+    let strStatus = !this.state.openStatus;
+    strStatus = strStatus.toString();
+
     api
       .updateVendorInfo({
         username: this.props.user.username,
-        open_status: !this.state.openStatus
+        open_status: strStatus
       })
       .then(updatedVendor => {
         this.setState({ openStatus: updatedVendor.open_status });
@@ -39,8 +42,18 @@ class VendorHome extends Component {
   };
 
   handleLocation = ({ location }) => {
-    console.log(location);
-    this.setState({ currentLocation: location });
+    //const newLoaction = formatLocation(location);
+
+    api
+      .updateVendorInfo({
+        username: this.props.user.username,
+        location: formatLocation(location)
+      })
+      .then(updatedVendor => {
+        this.setState({
+          currentLocation: updatedVendor.location
+        });
+      });
   };
 
   render() {
@@ -62,6 +75,7 @@ class VendorHome extends Component {
         <Text>{businessName}</Text>
         <Text>{email}</Text>
         <Text>{openingTimes}</Text>
+        <Text>{currentLocation}</Text>
         <StatusSetter
           handleStatus={this.handleStatus}
           openStatus={openStatus}
