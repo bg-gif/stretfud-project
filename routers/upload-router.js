@@ -1,6 +1,7 @@
 const fs = require('fs');
 const AWS = require('aws-sdk');
-const { SECRET, ID, BUCKET_NAME } = require('../private/config');
+
+const { S3_SECRET, S3_KEY, S3_BUCKET_NAME } = process.env;
 
 const s3 = new AWS.S3({
   accessKeyId: ID,
@@ -8,7 +9,7 @@ const s3 = new AWS.S3({
 });
 
 const uploadFile = filename => {
-  const fileContent = fs.readFileSync('private/file.jpg');
+  const fileContent = fs.readFileSync('');
   const params = {
     Bucket: BUCKET_NAME,
     Key: 'test.jpg',
