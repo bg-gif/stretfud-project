@@ -5,29 +5,14 @@ import { withUserHOC } from "../components/UserContext";
 import Map from "../components/Map";
 
 class UserHome extends Component {
-  static navigationOptions = ({ navigation }) => {
-    return {
-      headerRight: () => <SignOut navigation={navigation} />,
-      title: "Home",
-      headerStyle: { backgroundColor: "#f56111" },
-      headerTintColor: "#fff",
-      headerTitleStyle: { fontWeight: "bold" }
-    };
-  };
-
   render() {
     return (
       <View style={styles.container}>
         <Map navigation={this.props.navigation} />
-        <Text>User Home Page</Text>
-        <SignOut navigation={this.props.navigation} />
-        <View style={styles.map}>
-          <Text>This is map</Text>
-        </View>
         <Button
           title="See Vendor"
           onPress={() => {
-            this.props.navigation.navigate('SingleVendor');
+            this.props.navigation.navigate("SingleVendor");
           }}
         />
       </View>
@@ -38,16 +23,9 @@ class UserHome extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  map: {
-    borderStyle: 'solid',
-    borderColor: 'green',
-    borderWidth: 1,
-    height: 100,
-    width: 100
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center"
   }
 });
 
