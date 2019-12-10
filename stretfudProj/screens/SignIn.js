@@ -25,7 +25,6 @@ class SignIn extends React.Component {
   };
 
   render() {
-    console.log(this.props, "<<< in SignIn");
     return (
       <View style={styles.container}>
         <Text>This is sign in page</Text>

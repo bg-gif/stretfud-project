@@ -21,12 +21,19 @@ class VendorHome extends Component {
     email: "joe@joesbugrers.com",
     openStatus: false,
     currentLocation: "",
-
+    openingTimes: "",
     menu: "www.joesmenu.com"
   };
 
   componentDidMount() {
-    api.fetchVendor();
+    api.fetchVendor(this.props.user.username).then(vendor => {
+      this.setState({
+        businessName: vendor.businessname,
+        email: vendor.email,
+        openStatus: vendor.open_status,
+        openingTimes: vendor.opening_times
+      });
+    });
   }
 
   handleStatus = () => {
@@ -41,20 +48,24 @@ class VendorHome extends Component {
   };
 
   render() {
-    //const { params } = this.props.navigation.state;
-    console.dir(this.props.user.username);
-    //console.log(this.props.navigation.state.params);
     const {
       navigation,
       user: { username }
     } = this.props;
 
-    const { businessName, openStatus, currentLocation, email } = this.state;
+    const {
+      businessName,
+      openStatus,
+      currentLocation,
+      email,
+      openingTimes
+    } = this.state;
     return (
       <View style={styles.container}>
         <Text>username: {username}</Text>
         <Text>{businessName}</Text>
         <Text>{email}</Text>
+        <Text>{openingTimes}</Text>
         <StatusSetter
           handleStatus={this.handleStatus}
           openStatus={openStatus}
@@ -68,7 +79,7 @@ class VendorHome extends Component {
             padding: 10
           }}
           onPress={() => {
-            this.props.navigation.navigate("Menu");
+            navigation.navigate("Menu");
           }}
         >
           <Text>Edit Menu</Text>
