@@ -15,11 +15,8 @@
     "expo-crypto": "~7.0.0",
     "expo-location": "~7.0.0",
     "expo-permissions": "~7.0.0",
-<<<<<<< HEAD
     "geolib": "^3.1.0",
-=======
     "jest": "^24.9.0",
->>>>>>> b62b4559c352be5b3c45a8c92b03544164a2716d
     "react": "16.8.3",
     "react-dom": "16.8.3",
     "react-native": "https://github.com/expo/react-native/archive/sdk-35.0.0.tar.gz",
