@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Platform,
   Text,
@@ -6,16 +6,15 @@ import {
   Button,
   TouchableOpacity,
   StyleSheet
-} from "react-native";
-import Constants from "expo-constants";
-import * as Location from "expo-location";
-import * as Permissions from "expo-permissions";
+} from 'react-native';
+import * as Location from 'expo-location';
+import * as Permissions from 'expo-permissions';
 
 const LocationSetter = ({ handleLocation }) => {
   const handlePress = async () => {
     let { status } = await Permissions.askAsync(Permissions.LOCATION);
-    if (status !== "granted") {
-      handleLocation({ errorMsg: "Permission was denied" });
+    if (status !== 'granted') {
+      handleLocation({ errorMsg: 'Permission was denied' });
     } else {
       let location = await Location.getCurrentPositionAsync({});
       handleLocation({
@@ -39,12 +38,16 @@ export default LocationSetter;
 
 const styles = StyleSheet.create({
   locationButton: {
-    alignItems: "center",
-    backgroundColor: "rgba(175, 15, 103, 1)",
-    color: "rgba(198, 197, 185, 1)",
+    alignItems: 'center',
+    backgroundColor: 'rgba(112, 150, 36, 1)',
+    color: 'rgba(198, 197, 185, 1)',
     width: 200,
     padding: 10,
     borderRadius: 5
   },
-  buttonText: { color: "rgba(198, 197, 185, 1)" }
+  buttonText: {
+    color: 'rgba(198, 197, 185, 1)',
+    fontSize: 20,
+    fontFamily: 'BebasNeue-Regular'
+  }
 });
