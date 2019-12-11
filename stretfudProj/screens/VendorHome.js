@@ -80,42 +80,91 @@ class VendorHome extends Component {
 
     if (isLoading) return <Loader />;
     return (
-      <View style={styles.container}>
-        <Text>username: {username}</Text>
-        <Text>{businessName}</Text>
-        <Text>{email}</Text>
-        <Text>{openingTimes}</Text>
-        <Text>{currentLocation}</Text>
-        <StatusSetter
-          handleStatus={this.handleStatus}
-          openStatus={openStatus}
-        />
-        <LocationSetter handleLocation={this.handleLocation} />
-        {currentLocation !== "" && <Text>New Location Set!</Text>}
-        <TouchableOpacity
-          style={{
-            alignItems: "center",
-            backgroundColor: "#dddddd",
-            padding: 10
-          }}
-          onPress={() => {
-            navigation.navigate("Menu", username);
-          }}
-        >
-          <Text>View/Edit Menu</Text>
-        </TouchableOpacity>
+      <View style={styles.venderHomePage}>
+        <View style={styles.vendorInfo}>
+          <View style={styles.vendorDetails}>
+            <Text style={styles.detailText}>username: {username}</Text>
+            <Text style={styles.detailText}>{businessName}</Text>
+            <Text style={styles.detailText}>{email}</Text>
+            <Text style={styles.detailText}>{openingTimes}</Text>
+          </View>
+
+          <Text>{currentLocation}</Text>
+          <View style={styles.openStatusContainer}>
+            <StatusSetter
+              handleStatus={this.handleStatus}
+              openStatus={openStatus}
+            />
+          </View>
+        </View>
+        <View style={styles.vendorButtonsContainer}>
+          <LocationSetter handleLocation={this.handleLocation} />
+          {currentLocation !== "" && <Text>New Location Set!</Text>}
+          <TouchableOpacity
+            style={styles.editMenuButton}
+            onPress={() => {
+              navigation.navigate("Menu", username);
+            }}
+          >
+            <Text style={styles.buttonText}>View/Edit Menu</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
+  venderHomePage: {
     flex: 1,
-    backgroundColor: "#fff",
+    flexDirection: "column",
+    backgroundColor: "rgb(243, 202, 203)"
+  },
+  vendorInfo: {
+    flex: 1,
+    flexDirection: "row",
+    padding: 10
+  },
+  vendorDetails: {
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "space-around",
+    borderWidth: 2,
+    borderColor: "rgba(175, 15, 103, 1)",
+    borderRadius: 25,
     alignItems: "center",
-    justifyContent: "center"
+    backgroundColor: "rgba(198, 197, 185, 1)"
+  },
+  detailText: {
+    color: "rgba(175, 15, 103, 1)"
+  },
+  openStatusContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  buttonText: { color: "rgba(198, 197, 185, 1)" },
+  vendorButtonsContainer: {
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "space-around",
+    alignItems: "center"
+  },
+  editMenuButton: {
+    alignItems: "center",
+    backgroundColor: "rgba(175, 15, 103, 1)",
+    color: "rgba(198, 197, 185, 1)",
+    width: 200,
+    padding: 10,
+    borderRadius: 5
   }
+
+  // container: {
+  //   flex: 1,
+  //   backgroundColor: "#fff",
+  //   alignItems: "center",
+  //   justifyContent: "center"
+  // }
 });
 
 export default withUserHOC(VendorHome);
