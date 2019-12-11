@@ -1,13 +1,13 @@
-import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import InputAdder from "./InputAdder";
-import * as Crypto from "expo-crypto";
-import UserContext, { UserProvider } from "./UserContext";
+import React from 'react';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import InputAdder from './InputAdder';
+import * as Crypto from 'expo-crypto';
+import UserContext, { UserProvider } from './UserContext';
 
 class SignInForm extends React.Component {
   state = {
-    username: "",
-    password: "",
+    username: '',
+    password: '',
     errorMsg: false
   };
 
@@ -19,12 +19,12 @@ class SignInForm extends React.Component {
     const { signInType, navigation } = this.props;
     const { username, password } = this.state;
     const destination =
-      signInType === "user" ? "UserHomePage" : "VendorHomePage";
+      signInType === 'user' ? 'UserHomePage' : 'VendorHomePage';
     if (!username) {
       return this.setState({ errorMsg: true });
     }
-    Crypto.digestStringAsync("SHA-1", password).then(response => {
-      // console.log(response); // will need to send hashed password to backend and await validation response
+    Crypto.digestStringAsync('SHA-1', password).then(response => {
+      console.log(response); // will need to send hashed password to backend and await validation response
       UserContext.username = username;
       navigation.navigate(destination);
     });
@@ -58,29 +58,29 @@ class SignInForm extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: "column",
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center"
+    flexDirection: 'column',
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   picker: {
     height: 88,
     width: 100,
     borderWidth: 1,
-    borderColor: "black",
+    borderColor: 'black',
     borderRadius: 25
   },
   pickerItem: { height: 88 },
   TextInput: {
     height: 40,
     width: 200,
-    borderColor: "gray",
+    borderColor: 'gray',
     borderWidth: 1
   },
   badText: {
     height: 40,
     width: 200,
-    borderColor: "red",
+    borderColor: 'red',
     borderWidth: 1
   }
 });
