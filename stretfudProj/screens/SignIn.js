@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Picker, Image } from 'react-native';
 import SignInForm from '../components/SignInForm';
 import { UserConsumer } from '../components/UserContext';
 import { withUserHOC } from '../components/UserContext';
+import * as Font from 'expo-font';
 
 class SignIn extends React.Component {
   static contextType = UserConsumer;
@@ -13,11 +14,16 @@ class SignIn extends React.Component {
   state = {
     signInType: '',
     textValue: '',
-    errorMsg: false
+    errorMsg: false,
+    fontLoad: false
   };
 
   componentDidMount() {
-    this.setState({ signInType: 'user' });
+    Font.loadAsync({
+      'BebasNeue-Regular': require('../assets/fonts/BebasNeue-Regular.ttf')
+    }).then(() => {
+      this.setState({ signInType: 'user', fontLoad: true });
+    });
   }
 
   handleChange = itemValue => {
@@ -25,6 +31,7 @@ class SignIn extends React.Component {
   };
 
   render() {
+    if (!this.state.fontLoad) return <Text>Loading</Text>;
     return (
       <View style={styles.container}>
         <View style={styles.logoView}>
@@ -32,7 +39,7 @@ class SignIn extends React.Component {
             source={require('../assets/stretfud-logo.png')}
             style={styles.logo}
           />
-          <Text style={styles.header}>StretFud</Text>
+          <Text style={styles.header}>StrētFüd</Text>
         </View>
         <Picker
           selectedValue={this.state.signInType}
@@ -61,14 +68,14 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around'
   },
   picker: {
-    height: 88,
+    height: 75,
     width: 200,
     borderWidth: 1,
     borderColor: 'black',
     borderRadius: 25,
     backgroundColor: 'rgba(198, 197, 185, 1)'
   },
-  pickerItem: { height: 88 },
+  pickerItem: { height: 75, fontFamily: 'BebasNeue-Regular' },
   TextInput: {
     height: 40,
     width: 200,
@@ -90,14 +97,15 @@ const styles = StyleSheet.create({
   },
   header: {
     color: 'rgba(198, 197, 185, 1)',
-    fontSize: 50
+    fontSize: 50,
+    fontFamily: 'BebasNeue-Regular'
   },
   logoView: {
-    flex: 1,
+    flex: 0.5,
     flexDirection: 'column',
     backgroundColor: 'rgba(112, 150, 36, 1)',
     alignItems: 'center',
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-end'
   }
 });
 

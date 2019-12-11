@@ -44,7 +44,7 @@ class SignInForm extends React.Component {
     const { username, password, isEmpty } = this.state;
     return (
       <UserProvider value={username}>
-        <View>
+        <View style={styles.container}>
           <InputAdder
             name="username"
             handleTextChange={this.handleTextChange}
@@ -55,9 +55,16 @@ class SignInForm extends React.Component {
             handleTextChange={this.handleTextChange}
             value={password}
           />
-          {isEmpty && <Text>Please input Username or Password</Text>}
-          <TouchableOpacity onPress={this.handlePress}>
-            <Text>sign in</Text>
+          {isEmpty && (
+            <Text style={styles.missingTextWarning}>
+              Please input Username or Password
+            </Text>
+          )}
+          <TouchableOpacity
+            style={styles.signInButton}
+            onPress={this.handlePress}
+          >
+            <Text style={styles.buttonContent}>sign in</Text>
           </TouchableOpacity>
         </View>
       </UserProvider>
@@ -67,31 +74,27 @@ class SignInForm extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 0.4,
     flexDirection: 'column',
-    backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'space-around'
   },
-  picker: {
-    height: 88,
+  signInButton: {
+    alignItems: 'center',
     width: 100,
-    borderWidth: 1,
-    borderColor: 'black',
-    borderRadius: 25
+    padding: 10,
+    backgroundColor: 'rgba(175, 15, 103, 1)',
+    borderRadius: 5
   },
-  pickerItem: { height: 88 },
-  TextInput: {
-    height: 40,
-    width: 200,
-    borderColor: 'gray',
-    borderWidth: 1
+  buttonContent: {
+    fontFamily: 'BebasNeue-Regular',
+    fontSize: 20,
+    color: 'rgba(198, 197, 185, 1)'
   },
-  badText: {
-    height: 40,
-    width: 200,
-    borderColor: 'red',
-    borderWidth: 1
+  missingTextWarning: {
+    fontFamily: 'BebasNeue-Regular',
+    fontSize: 20,
+    color: 'rgba(198, 197, 185, 1)'
   }
 });
 
