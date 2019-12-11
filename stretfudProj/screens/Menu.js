@@ -1,71 +1,74 @@
 import React, { Component } from "react";
-import {
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  Image,
-  ScrollView
-} from "react-native";
+import { StyleSheet, Text, TouchableOpacity, Image, View } from "react-native";
 import * as api from "../utils/api";
 import InputAdder from "../components/InputAdder";
 import Loader from "../components/Loader";
 import ErrorAlerter from "../components/ErrorAlerter";
+import VendorMenuCard from "../components/VendorMenuCard";
 
 class Menu extends Component {
   state = {
-    menu: "",
+    menuItems: [
+      {
+        item: "Beef Steak",
+        price: 13,
+        description: "a steak of beef",
+        available: true
+      },
+      {
+        item: "Cauliflower Steak",
+        price: 10,
+        description: "a steak of cauliflower",
+        available: true,
+        vegetarian: true,
+        vegan: true
+      },
+      {
+        item: "Chicken Steak",
+        price: 11.5,
+        description: "a steak of chicken",
+        available: true,
+        glutenFree: true
+      }
+    ],
     isLoading: true
   };
 
-  componentDidMount() {
-    api.fetchVendor(this.props.navigation.state.params).then(vendor => {
-      this.setState({ menu: vendor.menu, isLoading: false });
-    });
-  }
-
-  handleTextChange = value => {
-    this.setState({ menu: value });
-  };
-
-  handleUpdate = () => {
-    api
-      .updateVendorInfo({
-        username: this.props.navigation.state.params,
-        menu: this.state.menu
-      })
-      .then(vendor => {
-        this.setState({ menu: vendor.menu });
-      })
-      .catch(err => {
-        ErrorAlerter("Menu could not be updated");
-      });
+  handleSwitch = name => {
+    const updatedMenu = this.state.menuItems.map(
+      ({ item, available, ...rest }) => {
+        if (item === name) available = !available;
+        return { item, available, ...rest };
+      }
+    );
+    this.setState({ menuItems: updatedMenu });
   };
 
   render() {
-    const { menu, isLoading } = this.state;
-    if (isLoading) return <Loader />;
+    const { menuItems, isLoading } = this.state;
+    //if (isLoading) return <Loader />;
+    console.log(this.props.navigation.state.params.username);
     return (
-      <ScrollView>
-        {menu !== "" && (
-          <Image source={{ uri: menu }} style={{ width: 300, height: 300 }} />
-        )}
-        <InputAdder
-          name="Menu URL"
-          value={menu}
-          handleTextChange={this.handleTextChange}
-        />
-        <TouchableOpacity onPress={this.handleUpdate}>
-          <Text>Update Menu</Text>
-        </TouchableOpacity>
-      </ScrollView>
+      <View style={styles.menuPageContainer}>
+        <Text>Menu Items</Text>
+        {menuItems.map(item => {
+          return (
+            <VendorMenuCard
+              key={item.item}
+              menuItem={item}
+              handleSwitch={this.handleSwitch}
+            />
+          );
+        })}
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
+  menuPageContainer: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "rgb(243, 202, 203)",
     alignItems: "center",
     justifyContent: "center"
   }
