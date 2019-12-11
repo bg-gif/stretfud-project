@@ -5,7 +5,7 @@ import {
   View,
   Button,
   TouchableOpacity,
-  Stylesheet
+  StyleSheet
 } from "react-native";
 import Constants from "expo-constants";
 import * as Location from "expo-location";
@@ -28,11 +28,23 @@ const LocationSetter = ({ handleLocation }) => {
   };
   return (
     <View>
-      <TouchableOpacity onPress={handlePress}>
-        <Text>Update Location!</Text>
+      <TouchableOpacity style={styles.locationButton} onPress={handlePress}>
+        <Text style={styles.buttonText}>Update Location!</Text>
       </TouchableOpacity>
     </View>
   );
 };
 
 export default LocationSetter;
+
+const styles = StyleSheet.create({
+  locationButton: {
+    alignItems: "center",
+    backgroundColor: "rgba(175, 15, 103, 1)",
+    color: "rgba(198, 197, 185, 1)",
+    width: 200,
+    padding: 10,
+    borderRadius: 5
+  },
+  buttonText: { color: "rgba(198, 197, 185, 1)" }
+});
