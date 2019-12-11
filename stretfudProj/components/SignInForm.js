@@ -1,15 +1,15 @@
-import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import InputAdder from "./InputAdder";
-import * as Crypto from "expo-crypto";
-import UserContext, { UserProvider } from "./UserContext";
-import * as api from "../utils/api";
-import ErrorAlerter from "./ErrorAlerter";
+import React from 'react';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import InputAdder from './InputAdder';
+import * as Crypto from 'expo-crypto';
+import UserContext, { UserProvider } from './UserContext';
+import * as api from '../utils/api';
+import ErrorAlerter from './ErrorAlerter';
 
 class SignInForm extends React.Component {
   state = {
-    username: "",
-    password: "",
+    username: '',
+    password: '',
     isEmpty: false
   };
 
@@ -21,21 +21,21 @@ class SignInForm extends React.Component {
     const { signInType, navigation } = this.props;
     const { username, password } = this.state;
     const destination =
-      signInType === "user" ? "UserHomePage" : "VendorHomePage";
+      signInType === 'user' ? 'UserHomePage' : 'VendorHomePage';
     if (!username || !password) {
       return this.setState({ isEmpty: true });
     }
-    Crypto.digestStringAsync("SHA-1", password).then(hashedPassword => {
+    Crypto.digestStringAsync('SHA-1', password).then(hashedPassword => {
       UserContext.username = username;
       api
         .postLoginAuth({ username, password: hashedPassword }, signInType)
         .then(varification => {
-          if (varification.msg === "Verified") {
+          if (varification.msg === 'Verified') {
             navigation.navigate(destination);
           }
         })
         .catch(err => {
-          ErrorAlerter("Username or Password is incorrect");
+          ErrorAlerter('Username or Password is incorrect');
         });
     });
   };
@@ -68,29 +68,29 @@ class SignInForm extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: "column",
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center"
+    flexDirection: 'column',
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   picker: {
     height: 88,
     width: 100,
     borderWidth: 1,
-    borderColor: "black",
+    borderColor: 'black',
     borderRadius: 25
   },
   pickerItem: { height: 88 },
   TextInput: {
     height: 40,
     width: 200,
-    borderColor: "gray",
+    borderColor: 'gray',
     borderWidth: 1
   },
   badText: {
     height: 40,
     width: 200,
-    borderColor: "red",
+    borderColor: 'red',
     borderWidth: 1
   }
 });

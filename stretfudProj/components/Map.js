@@ -13,6 +13,8 @@ import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
 import { fetchVendorsByLocation } from "../utils/api";
 import ToggleSwitch from "toggle-switch-react-native";
+import Loader from "./Loader";
+import ErrorAlerter from "./ErrorAlerter";
 
 const geolib = require("geolib");
 
@@ -28,7 +30,7 @@ export default class App extends Component {
     errorMessage: null,
     long: null,
     lat: null,
-    loading: true,
+    isLoading: true,
     vendors: []
   };
 
@@ -58,7 +60,7 @@ export default class App extends Component {
         location,
         long: location.coords.longitude,
         lat: location.coords.latitude,
-        loading: false
+        isLoading: false
       },
       () => {
         const { long, lat } = this.state;
@@ -70,14 +72,14 @@ export default class App extends Component {
   };
 
   render() {
-    const { lat, long, vendors, loading } = this.state;
+    const { lat, long, vendors, isLoading } = this.state;
     const coordinates = {
       latitude: lat,
       longitude: long
     };
 
-    return loading ? (
-      <Text>Loading</Text>
+    return isLoading ? (
+      <Loader />
     ) : (
       <View style={styles.container}>
         <MapView
@@ -101,38 +103,40 @@ export default class App extends Component {
             // fillColor={"rgba(230,238,255,0.5)"}
             // onRegionChangeComplete={this.onRegionChangeComplete.bind(this)}
           />
-          {vendors.map(vendor => {
-            const coords = vendor.location.split(",");
-            const openStatus = vendor.open_status ? "Open" : "Closed";
-            const color = vendor.open_status ? "#008000" : "#d3d3d3";
-            return (
-              <Marker
-                key={vendor.username}
-                coordinate={{
-                  latitude: +coords[0],
-                  longitude: +coords[1]
-                }}
-                title={vendor.businessname}
-                description={vendor.cuisine}
-                pinColor={color}
-              >
-                <MapView.Callout
-                  onPress={() => {
-                    this.props.navigation.navigate("SingleVendor", { vendor });
-                  }}
-                >
-                  <TouchableHighlight underlayColor="#dddddd">
-                    <View>
-                      <Text>{vendor.businessname}</Text>
-                      <Text> {vendor.cuisine}</Text>
-                      <Text> {openStatus}</Text>
-                      <Text> {vendor.opening_times}</Text>
-                    </View>
-                  </TouchableHighlight>
-                </MapView.Callout>
-              </Marker>
-            );
-          })}
+          {vendors === undefined
+            ? ErrorAlerter("Could not find vendors")
+            : vendors.map(vendor => {
+                const coords = vendor.location.split(",");
+                const openStatus = vendor.open_status ? "Open" : "Closed";
+                return (
+                  <Marker
+                    key={vendor.username}
+                    coordinate={{
+                      latitude: +coords[0],
+                      longitude: +coords[1]
+                    }}
+                    title={vendor.businessname}
+                    description={vendor.cuisine}
+                  >
+                    <MapView.Callout
+                      onPress={() => {
+                        this.props.navigation.navigate("SingleVendor", {
+                          vendor
+                        });
+                      }}
+                    >
+                      <TouchableHighlight underlayColor="#dddddd">
+                        <View>
+                          <Text>{vendor.businessname}</Text>
+                          <Text> {vendor.cuisine}</Text>
+                          <Text> {openStatus}</Text>
+                          <Text> {vendor.opening_times}</Text>
+                        </View>
+                      </TouchableHighlight>
+                    </MapView.Callout>
+                  </Marker>
+                );
+              })}
           <Marker
             coordinate={{
               latitude: coordinates.latitude,
