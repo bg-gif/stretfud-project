@@ -4,7 +4,9 @@ const {
   getVendors,
   getVendorByUsername,
   postVendor,
-  patchVendor
+  patchVendor,
+  getVendorMenu,
+  patchVendorMenu
 } = require('../controllers/vendors-controller');
 
 vendorsRouter
@@ -17,6 +19,16 @@ vendorsRouter
   .route('/:username')
   .get(getVendorByUsername)
   .patch(patchVendor)
+  .all(handle405s);
+
+vendorsRouter
+  .route('/:username/menu')
+  .get(getVendorMenu)
+  .all(handle405s);
+
+vendorsRouter
+  .route('/:username/menu/:menu_item_id')
+  .patch(patchVendorMenu)
   .all(handle405s);
 
 module.exports = vendorsRouter;

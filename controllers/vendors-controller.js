@@ -2,14 +2,15 @@ const {
   fetchVendors,
   fetchVendorByUsername,
   sendVendor,
-  patchVendor
+  patchVendor,
+  fetchMenuItems,
+  updateMenuItem
 } = require('../models/vendors-model');
 
 const { filterVendors } = require('../utils/utils');
 
 exports.getVendors = (req, res, next) => {
   let location = req.query.location;
-
   fetchVendors()
     .then(vendors => {
       if (!location) {
@@ -52,6 +53,27 @@ exports.patchVendor = (req, res, next) => {
   patchVendor(update, username)
     .then(response => {
       res.status(200).send({ vendor: response });
+    })
+    .catch(next);
+};
+
+exports.getVendorMenu = (req, res, next) => {
+  let username = req.params.username;
+  fetchMenuItems(username)
+    .then(menu_items => {
+      res.status(200).send({ menu_items });
+    })
+    .catch(next);
+};
+
+exports.patchVendorMenu = (req, res, next) => {
+  let menuItem = req.params.menu_item_id;
+  let options = req.body;
+  updateMenuItem(menuItem, options)
+    .then(([menu_item]) => {
+      return menu_item
+        ? res.status(200).send({ menu_item })
+        : Promise.reject({ status: 404, msg: 'Not Found' });
     })
     .catch(next);
 };

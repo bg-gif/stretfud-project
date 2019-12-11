@@ -527,6 +527,252 @@ describe('server', () => {
             return Promise.all[promiseArr];
           });
         });
+        describe('/menu', () => {
+          describe('GET', () => {
+            it('status:200, returns menu items by username in an array with key of menu_items', () => {
+              return request
+                .get('/api/vendors/oppri/menu')
+                .expect(200)
+                .then(({ body: { menu_items } }) => {
+                  expect(menu_items).to.be.an('array');
+                  expect(menu_items[0]).to.contain.keys(
+                    'price',
+                    'description',
+                    'name'
+                  );
+                });
+            });
+            it('status:404, invalid username', () => {
+              it('status:404, for valid but non existent vendor_id', () => {
+                return request
+                  .get('/api/vendors/steve/menu')
+                  .expect(404)
+                  .then(res => {
+                    expect(res.body.msg).to.equal('Vendor Does Not Exist');
+                  });
+              });
+            });
+          });
+          describe('INVALID METHODS', () => {
+            it('status:405, responds with method not allowed', () => {
+              const methodArr = ['post', 'put', 'delete'];
+              const promiseArr = methodArr.map(method => {
+                return request[method]('/api/vendors/oppri/menu')
+                  .expect(405)
+                  .then(({ body: { msg } }) => {
+                    expect(msg).to.equal('Method not allowed');
+                  });
+              });
+              return Promise.all[promiseArr];
+            });
+          });
+          describe('/:menu_item_id', () => {
+            describe('PATCH', () => {
+              it('status:200, updates menu availability and returns updated item', () => {
+                return request
+                  .patch('/api/vendors/oppri/menu/1')
+                  .send({ available: true })
+                  .expect(200)
+                  .then(({ body: { menu_item } }) => {
+                    expect(menu_item.available).to.equal(true);
+                  });
+              });
+              it('status:404, returns Not Found if menu item does not exist', () => {
+                return request
+                  .patch('/api/vendors/oppri/menu/199')
+                  .send({ available: true })
+                  .expect(404)
+                  .then(({ body: { msg } }) => {
+                    expect(msg).to.equal('Not Found');
+                  });
+              });
+              it('status:400, invalid menu item value', () => {
+                return request
+                  .patch('/api/vendors/oppri/menu/bananas')
+                  .send({ available: true })
+                  .expect(400)
+                  .then(({ body: { msg } }) => {
+                    expect(msg).to.equal('Bad Request');
+                  });
+              });
+              it('status:400, returns bad request on bad body object', () => {
+                return request
+                  .patch('/api/vendors/oppri/menu/1')
+                  .send({ avaiable: true })
+                  .expect(400)
+                  .then(({ body: { msg } }) => {
+                    expect(msg).to.equal('Bad Request');
+                  });
+              });
+              it('status:400, returns bad request on bad body value', () => {
+                return request
+                  .patch('/api/vendors/oppri/menu/1')
+                  .send({ available: 'banans' })
+                  .expect(400)
+                  .then(({ body: { msg } }) => {
+                    expect(msg).to.equal('Bad Request');
+                  });
+              });
+              it('status:200, updates menu availability and returns updated item', () => {
+                return request
+                  .patch('/api/vendors/oppri/menu/1')
+                  .send({ price: 200 })
+                  .expect(200)
+                  .then(({ body: { menu_item } }) => {
+                    expect(menu_item.available).to.equal(true);
+                  });
+              });
+              it('status:400, returns bad request on bad body object', () => {
+                return request
+                  .patch('/api/vendors/oppri/menu/1')
+                  .send({ prie: 200 })
+                  .expect(400)
+                  .then(({ body: { msg } }) => {
+                    expect(msg).to.equal('Bad Request');
+                  });
+              });
+              it('status:400, returns bad request on bad body value', () => {
+                return request
+                  .patch('/api/vendors/oppri/menu/1')
+                  .send({ price: 'banans' })
+                  .expect(400)
+                  .then(({ body: { msg } }) => {
+                    expect(msg).to.equal('Bad Request');
+                  });
+              });
+              it('status:200, updates menu description and returns updated item', () => {
+                return request
+                  .patch('/api/vendors/oppri/menu/1')
+                  .send({ description: 'bananas' })
+                  .expect(200)
+                  .then(({ body: { menu_item } }) => {
+                    expect(menu_item.description).to.equal('bananas');
+                  });
+              });
+              it('status:400, returns bad request on bad body object', () => {
+                return request
+                  .patch('/api/vendors/oppri/menu/1')
+                  .send({ descrition: 'bananas' })
+                  .expect(400)
+                  .then(({ body: { msg } }) => {
+                    expect(msg).to.equal('Bad Request');
+                  });
+              });
+              it('status:200, updates menu allergens and returns updated item', () => {
+                return request
+                  .patch('/api/vendors/oppri/menu/1')
+                  .send({ allergens: 'nuts' })
+                  .expect(200)
+                  .then(({ body: { menu_item } }) => {
+                    expect(menu_item.allergens).to.equal('nuts');
+                  });
+              });
+              it('status:400, returns bad request on bad body object', () => {
+                return request
+                  .patch('/api/vendors/oppri/menu/1')
+                  .send({ allegens: 'nuts' })
+                  .expect(400)
+                  .then(({ body: { msg } }) => {
+                    expect(msg).to.equal('Bad Request');
+                  });
+              });
+              it('status:200, updates menu vegetarian status and returns updated item', () => {
+                return request
+                  .patch('/api/vendors/oppri/menu/1')
+                  .send({ vegetarian: true })
+                  .expect(200)
+                  .then(({ body: { menu_item } }) => {
+                    expect(menu_item.vegetarian).to.equal(true);
+                  });
+              });
+              it('status:400, returns bad request on bad body object', () => {
+                return request
+                  .patch('/api/vendors/oppri/menu/1')
+                  .send({ vegetrian: true })
+                  .expect(400)
+                  .then(({ body: { msg } }) => {
+                    expect(msg).to.equal('Bad Request');
+                  });
+              });
+              it('status:400, returns bad request on bad body value', () => {
+                return request
+                  .patch('/api/vendors/oppri/menu/1')
+                  .send({ available: 7 })
+                  .expect(400)
+                  .then(({ body: { msg } }) => {
+                    expect(msg).to.equal('Bad Request');
+                  });
+              });
+              it('status:200, updates menu vegan status and returns updated item', () => {
+                return request
+                  .patch('/api/vendors/oppri/menu/1')
+                  .send({ vegan: true })
+                  .expect(200)
+                  .then(({ body: { menu_item } }) => {
+                    expect(menu_item.vegan).to.equal(true);
+                  });
+              });
+              it('status:400, returns bad request on bad body object', () => {
+                return request
+                  .patch('/api/vendors/oppri/menu/1')
+                  .send({ vegn: true })
+                  .expect(400)
+                  .then(({ body: { msg } }) => {
+                    expect(msg).to.equal('Bad Request');
+                  });
+              });
+              it('status:400, returns bad request on bad body value', () => {
+                return request
+                  .patch('/api/vendors/oppri/menu/1')
+                  .send({ vegan: 7 })
+                  .expect(400)
+                  .then(({ body: { msg } }) => {
+                    expect(msg).to.equal('Bad Request');
+                  });
+              });
+              it('status:200, updates menu vegan status and returns updated item', () => {
+                return request
+                  .patch('/api/vendors/oppri/menu/1')
+                  .send({ gluten_free: true })
+                  .expect(200)
+                  .then(({ body: { menu_item } }) => {
+                    expect(menu_item.gluten_free).to.equal(true);
+                  });
+              });
+              it('status:400, returns bad request on bad body object', () => {
+                return request
+                  .patch('/api/vendors/oppri/menu/1')
+                  .send({ glten_free: true })
+                  .expect(400)
+                  .then(({ body: { msg } }) => {
+                    expect(msg).to.equal('Bad Request');
+                  });
+              });
+              it('status:400, returns bad request on bad body value', () => {
+                return request
+                  .patch('/api/vendors/oppri/menu/1')
+                  .send({ gluten_free: 7 })
+                  .expect(400)
+                  .then(({ body: { msg } }) => {
+                    expect(msg).to.equal('Bad Request');
+                  });
+              });
+            });
+            describe('INVALID METHODS', () => {
+              it('status:405, responds with method not allowed', () => {
+                const methodArr = ['post', 'put', 'delete'];
+                const promiseArr = methodArr.map(method => {
+                  return request[method]('/api/vendors/oppri/menu/1')
+                    .expect(405)
+                    .then(({ body: { msg } }) => {
+                      expect(msg).to.equal('Method not allowed');
+                    });
+                });
+                return Promise.all[promiseArr];
+              });
+            });
+          });
+        });
       });
     });
     describe('/login', () => {

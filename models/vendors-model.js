@@ -119,3 +119,44 @@ exports.fetchVendorInfo = username => {
     .select('username', 'password')
     .where({ username });
 };
+
+exports.fetchMenuItems = username => {
+  return connection('menu_items')
+    .select('*')
+    .where({ username });
+};
+
+exports.updateMenuItem = (menu_item_id, options) => {
+  const {
+    available,
+    price,
+    description,
+    allergens,
+    vegetarian,
+    vegan,
+    gluten_free
+  } = options;
+  if (
+    !available &&
+    !price &&
+    !description &&
+    !allergens &&
+    !vegetarian &&
+    !vegan &&
+    !gluten_free
+  ) {
+    return Promise.reject({ status: 400, msg: 'Bad Request' });
+  }
+  return connection('menu_items')
+    .where({ menu_item_id })
+    .modify(query => {
+      if (available) query.update({ available });
+      if (price) query.update({ price });
+      if (description) query.update({ description });
+      if (allergens) query.update({ allergens });
+      if (vegetarian) query.update({ vegetarian });
+      if (vegan) query.update({ vegan });
+      if (gluten_free) query.update({ gluten_free });
+    })
+    .returning('*');
+};

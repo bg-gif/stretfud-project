@@ -1,4 +1,4 @@
-const { usersData, vendorsData } = require('../data/index');
+const { usersData, vendorsData, menuItemsData } = require('../data/index');
 
 exports.seed = function(knex) {
   return knex.migrate
@@ -14,6 +14,12 @@ exports.seed = function(knex) {
       return knex
         .insert(vendorsData)
         .into('vendors')
+        .returning('*');
+    })
+    .then(() => {
+      return knex
+        .insert(menuItemsData)
+        .into('menu_items')
         .returning('*');
     });
 };
