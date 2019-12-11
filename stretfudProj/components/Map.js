@@ -31,7 +31,8 @@ export default class App extends Component {
     long: null,
     lat: null,
     isLoading: true,
-    vendors: []
+    vendors: [],
+    toggleVal: false
   };
 
   componentWillMount() {

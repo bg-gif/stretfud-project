@@ -24,13 +24,13 @@ class UserHome extends Component {
     const { toggleVal } = this.state;
     return (
       <View style={styles.container}>
-        <Map navigation={this.props.navigation} />
+        <Map navigation={this.props.navigation} toggleVal={toggleVal} />
         <Text>User Home Page</Text>
         <ToggleSwitch
           isOn={toggleVal}
           onColor="green"
           offColor="red"
-          label="Hide Closed"
+          label="Show Closed"
           labelStyle={{ color: "black", fontWeight: "900" }}
           size="large"
           onToggle={() =>
