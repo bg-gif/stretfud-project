@@ -1,52 +1,84 @@
-import React from "react";
-import { Text, TextInput, View, StyleSheet } from "react-native";
+import React from 'react';
+import {
+  Text,
+  TextInput,
+  View,
+  StyleSheet,
+  InputAccessoryView
+} from 'react-native';
 
 const InputAdder = ({ name, handleTextChange, value }) => {
   const handleChange = text => {
     handleTextChange(text, name);
   };
+  const inputAccessoryViewID = name;
 
   return (
-    <View>
-      <Text>{name}</Text>
+    <View style={styles.container}>
+      <Text style={styles.text}>{name}</Text>
       <TextInput
+        inputAccessoryViewID={inputAccessoryViewID}
         onChangeText={handleChange}
-        style={styles.TextInput}
-        secureTextEntry={name === "password"}
+        style={styles.inputBox}
+        secureTextEntry={name === 'password'}
         value={value}
       ></TextInput>
-      {/* {this.state.errorMsg && <Text>Please enter some deets</Text>} */}
+      <InputAccessoryView nativeID={inputAccessoryViewID}>
+        <View style={styles.keyboardView}>
+          <Text style={styles.inputAccessoryViewIDText}>{name}: </Text>
+          <TextInput
+            value={value}
+            secureTextEntry={name === 'password'}
+            style={styles.inputAccessoryViewIDValue}
+          ></TextInput>
+        </View>
+      </InputAccessoryView>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    flexDirection: "column",
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center"
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
-  picker: {
-    height: 88,
-    width: 100,
-    borderWidth: 1,
-    borderColor: "black",
-    borderRadius: 25
-  },
-  pickerItem: { height: 88 },
-  TextInput: {
+  inputBox: {
+    textAlign: 'center',
+    borderColor: 'transparent',
+    backgroundColor: 'rgba(198, 197, 185, 1)',
+    width: 250,
     height: 40,
-    width: 200,
-    borderColor: "gray",
-    borderWidth: 1
+    borderRadius: 25,
+    fontWeight: '400',
+    fontSize: 20
   },
-  badText: {
-    height: 40,
-    width: 200,
-    borderColor: "red",
-    borderWidth: 1
+  text: {
+    color: 'rgba(198, 197, 185, 1)',
+    fontSize: 20,
+    fontFamily: 'BebasNeue-Regular'
+  },
+  inputAccessoryViewIDText: {
+    fontWeight: '400',
+    fontSize: 20,
+    textAlign: 'center',
+    width: 150,
+    paddingTop: 10
+  },
+  inputAccessoryViewIDValue: {
+    fontWeight: '400',
+    fontSize: 20,
+    textAlign: 'center',
+    width: 150,
+    paddingTop: 10,
+    textAlign: 'left'
+  },
+  keyboardView: {
+    flex: 0.5,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(198, 197, 185, 1)',
+    height: 40
   }
 });
 
