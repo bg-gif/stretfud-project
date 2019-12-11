@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   Platform,
   StyleSheet,
@@ -6,23 +6,23 @@ import {
   View,
   Dimensions,
   TouchableHighlight
-} from "react-native";
-import MapView, { Marker } from "react-native-maps";
-import Constants from "expo-constants";
-import * as Location from "expo-location";
-import * as Permissions from "expo-permissions";
-import { fetchVendorsByLocation } from "../utils/api";
-import ToggleSwitch from "toggle-switch-react-native";
-import Loader from "./Loader";
-import ErrorAlerter from "./ErrorAlerter";
+} from 'react-native';
+import MapView, { Marker } from 'react-native-maps';
+import Constants from 'expo-constants';
+import * as Location from 'expo-location';
+import * as Permissions from 'expo-permissions';
+import { fetchVendorsByLocation } from '../utils/api';
+import ToggleSwitch from 'toggle-switch-react-native';
+import Loader from './Loader';
+import ErrorAlerter from './ErrorAlerter';
 
-const geolib = require("geolib");
+const geolib = require('geolib');
 
 const instructions = Platform.select({
-  ios: "Press Cmd+R to reload,\n" + "Cmd+D or shake for dev menu",
+  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
   android:
-    "Double tap R on your keyboard to reload,\n" +
-    "Shake or press menu button for dev menu"
+    'Double tap R on your keyboard to reload,\n' +
+    'Shake or press menu button for dev menu'
 });
 
 export default class App extends Component {
@@ -31,26 +31,29 @@ export default class App extends Component {
     long: null,
     lat: null,
     isLoading: true,
-    vendors: [],
-    toggleVal: false
+    vendors: []
   };
 
   componentWillMount() {
-    if (Platform.OS === "android" && !Constants.isDevice) {
+    if (Platform.OS === 'android' && !Constants.isDevice) {
       this.setState({
         errorMessage:
-          "Oops, this will not work on Sketch in an Android emulator. Try it on your device!"
+          'Oops, this will not work on Sketch in an Android emulator. Try it on your device!'
       });
     } else {
       this._getLocationAsync();
     }
   }
 
+  componentDidUpdate() {
+    if (this.props.refresh) this._getLocationAsync();
+  }
+
   _getLocationAsync = async () => {
     let { status } = await Permissions.askAsync(Permissions.LOCATION);
-    if (status !== "granted") {
+    if (status !== 'granted') {
       this.setState({
-        errorMessage: "Permission to access location was denied"
+        errorMessage: 'Permission to access location was denied'
       });
     }
 
@@ -66,7 +69,9 @@ export default class App extends Component {
       () => {
         const { long, lat } = this.state;
         fetchVendorsByLocation(lat, long).then(vendors => {
-          this.setState({ vendors });
+          this.setState({ vendors }, () => {
+            this.props.changeRefresh;
+          });
         });
       }
     );
@@ -78,7 +83,6 @@ export default class App extends Component {
       latitude: lat,
       longitude: long
     };
-
     return isLoading ? (
       <Loader />
     ) : (
@@ -100,43 +104,55 @@ export default class App extends Component {
             }}
             radius={805}
             strokeWidth={1}
-            strokeColor={"#1a66ff"}
+            strokeColor={'#1a66ff'}
             // fillColor={"rgba(230,238,255,0.5)"}
             // onRegionChangeComplete={this.onRegionChangeComplete.bind(this)}
           />
           {vendors === undefined
-            ? ErrorAlerter("Could not find vendors")
+            ? ErrorAlerter('Could not find vendors')
             : vendors.map(vendor => {
-                const coords = vendor.location.split(",");
-                const openStatus = vendor.open_status ? "Open" : "Closed";
-                return (
-                  <Marker
-                    key={vendor.username}
-                    coordinate={{
-                      latitude: +coords[0],
-                      longitude: +coords[1]
-                    }}
-                    title={vendor.businessname}
-                    description={vendor.cuisine}
-                  >
-                    <MapView.Callout
-                      onPress={() => {
-                        this.props.navigation.navigate("SingleVendor", {
-                          vendor
-                        });
+                const {
+                  location,
+                  open_status,
+                  username,
+                  businessname,
+                  cuisine,
+                  opening_times
+                } = vendor;
+                const coords = location.split(',');
+                const openStatus = open_status ? 'Open' : 'Closed';
+                const color = open_status ? '#008000' : '#FF0000';
+                if (this.props.toggleVal || open_status) {
+                  return (
+                    <Marker
+                      key={username}
+                      coordinate={{
+                        latitude: +coords[0],
+                        longitude: +coords[1]
                       }}
+                      title={businessname}
+                      description={cuisine}
+                      pinColor={color}
                     >
-                      <TouchableHighlight underlayColor="#dddddd">
-                        <View>
-                          <Text>{vendor.businessname}</Text>
-                          <Text> {vendor.cuisine}</Text>
-                          <Text> {openStatus}</Text>
-                          <Text> {vendor.opening_times}</Text>
-                        </View>
-                      </TouchableHighlight>
-                    </MapView.Callout>
-                  </Marker>
-                );
+                      <MapView.Callout
+                        onPress={() => {
+                          this.props.navigation.navigate('SingleVendor', {
+                            vendor
+                          });
+                        }}
+                      >
+                        <TouchableHighlight underlayColor="#dddddd">
+                          <View>
+                            <Text>{vendor.businessname}</Text>
+                            <Text> {vendor.cuisine}</Text>
+                            <Text> {openStatus}</Text>
+                            <Text> {vendor.opening_times}</Text>
+                          </View>
+                        </TouchableHighlight>
+                      </MapView.Callout>
+                    </Marker>
+                  );
+                }
               })}
           <Marker
             coordinate={{
@@ -144,7 +160,7 @@ export default class App extends Component {
               longitude: coordinates.longitude
             }}
             title="your location"
-            pinColor="#3f33ff"
+            pinColor="#0000A0"
           />
         </MapView>
       </View>
@@ -155,22 +171,22 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#F5FCFF"
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#800080'
   },
   welcome: {
     fontSize: 20,
-    textAlign: "center",
+    textAlign: 'center',
     margin: 10
   },
   instructions: {
-    textAlign: "center",
-    color: "#333333",
+    textAlign: 'center',
+    color: '#333333',
     marginBottom: 5
   },
   mapStyle: {
-    width: Dimensions.get("window").width,
-    height: Dimensions.get("window").height
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height
   }
 });

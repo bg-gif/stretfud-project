@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
@@ -7,7 +7,7 @@ import {
   Image,
   Dimensions,
   TouchableHighlight
-} from "react-native";
+} from 'react-native';
 
 class SingleVendor extends Component {
   pinZoomLayoutRef = React.createRef();
@@ -21,7 +21,7 @@ class SingleVendor extends Component {
       open_status,
       menu
     } = this.props.navigation.state.params.vendor;
-    const open = open_status ? "Open" : "Closed";
+    const open = open_status ? 'Open' : 'Closed';
     return (
       <View style={styles.container}>
         <Text>{businessname}</Text>
@@ -32,8 +32,7 @@ class SingleVendor extends Component {
         <Text>E-mail: {email}</Text>
         <TouchableHighlight
           onPress={() => {
-            console.log("pressed");
-            this.props.navigation.navigate("ViewMenu", { menu });
+            this.props.navigation.navigate('ViewMenu', { menu });
           }}
         >
           <Image
@@ -41,7 +40,7 @@ class SingleVendor extends Component {
             style={{
               width: 200,
               height: 200,
-              resizeMode: "stretch"
+              resizeMode: 'stretch'
             }}
           />
         </TouchableHighlight>
@@ -53,9 +52,9 @@ class SingleVendor extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center"
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 });
 
