@@ -50,7 +50,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center"
-<<<<<<< HEAD
   },
   map: {
     borderStyle: "solid",
@@ -58,8 +57,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     height: 100,
     width: 100
-=======
->>>>>>> 41a78adeab1587eae20c4cde2e2371cbb1a774df
   }
 });
 
