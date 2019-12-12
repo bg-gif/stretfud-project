@@ -5,14 +5,13 @@ import {
   Text,
   View,
   Dimensions,
-  TouchableHighlight
+  Image
 } from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
+import MapView, { Marker, Callout } from 'react-native-maps';
 import Constants from 'expo-constants';
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
 import { fetchVendorsByLocation } from '../utils/api';
-import ToggleSwitch from 'toggle-switch-react-native';
 import Loader from './Loader';
 import ErrorAlerter from './ErrorAlerter';
 
@@ -105,8 +104,6 @@ export default class App extends Component {
             radius={805}
             strokeWidth={1}
             strokeColor={'#1a66ff'}
-            // fillColor={"rgba(230,238,255,0.5)"}
-            // onRegionChangeComplete={this.onRegionChangeComplete.bind(this)}
           />
           {vendors === undefined
             ? ErrorAlerter('Could not find vendors')
@@ -134,22 +131,43 @@ export default class App extends Component {
                       description={cuisine}
                       pinColor={color}
                     >
-                      <MapView.Callout
+                      <Callout
+                        style={styles.customView}
                         onPress={() => {
                           this.props.navigation.navigate('SingleVendor', {
                             vendor
                           });
                         }}
                       >
-                        <TouchableHighlight underlayColor="#dddddd">
-                          <View>
-                            <Text>{vendor.businessname}</Text>
-                            <Text> {vendor.cuisine}</Text>
-                            <Text> {openStatus}</Text>
-                            <Text> {vendor.opening_times}</Text>
+                        <View style={styles.customView2}>
+                          <Text style={styles.businessCardHeader}>
+                            {businessname}
+                          </Text>
+                          <View name="cardContent" style={styles.cardContent}>
+                            <View name="VendorDetials">
+                              <Text style={styles.businessCardInfo}>
+                                {cuisine}
+                              </Text>
+                              <Text style={styles.businessCardInfo}>
+                                {opening_times}
+                              </Text>
+                              <Text style={styles.businessCardInfo}>
+                                {openStatus}
+                              </Text>
+                              <Text style={styles.businessCardInfo}>
+                                Tap to View Menu
+                              </Text>
+                            </View>
+                            <View name="Logo">
+                              <Image
+                                resizeMethod="resize"
+                                source={require('../assets/stretfud-logo.png')}
+                                style={styles.logo}
+                              />
+                            </View>
                           </View>
-                        </TouchableHighlight>
-                      </MapView.Callout>
+                        </View>
+                      </Callout>
                     </Marker>
                   );
                 }
@@ -159,7 +177,6 @@ export default class App extends Component {
               latitude: coordinates.latitude,
               longitude: coordinates.longitude
             }}
-            title="your location"
             pinColor="#0000A0"
           />
         </MapView>
@@ -189,5 +206,36 @@ const styles = StyleSheet.create({
     flex: 1,
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height
+  },
+  customView: {
+    height: 140
+  },
+  customView2: {
+    height: 140
+  },
+  businessCardHeader: {
+    fontFamily: 'BebasNeue-Regular',
+    fontSize: 30,
+    color: 'rgba(175, 15, 103, 1)',
+    textAlign: 'center'
+  },
+  businessCardInfo: {
+    fontFamily: 'BebasNeue-Regular',
+    fontSize: 20,
+    color: 'rgba(175, 15, 103, 1)',
+    textAlign: 'left',
+    paddingLeft: 5
+  },
+  cardContent: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  logo: {
+    width: 100,
+    height: 100,
+    borderRadius: 75,
+    borderColor: 'rgba(175, 15, 103, 1)',
+    borderWidth: 4,
+    paddingRight: 10
   }
 });
