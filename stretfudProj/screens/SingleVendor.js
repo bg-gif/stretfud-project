@@ -39,44 +39,97 @@ class SingleVendor extends Component {
     if (isLoading) return <Loader />;
 
     return (
-      <ScrollView contentContainerStyle={styles.container}>
-        <View style={styles.vendorDetailsContainer}>
-          <Text>{businessname}</Text>
-          <Text>{cuisine}</Text>
-          <Text>{open}</Text>
-          <Text>Opening Times: {opening_times}</Text>
-          <Text>Phone: {phone_num}</Text>
-          <Text>E-mail: {email}</Text>
-        </View>
-        <View style={styles.menuItemsContainer}>
-          {menuItems.map(menuItem => {
-            return (
-              <UserMenuCard key={menuItem.menu_item_id} menuItem={menuItem} />
-            );
-          })}
-        </View>
-      </ScrollView>
+      <View style={{ flex: 1 }}>
+        <ScrollView
+          contentContainerStyle={styles.container}
+          pagingEnabled={true}
+        >
+          <View style={styles.vendorDetailsContainer}>
+            <Text style={styles.businessHeaderText}>{businessname}</Text>
+            <Text style={styles.detailText}>{cuisine}</Text>
+            <Text style={styles.detailText}>
+              Opening Times: {opening_times}
+            </Text>
+            <Text style={styles.detailText}>Phone: {phone_num}</Text>
+            <Text style={styles.detailText}>E-mail: {email}</Text>
+          </View>
+          <View>
+            <Text style={open_status ? styles.open : styles.closed}>
+              {open}
+            </Text>
+          </View>
+          <View style={styles.menuItemsContainer}>
+            {menuItems.map(menuItem => {
+              return (
+                <UserMenuCard key={menuItem.menu_item_id} menuItem={menuItem} />
+              );
+            })}
+          </View>
+        </ScrollView>
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    padding: 8
   },
   vendorDetailsContainer: {
     flex: 1,
     flexDirection: "column",
-    alignItems: "center"
+    justifyContent: "space-around",
+    borderRadius: 5,
+    textAlign: "left",
+    padding: 10,
+    paddingRight: 15,
+    backgroundColor: "rgba(112, 150, 36, 1)"
   },
   menuItemsContainer: {
     flex: 3,
     justifyContent: "flex-start",
-    paddingLeft: 20,
-    paddingRight: 20
+    padding: 20,
+    paddingTop: 25
+  },
+  detailText: {
+    color: "white",
+    fontFamily: "BebasNeue-Regular",
+    fontSize: 17,
+    paddingLeft: 10
+  },
+  businessHeaderText: {
+    color: "white",
+    fontFamily: "BebasNeue-Regular",
+    fontSize: 30,
+    paddingLeft: 10
+  },
+  open: {
+    marginTop: 5,
+    color: "rgba(112, 150, 36, 1)",
+    fontFamily: "BebasNeue-Regular",
+    fontSize: 25,
+    backgroundColor: "rgb(202, 232, 189)",
+    padding: 5,
+    paddingBottom: 3,
+    borderRadius: 5,
+    borderColor: "rgba(112, 150, 36, 1)",
+    borderWidth: 2
+  },
+  closed: {
+    marginTop: 5,
+    color: "rgba(175, 15, 103, 1)",
+    fontFamily: "BebasNeue-Regular",
+    fontSize: 25,
+    backgroundColor: "rgb(243, 202, 203)",
+    padding: 5,
+    paddingBottom: 3,
+    borderRadius: 5,
+    borderColor: "rgba(175, 15, 103, 1)",
+    borderWidth: 2
   }
 });
 
