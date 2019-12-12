@@ -9,7 +9,7 @@ class SignOut extends React.Component {
           this.props.navigation.navigate("SignIn");
         }}
         title="Sign Out"
-        color="rgba(198, 197, 185, 1)"
+        color="rgb(237, 237, 237)"
       ></Button>
     );
   }
