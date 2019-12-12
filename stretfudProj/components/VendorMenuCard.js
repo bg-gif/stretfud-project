@@ -1,5 +1,12 @@
 import React from "react";
-import { View, Text, StyleSheet, Switch } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Switch,
+  Dimensions,
+  ScrollView
+} from "react-native";
 
 const VendorMenuCard = ({ menuItem, handleSwitch }) => {
   const handleAvailability = () => {
@@ -20,23 +27,28 @@ const VendorMenuCard = ({ menuItem, handleSwitch }) => {
 
   return (
     <View style={styles.menuCard}>
-      <View style={styles.menuDetails}>
-        <Text>
-          {name} £{price}
-        </Text>
-        <Text>{description}</Text>
-        {gluten_free === true && <Text>GF</Text>}
-        {vegan === true && <Text>VG</Text>}
-        {vegetarian === true && <Text>V</Text>}
+      <View style={styles.menuItemHeader}>
+        <Text style={styles.menuItemHeaderText}>{name}</Text>
+        <Text style={styles.menuItemHeaderText}>£{price}</Text>
       </View>
+      <View style={styles.menuDetails}>
+        <View style={styles.detailsContainer}>
+          <Text style={styles.descriptionText}>{description}</Text>
+          {gluten_free === true && (
+            <Text style={styles.descriptionText}>GF</Text>
+          )}
+          {vegan === true && <Text style={styles.descriptionText}>VG</Text>}
+          {vegetarian === true && <Text style={styles.descriptionText}>V</Text>}
+        </View>
 
-      <View style={styles.availabilityButtonContainer}>
-        <Text>Available:</Text>
-        <Switch
-          onValueChange={handleAvailability}
-          name={menu_item_id}
-          value={available}
-        />
+        <View style={styles.availabilityButtonContainer}>
+          <Text style={styles.availabilityText}>Available: </Text>
+          <Switch
+            onValueChange={handleAvailability}
+            name={menu_item_id}
+            value={available}
+          />
+        </View>
       </View>
     </View>
   );
@@ -46,19 +58,49 @@ export default VendorMenuCard;
 
 const styles = StyleSheet.create({
   menuCard: {
-    flex: 1,
-    flexDirection: "row"
+    flexDirection: "column",
+    borderColor: "rgba(175, 15, 103, 1)",
+    borderRadius: 5,
+    borderWidth: 4,
+    marginBottom: 15,
+    marginTop: 15
   },
   menuDetails: {
-    justifyContent: "center",
-    alignItems: "center",
-    flex: 2
+    flexDirection: "row"
+  },
+  detailsContainer: {
+    flex: 2,
+    padding: 5
   },
   availabilityButtonContainer: {
     flex: 1,
     flexDirection: "row",
-    justifyContent: "center",
+    justifyContent: "flex-end",
     alignItems: "center",
-    paddingRight: 20
+    paddingRight: 10
+  },
+  menuItemHeader: {
+    flexDirection: "row",
+    backgroundColor: "rgba(175, 15, 103, 1)",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingRight: 5,
+    paddingLeft: 5,
+    width: Dimensions.get("window").width - 30
+  },
+  menuItemHeaderText: {
+    color: "white",
+    fontFamily: "BebasNeue-Regular",
+    fontSize: 25
+  },
+  descriptionText: {
+    fontFamily: "BebasNeue-Regular",
+    fontSize: 17,
+    color: "rgba(175, 15, 103, 1)"
+  },
+  availabilityText: {
+    fontFamily: "BebasNeue-Regular",
+    fontSize: 17,
+    color: "rgba(175, 15, 103, 1)"
   }
 });

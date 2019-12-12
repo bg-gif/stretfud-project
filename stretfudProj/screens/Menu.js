@@ -1,17 +1,16 @@
-
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   StyleSheet,
   Text,
-  TouchableOpacity,
+  ScrollView,
   Image,
   View,
   Dimensions
-} from 'react-native';
-import * as api from '../utils/api';
+} from "react-native";
+import * as api from "../utils/api";
 
-import Loader from '../components/Loader';
-import ErrorAlerter from '../components/ErrorAlerter';
+import Loader from "../components/Loader";
+import ErrorAlerter from "../components/ErrorAlerter";
 
 import VendorMenuCard from "../components/VendorMenuCard";
 
@@ -22,7 +21,6 @@ class Menu extends Component {
   };
 
   componentDidMount() {
-
     api
       .fetchMenuItemsByVendor(this.props.navigation.state.params.username)
       .then(menuItems => {
@@ -48,7 +46,6 @@ class Menu extends Component {
         );
         this.setState({ menuItems: updatedMenu });
       });
-
   };
 
   render() {
@@ -56,20 +53,22 @@ class Menu extends Component {
 
     if (isLoading) return <Loader />;
     return (
+      <View style={{ flex: 1 }}>
+        <ScrollView contentContainerStyle={styles.menuPageContainer}>
+          <View style={styles.headerContainer}>
+            <Text style={styles.headerText}>Menu Items</Text>
+          </View>
 
-      <View style={styles.menuPageContainer}>
-        <Text>{this.props.navigation.state.params.username}'s Menu Items</Text>
-        {menuItems.map(item => {
-          return (
-            <VendorMenuCard
-              key={item.name}
-              menuItem={item}
-              handleSwitch={this.handleSwitch}
-            />
-          );
-        })}
-        <Text>Please ask about allergen information</Text>
-
+          {menuItems.map(item => {
+            return (
+              <VendorMenuCard
+                key={item.name}
+                menuItem={item}
+                handleSwitch={this.handleSwitch}
+              />
+            );
+          })}
+        </ScrollView>
       </View>
     );
   }
@@ -78,31 +77,20 @@ class Menu extends Component {
 const styles = StyleSheet.create({
   menuPageContainer: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'space-around'
-  },
-  menuImage: {
-    width: Dimensions.get('window').width,
-    height: 300
-  },
-  changeMenuButton: {
-    alignItems: 'center',
-    backgroundColor: 'rgba(112, 150, 36, 1)',
-    width: 200,
-    padding: 10,
-    borderRadius: 5
-  },
-  inputStyle: {
-    backgroundColor: 'rgba(175, 15, 103, 1)',
-    borderRadius: 5,
-    width: Dimensions.get('window').width - 20,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "space-around",
     padding: 15
   },
-  vendorButtonText: {
-    color: 'white',
-    fontFamily: 'BebasNeue-Regular',
-    fontSize: 20
+  headerContainer: {
+    backgroundColor: "rgba(175, 15, 103, 1)",
+    borderRadius: 5,
+    padding: 5
+  },
+  headerText: {
+    color: "white",
+    fontFamily: "BebasNeue-Regular",
+    fontSize: 25
   }
 });
 
