@@ -133,5 +133,56 @@
     "exampleResponse": {
       "msg": "Verified"
     }
+  },
+  "GET api/vendors/:username/menu": {
+    "description": "returns an array on key of menu_items for the given vendor by username",
+    "exampleResponse": {
+      "menu_items": [
+        {
+          "menu_item_id": 9,
+          "username": "frankgrimes",
+          "name": "Badass Brisket Sandwich",
+          "price": "8.00",
+          "description": "Genuine Texas recipe beef brisket with a bangin' peppery flavour",
+          "allergens": null,
+          "vegetarian": false,
+          "vegan": false,
+          "gluten_free": false,
+          "available": true
+        },
+        {
+          "menu_item_id": 10,
+          "username": "frankgrimes",
+          "name": "Memphis Hog Butt Sandwich",
+          "price": "7.00",
+          "description": "Memphis smoked hog butt, the original pulled pork. All served in a pretzel roll, with house BBQ sauce and slaw",
+          "allergens": null,
+          "vegetarian": false,
+          "vegan": false,
+          "gluten_free": false,
+          "available": true
+        }
+      ]
+    }
+  },
+  "PATCH api/vendors/:username/menu/:menu_item": {
+    "description": "takes a patch request of either price/description/allergen/vegetarian/vegan/gluten_free/availble and returns the updated menu item on a key of menu_item",
+    "exampleBody": {
+      "available": false
+    },
+    "exampleResponse": {
+      "menu_item": {
+        "menu_item_id": 3,
+        "username": "oppri",
+        "name": "Fillet 8oz",
+        "price": "24.85",
+        "description": "The most tender steak regarded by many as the premium cut, recommended rare.",
+        "allergens": null,
+        "vegetarian": false,
+        "vegan": false,
+        "gluten_free": true,
+        "available": false
+      }
+    }
   }
 }
