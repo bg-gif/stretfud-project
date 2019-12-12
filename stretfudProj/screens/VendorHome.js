@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     borderRadius: 5,
     textAlign: 'left',
-    backgroundColor: 'rgba(112, 150, 36, 1)'
+    backgroundColor: 'rgba(175, 15, 103, 1)'
   },
   vendorStatusContainer: {
     flex: 1,
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
     paddingLeft: 10
   },
   headerText: {
-    color: 'rgba(112, 150, 36, 1)',
+    color: 'rgba(175, 15, 103, 1)',
     fontFamily: 'BebasNeue-Regular',
     fontSize: 40,
     textAlign: 'center'

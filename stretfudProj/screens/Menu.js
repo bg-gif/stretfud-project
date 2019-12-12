@@ -1,19 +1,20 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
   TouchableOpacity,
   Image,
-  ScrollView
-} from "react-native";
-import * as api from "../utils/api";
-import InputAdder from "../components/InputAdder";
-import Loader from "../components/Loader";
-import ErrorAlerter from "../components/ErrorAlerter";
+  View,
+  Dimensions
+} from 'react-native';
+import * as api from '../utils/api';
+import InputAdder from '../components/InputAdder';
+import Loader from '../components/Loader';
+import ErrorAlerter from '../components/ErrorAlerter';
 
 class Menu extends Component {
   state = {
-    menu: "",
+    menu: '',
     isLoading: true
   };
 
@@ -37,7 +38,7 @@ class Menu extends Component {
         this.setState({ menu: vendor.menu });
       })
       .catch(err => {
-        ErrorAlerter("Menu could not be updated");
+        ErrorAlerter('Menu could not be updated');
       });
   };
 
@@ -45,19 +46,24 @@ class Menu extends Component {
     const { menu, isLoading } = this.state;
     if (isLoading) return <Loader />;
     return (
-      <ScrollView>
-        {menu !== "" && (
-          <Image source={{ uri: menu }} style={{ width: 300, height: 300 }} />
+      <View style={styles.container}>
+        {menu !== '' && (
+          <Image source={{ uri: menu }} style={styles.menuImage} />
         )}
-        <InputAdder
-          name="Menu URL"
-          value={menu}
-          handleTextChange={this.handleTextChange}
-        />
-        <TouchableOpacity onPress={this.handleUpdate}>
-          <Text>Update Menu</Text>
+        <View style={styles.inputStyle}>
+          <InputAdder
+            name="Menu URL"
+            value={menu}
+            handleTextChange={this.handleTextChange}
+          />
+        </View>
+        <TouchableOpacity
+          onPress={this.handleUpdate}
+          style={styles.changeMenuButton}
+        >
+          <Text style={styles.vendorButtonText}>Update Menu</Text>
         </TouchableOpacity>
-      </ScrollView>
+      </View>
     );
   }
 }
@@ -65,9 +71,31 @@ class Menu extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center"
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'space-around'
+  },
+  menuImage: {
+    width: Dimensions.get('window').width,
+    height: 300
+  },
+  changeMenuButton: {
+    alignItems: 'center',
+    backgroundColor: 'rgba(112, 150, 36, 1)',
+    width: 200,
+    padding: 10,
+    borderRadius: 5
+  },
+  inputStyle: {
+    backgroundColor: 'rgba(175, 15, 103, 1)',
+    borderRadius: 5,
+    width: Dimensions.get('window').width - 20,
+    padding: 15
+  },
+  vendorButtonText: {
+    color: 'white',
+    fontFamily: 'BebasNeue-Regular',
+    fontSize: 20
   }
 });
 

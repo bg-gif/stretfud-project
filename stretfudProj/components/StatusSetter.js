@@ -42,11 +42,11 @@ const styles = StyleSheet.create({
   buttonOpen: {
     color: 'rgba(112, 150, 36, 1)',
     fontFamily: 'BebasNeue-Regular',
-    fontSize: 20
+    fontSize: 25
   },
   buttonClosed: {
     color: 'rgba(175, 15, 103, 1)',
     fontFamily: 'BebasNeue-Regular',
-    fontSize: 20
+    fontSize: 25
   }
 });
