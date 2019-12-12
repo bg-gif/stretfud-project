@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   open: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(198, 197, 185, 1)',
+    backgroundColor: 'rgb(202, 232, 189)',
     padding: 10,
     width: 100,
     height: 100,
@@ -41,10 +41,12 @@ const styles = StyleSheet.create({
   },
   buttonOpen: {
     color: 'rgba(112, 150, 36, 1)',
-    fontFamily: 'BebasNeue-Regular'
+    fontFamily: 'BebasNeue-Regular',
+    fontSize: 20
   },
   buttonClosed: {
     color: 'rgba(175, 15, 103, 1)',
-    fontFamily: 'BebasNeue-Regular'
+    fontFamily: 'BebasNeue-Regular',
+    fontSize: 20
   }
 });

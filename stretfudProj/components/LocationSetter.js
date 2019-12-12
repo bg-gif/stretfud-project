@@ -40,13 +40,12 @@ const styles = StyleSheet.create({
   locationButton: {
     alignItems: 'center',
     backgroundColor: 'rgba(112, 150, 36, 1)',
-    color: 'rgba(198, 197, 185, 1)',
     width: 200,
     padding: 10,
     borderRadius: 5
   },
   buttonText: {
-    color: 'rgba(198, 197, 185, 1)',
+    color: 'white',
     fontSize: 20,
     fontFamily: 'BebasNeue-Regular'
   }

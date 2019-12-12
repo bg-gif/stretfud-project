@@ -81,18 +81,12 @@ class VendorHome extends Component {
     if (isLoading) return <Loader />;
     return (
       <View style={styles.venderHomePage}>
-        <View style={styles.vendorInfo}>
-          <View style={styles.vendorDetails}>
-            <Text style={styles.detailText}>username: {username}</Text>
-            <Text style={styles.detailText}>{businessName}</Text>
-            <Text style={styles.detailText}>{email}</Text>
-            <Text style={styles.detailText}>{openingTimes}</Text>
-          </View>
-          <View style={styles.openStatusContainer}>
-            <StatusSetter
-              handleStatus={this.handleStatus}
-              openStatus={openStatus}
-            />
+        <View style={styles.vendorInfoContainer}>
+          <Text style={styles.headerText}>Vendor Home</Text>
+          <View style={styles.vendorDetailsContainer}>
+            <Text style={styles.detailText}>name: {businessName}</Text>
+            <Text style={styles.detailText}>email: {email}</Text>
+            <Text style={styles.detailText}>opening times:{openingTimes}</Text>
           </View>
         </View>
         <View style={styles.vendorButtonsContainer}>
@@ -109,6 +103,12 @@ class VendorHome extends Component {
             <Text style={styles.buttonText}>View/Edit Menu</Text>
           </TouchableOpacity>
         </View>
+        <View style={styles.vendorStatusContainer}>
+          <StatusSetter
+            handleStatus={this.handleStatus}
+            openStatus={openStatus}
+          />
+        </View>
       </View>
     );
   }
@@ -118,26 +118,46 @@ const styles = StyleSheet.create({
   venderHomePage: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: 'rgb(243, 202, 203)'
+    backgroundColor: 'white'
   },
-  vendorInfo: {
-    flex: 1,
-    flexDirection: 'row',
+  vendorInfoContainer: {
+    flex: 2,
+    flexDirection: 'column',
     padding: 10
   },
-  vendorDetails: {
+  vendorButtonsContainer: {
+    flex: 2,
+    flexDirection: 'column',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    height: 200
+  },
+  vendorDetailsContainer: {
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'space-around',
-    borderWidth: 2,
-    borderColor: 'rgba(112, 150, 36, 1)',
-    borderRadius: 25,
+    borderRadius: 5,
+    textAlign: 'left',
+    backgroundColor: 'rgba(112, 150, 36, 1)'
+  },
+  vendorStatusContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'space-evenly',
     alignItems: 'center',
-    backgroundColor: 'rgba(198, 197, 185, 1)'
+    height: 200
   },
   detailText: {
+    color: 'white',
+    fontFamily: 'BebasNeue-Regular',
+    fontSize: 25,
+    paddingLeft: 10
+  },
+  headerText: {
     color: 'rgba(112, 150, 36, 1)',
-    fontFamily: 'BebasNeue-Regular'
+    fontFamily: 'BebasNeue-Regular',
+    fontSize: 40,
+    textAlign: 'center'
   },
   openStatusContainer: {
     flex: 1,
@@ -145,20 +165,19 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   buttonText: {
-    color: 'rgba(198, 197, 185, 1)',
+    color: 'white',
     fontFamily: 'BebasNeue-Regular',
     fontSize: 20
   },
-  vendorButtonsContainer: {
-    flex: 1,
-    flexDirection: 'column',
+  vendorOptionsContainer: {
+    flex: 3,
+    flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center'
   },
   editMenuButton: {
     alignItems: 'center',
     backgroundColor: 'rgba(112, 150, 36, 1)',
-    color: 'rgba(198, 197, 185, 1)',
     width: 200,
     padding: 10,
     borderRadius: 5

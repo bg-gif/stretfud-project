@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     borderWidth: 16
   },
   header: {
-    color: 'rgba(198, 197, 185, 1)',
+    color: 'white',
     fontSize: 50,
     fontFamily: 'BebasNeue-Regular'
   },
