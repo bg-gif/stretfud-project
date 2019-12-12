@@ -9,6 +9,9 @@ import Loader from '../components/Loader';
 import ErrorAlerter from '../components/ErrorAlerter';
 
 class VendorHome extends Component {
+  static navigationOptions = {
+    title: "Vendor Home"
+  };
   state = {
     businessName: 'Joes Burgers',
     email: 'joe@joesbugrers.com',

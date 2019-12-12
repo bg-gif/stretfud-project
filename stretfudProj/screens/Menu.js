@@ -9,81 +9,67 @@ import {
   Dimensions
 } from 'react-native';
 import * as api from '../utils/api';
-import InputAdder from '../components/InputAdder';
+
 import Loader from '../components/Loader';
 import ErrorAlerter from '../components/ErrorAlerter';
+
 import VendorMenuCard from "../components/VendorMenuCard";
 
 class Menu extends Component {
   state = {
-    menuItems: [
-      {
-        item: "Beef Steak",
-        price: 13,
-        description: "a steak of beef",
-        available: true
-      },
-      {
-        item: "Cauliflower Steak",
-        price: 10,
-        description: "a steak of cauliflower",
-        available: true,
-        vegetarian: true,
-        vegan: true
-      },
-      {
-        item: "Chicken Steak",
-        price: 11.5,
-        description: "a steak of chicken",
-        available: true,
-        glutenFree: true
-      }
-    ],
+    menuItems: [],
     isLoading: true
   };
 
   componentDidMount() {
-    api.fetchVendor(this.props.navigation.state.params).then(vendor => {
-      this.setState({ menu: vendor.menu, isLoading: false });
-    });
+
+    api
+      .fetchMenuItemsByVendor(this.props.navigation.state.params.username)
+      .then(menuItems => {
+        this.setState({ menuItems: menuItems, isLoading: false });
+      })
+      .catch(err => {
+        ErrorAlerter("Menu items could not be found");
+      });
   }
 
-  handleTextChange = value => {
-    this.setState({ menu: value });
-  };
+  handleSwitch = (username, menu_item_id, available) => {
+    let newStatus = !available;
+    newStatus = newStatus.toString();
+    api
+      .updateMenuItem({ username, menu_item_id, available: newStatus })
+      .then(menuObj => {
+        const updatedMenu = this.state.menuItems.map(
+          ({ menu_item_id, available, ...rest }) => {
+            if (menu_item_id === menuObj.menu_item_id)
+              available = menuObj.available;
+            return { menu_item_id, available, ...rest };
+          }
+        );
+        this.setState({ menuItems: updatedMenu });
+      });
 
-  handleSwitch = name => {
-    const updatedMenu = this.state.menuItems.map(
-      ({ item, available, ...rest }) => {
-        if (item === name) available = !available;
-        return { item, available, ...rest };
-      }
-    );
-    this.setState({ menuItems: updatedMenu });
   };
 
   render() {
     const { menuItems, isLoading } = this.state;
-    //if (isLoading) return <Loader />;
-    console.log(this.props.navigation.state.params.username);
+
+    if (isLoading) return <Loader />;
     return (
-      <View style={styles.container}>
-        {menu !== '' && (
-          <Image source={{ uri: menu }} style={styles.menuImage} />
-        )}
-        <View style={styles.inputStyle}>
-          <InputAdder
-            name="Menu URL"
-            value={menu}
-            handleTextChange={this.handleTextChange}
-          />
-        </View>
-        <TouchableOpacity
-          onPress={this.handleUpdate}
-          style={styles.changeMenuButton}
-        >
-          <Text style={styles.vendorButtonText}>Update Menu</Text>
-        </TouchableOpacity>
+
+      <View style={styles.menuPageContainer}>
+        <Text>{this.props.navigation.state.params.username}'s Menu Items</Text>
+        {menuItems.map(item => {
+          return (
+            <VendorMenuCard
+              key={item.name}
+              menuItem={item}
+              handleSwitch={this.handleSwitch}
+            />
+          );
+        })}
+        <Text>Please ask about allergen information</Text>
+
       </View>
     );
   }
