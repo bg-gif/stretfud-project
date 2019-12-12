@@ -3,25 +3,39 @@ import { View, Text, StyleSheet, Switch } from "react-native";
 
 const VendorMenuCard = ({ menuItem, handleSwitch }) => {
   const handleAvailability = () => {
-    handleSwitch(menuItem.item);
+    handleSwitch(username, menu_item_id, available);
   };
+  const {
+    name,
+    description,
+    available,
+    allergens,
+    gluten_free,
+    vegan,
+    vegetarian,
+    price,
+    menu_item_id,
+    username
+  } = menuItem;
 
   return (
     <View style={styles.menuCard}>
       <View style={styles.menuDetails}>
         <Text>
-          {menuItem.item} £{menuItem.price}
+          {name} £{price}
         </Text>
-        <Text>{menuItem.description}</Text>
-        <Text>{menuItem.available}</Text>
+        <Text>{description}</Text>
+        {gluten_free === true && <Text>GF</Text>}
+        {vegan === true && <Text>VG</Text>}
+        {vegetarian === true && <Text>V</Text>}
       </View>
 
       <View style={styles.availabilityButtonContainer}>
         <Text>Available:</Text>
         <Switch
           onValueChange={handleAvailability}
-          name={menuItem.item}
-          value={menuItem.available}
+          name={menu_item_id}
+          value={available}
         />
       </View>
     </View>

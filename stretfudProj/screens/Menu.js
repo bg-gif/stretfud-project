@@ -1,65 +1,61 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, TouchableOpacity, Image, View } from "react-native";
 import * as api from "../utils/api";
-import InputAdder from "../components/InputAdder";
 import Loader from "../components/Loader";
 import ErrorAlerter from "../components/ErrorAlerter";
 import VendorMenuCard from "../components/VendorMenuCard";
 
 class Menu extends Component {
   state = {
-    menuItems: [
-      {
-        item: "Beef Steak",
-        price: 13,
-        description: "a steak of beef",
-        available: true
-      },
-      {
-        item: "Cauliflower Steak",
-        price: 10,
-        description: "a steak of cauliflower",
-        available: true,
-        vegetarian: true,
-        vegan: true
-      },
-      {
-        item: "Chicken Steak",
-        price: 11.5,
-        description: "a steak of chicken",
-        available: true,
-        glutenFree: true
-      }
-    ],
+    menuItems: [],
     isLoading: true
   };
 
-  handleSwitch = name => {
-    const updatedMenu = this.state.menuItems.map(
-      ({ item, available, ...rest }) => {
-        if (item === name) available = !available;
-        return { item, available, ...rest };
-      }
-    );
-    this.setState({ menuItems: updatedMenu });
+  componentDidMount() {
+    api
+      .fetchMenuItemsByVendor(this.props.navigation.state.params.username)
+      .then(menuItems => {
+        this.setState({ menuItems: menuItems, isLoading: false });
+      })
+      .catch(err => {
+        ErrorAlerter("Menu items could not be found");
+      });
+  }
+
+  handleSwitch = (username, menu_item_id, available) => {
+    let newStatus = !available;
+    newStatus = newStatus.toString();
+    api
+      .updateMenuItem({ username, menu_item_id, available: newStatus })
+      .then(menuObj => {
+        const updatedMenu = this.state.menuItems.map(
+          ({ menu_item_id, available, ...rest }) => {
+            if (menu_item_id === menuObj.menu_item_id)
+              available = menuObj.available;
+            return { menu_item_id, available, ...rest };
+          }
+        );
+        this.setState({ menuItems: updatedMenu });
+      });
   };
 
   render() {
     const { menuItems, isLoading } = this.state;
-    //if (isLoading) return <Loader />;
-    console.log(this.props.navigation.state.params.username);
+
+    if (isLoading) return <Loader />;
     return (
       <View style={styles.menuPageContainer}>
-        <Text>Menu Items</Text>
+        <Text>{this.props.navigation.state.params.username}'s Menu Items</Text>
         {menuItems.map(item => {
           return (
             <VendorMenuCard
-              key={item.item}
+              key={item.name}
               menuItem={item}
               handleSwitch={this.handleSwitch}
             />
           );
         })}
+        <Text>Please ask about allergen information</Text>
       </View>
     );
   }
