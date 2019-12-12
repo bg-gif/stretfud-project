@@ -1,16 +1,29 @@
-import React, { Component } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  Button,
-  Image,
-  Dimensions,
-  TouchableHighlight
-} from 'react-native';
+import React, { Component } from "react";
+import { StyleSheet, Text, View, ScrollView } from "react-native";
+import * as api from "../utils/api";
+import ErrorAlerter from "../components/ErrorAlerter";
+import Loader from "../components/Loader";
+import UserMenuCard from "../components/UserMenuCard";
 
 class SingleVendor extends Component {
-  pinZoomLayoutRef = React.createRef();
+  state = {
+    menuItems: [],
+    isLoading: true
+  };
+
+  componentDidMount() {
+    api
+      .fetchMenuItemsByVendor(
+        this.props.navigation.state.params.vendor.username
+      )
+      .then(menuItems => {
+        this.setState({ menuItems: menuItems, isLoading: false });
+      })
+      .catch(err => {
+        ErrorAlerter("Menu items could not be found");
+      });
+  }
+
   render() {
     const {
       businessname,
@@ -18,33 +31,31 @@ class SingleVendor extends Component {
       cuisine,
       email,
       phone_num,
-      open_status,
-      menu
+      open_status
     } = this.props.navigation.state.params.vendor;
-    const open = open_status ? 'Open' : 'Closed';
+
+    const open = open_status ? "Open" : "Closed";
+    const { menuItems, isLoading } = this.state;
+    if (isLoading) return <Loader />;
+
     return (
-      <View style={styles.container}>
-        <Text>{businessname}</Text>
-        <Text>{cuisine}</Text>
-        <Text>{open}</Text>
-        <Text>Opening Times: {opening_times}</Text>
-        <Text>Phone: {phone_num}</Text>
-        <Text>E-mail: {email}</Text>
-        <TouchableHighlight
-          onPress={() => {
-            this.props.navigation.navigate('ViewMenu', { menu });
-          }}
-        >
-          <Image
-            source={{ uri: menu }}
-            style={{
-              width: 200,
-              height: 200,
-              resizeMode: 'stretch'
-            }}
-          />
-        </TouchableHighlight>
-      </View>
+      <ScrollView contentContainerStyle={styles.container}>
+        <View style={styles.vendorDetailsContainer}>
+          <Text>{businessname}</Text>
+          <Text>{cuisine}</Text>
+          <Text>{open}</Text>
+          <Text>Opening Times: {opening_times}</Text>
+          <Text>Phone: {phone_num}</Text>
+          <Text>E-mail: {email}</Text>
+        </View>
+        <View style={styles.menuItemsContainer}>
+          {menuItems.map(menuItem => {
+            return (
+              <UserMenuCard key={menuItem.menu_item_id} menuItem={menuItem} />
+            );
+          })}
+        </View>
+      </ScrollView>
     );
   }
 }
@@ -52,9 +63,20 @@ class SingleVendor extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center'
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  vendorDetailsContainer: {
+    flex: 1,
+    flexDirection: "column",
+    alignItems: "center"
+  },
+  menuItemsContainer: {
+    flex: 3,
+    justifyContent: "flex-start",
+    paddingLeft: 20,
+    paddingRight: 20
   }
 });
 
