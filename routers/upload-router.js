@@ -1,26 +1,11 @@
-const fs = require('fs');
-const AWS = require('aws-sdk');
+const uploadRouter = require('express')();
+const { handle405s } = require('../errors/index');
+const { sendPhoto } = require('../controllers/upload-controller.js');
 
-const { S3_SECRET, S3_KEY, S3_BUCKET_NAME } = process.env;
+uploadRouter
+  .route('/')
+  .post(sendPhoto)
+  .patch(sendPhoto)
+  .all(handle405s);
 
-const s3 = new AWS.S3({
-  accessKeyId: S3_KEY,
-  secretAccessKey: S3_SECRET
-});
-
-const uploadFile = filename => {
-  const fileContent = fs.readFileSync('');
-  const params = {
-    Bucket: S3_BUCKET_NAME,
-    Key: 'test.jpg',
-    Body: fileContent
-  };
-  s3.upload(params, function(err, data) {
-    if (err) {
-      throw err;
-    }
-    console.log(`File Uploaded successfully. ${data.Location}`);
-  });
-};
-
-module.exports = uploadFile;
+module.exports = uploadRouter;
