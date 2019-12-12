@@ -186,6 +186,7 @@ const styles = StyleSheet.create({
     marginBottom: 5
   },
   mapStyle: {
+    flex: 1,
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height
   }

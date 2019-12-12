@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Dimensions,
+  TouchableOpacity
+} from 'react-native';
 import SignOut from './SignOut';
 import { withUserHOC } from '../components/UserContext';
 import Map from '../components/Map';
@@ -7,7 +13,7 @@ import ToggleSwitch from 'toggle-switch-react-native';
 
 class UserHome extends Component {
   state = {
-    toggleVal: false,
+    toggleVal: true,
     refresh: false
   };
 
@@ -34,27 +40,29 @@ class UserHome extends Component {
           refresh={this.state.refresh}
           changeRefresh={this.changeRefresh}
         />
-        <Text>User Home Page</Text>
-        <ToggleSwitch
-          isOn={this.state.toggleVal}
-          onColor="green"
-          offColor="red"
-          label="Show Closed"
-          labelStyle={{ color: 'black', fontWeight: '900' }}
-          size="small"
-          onToggle={() =>
-            this.setState(currentState => {
-              return { toggleVal: !currentState.toggleVal };
-            })
-          }
-        />
-        <TouchableOpacity
-          onPress={() => {
-            this.setState({ refresh: true });
-          }}
-        >
-          <Text>Refresh Page</Text>
-        </TouchableOpacity>
+        <View style={styles.userOptionsContainer}>
+          <TouchableOpacity
+            onPress={() => {
+              this.setState({ refresh: true });
+            }}
+            style={styles.userButton}
+          >
+            <Text style={styles.buttonContent}>Refresh</Text>
+          </TouchableOpacity>
+          <ToggleSwitch
+            isOn={this.state.toggleVal}
+            onColor="green"
+            offColor="red"
+            label="View Closed"
+            labelStyle={styles.toggleSwitch}
+            size="small"
+            onToggle={() =>
+              this.setState(currentState => {
+                return { toggleVal: !currentState.toggleVal };
+              })
+            }
+          />
+        </View>
       </View>
     );
   }
@@ -67,12 +75,31 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
-  map: {
-    borderStyle: 'solid',
-    borderColor: 'green',
-    borderWidth: 1,
-    height: 100,
-    width: 100
+  userButton: {
+    alignItems: 'center',
+    width: 100,
+    padding: 10,
+    backgroundColor: 'rgba(175, 15, 103, 1)',
+    borderRadius: 5,
+    margin: 5
+  },
+  buttonContent: {
+    fontFamily: 'BebasNeue-Regular',
+    fontSize: 20,
+    color: 'rgb(237, 237, 237)'
+  },
+  userOptionsContainer: {
+    backgroundColor: 'rgb(237, 237, 237)',
+    borderColor: 'rgba(112, 150, 36, 1)',
+    borderWidth: 2,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: Dimensions.get('window').width
+  },
+  toggleSwitch: {
+    color: 'rgba(175, 15, 103, 1)',
+    fontFamily: 'BebasNeue-Regular',
+    fontSize: 20
   }
 });
 
