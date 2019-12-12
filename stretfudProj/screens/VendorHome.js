@@ -10,7 +10,7 @@ import ErrorAlerter from '../components/ErrorAlerter';
 
 class VendorHome extends Component {
   static navigationOptions = {
-    title: "Vendor Home"
+    title: 'Vendor Home'
   };
   state = {
     businessName: 'Joes Burgers',
@@ -100,10 +100,18 @@ class VendorHome extends Component {
           <TouchableOpacity
             style={styles.editMenuButton}
             onPress={() => {
-              navigation.navigate("Menu", { username: username });
+              navigation.navigate('Menu', { username: username });
             }}
           >
             <Text style={styles.buttonText}>View/Edit Menu</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.editMenuButton}
+            onPress={() => {
+              navigation.navigate('AddPhoto', { username: username });
+            }}
+          >
+            <Text style={styles.buttonText}>Upload Logo</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.vendorStatusContainer}>

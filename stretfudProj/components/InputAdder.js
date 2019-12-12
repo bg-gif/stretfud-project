@@ -3,36 +3,36 @@ import {
   Text,
   TextInput,
   View,
-  StyleSheet,
-  InputAccessoryView
+  StyleSheet
+  // InputAccessoryView
 } from 'react-native';
 
 const InputAdder = ({ name, handleTextChange, value }) => {
   const handleChange = text => {
     handleTextChange(text, name);
   };
-  const inputAccessoryViewID = name;
+  // const inputAccessoryViewID = name;
 
   return (
     <View style={styles.container}>
       <Text style={styles.text}>{name}</Text>
       <TextInput
-        inputAccessoryViewID={inputAccessoryViewID}
+        // inputAccessoryViewID={inputAccessoryViewID}
         onChangeText={handleChange}
         style={styles.inputBox}
         secureTextEntry={name === 'password'}
         value={value}
       ></TextInput>
-      <InputAccessoryView nativeID={inputAccessoryViewID}>
-        <View style={styles.keyboardView}>
-          <Text style={styles.inputAccessoryViewIDText}>{name}: </Text>
-          <TextInput
-            value={value}
-            secureTextEntry={name === 'password'}
-            style={styles.inputAccessoryViewIDValue}
-          ></TextInput>
-        </View>
-      </InputAccessoryView>
+      {/* <InputAccessoryView nativeID={inputAccessoryViewID}>
+      <View style={styles.keyboardView}>
+        <Text style={styles.inputAccessoryViewIDText}>{name}: </Text>
+        <TextInput
+          value={value}
+          secureTextEntry={name === 'password'}
+          style={styles.inputAccessoryViewIDValue}
+        ></TextInput>
+      </View>
+      </InputAccessoryView> */}
     </View>
   );
 };
