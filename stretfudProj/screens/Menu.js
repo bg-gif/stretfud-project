@@ -1,8 +1,18 @@
-import React, { Component } from "react";
-import { StyleSheet, Text, TouchableOpacity, Image, View } from "react-native";
-import * as api from "../utils/api";
-import Loader from "../components/Loader";
-import ErrorAlerter from "../components/ErrorAlerter";
+
+import React, { Component } from 'react';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  Image,
+  View,
+  Dimensions
+} from 'react-native';
+import * as api from '../utils/api';
+
+import Loader from '../components/Loader';
+import ErrorAlerter from '../components/ErrorAlerter';
+
 import VendorMenuCard from "../components/VendorMenuCard";
 
 class Menu extends Component {
@@ -12,6 +22,7 @@ class Menu extends Component {
   };
 
   componentDidMount() {
+
     api
       .fetchMenuItemsByVendor(this.props.navigation.state.params.username)
       .then(menuItems => {
@@ -37,6 +48,7 @@ class Menu extends Component {
         );
         this.setState({ menuItems: updatedMenu });
       });
+
   };
 
   render() {
@@ -44,6 +56,7 @@ class Menu extends Component {
 
     if (isLoading) return <Loader />;
     return (
+
       <View style={styles.menuPageContainer}>
         <Text>{this.props.navigation.state.params.username}'s Menu Items</Text>
         {menuItems.map(item => {
@@ -56,6 +69,7 @@ class Menu extends Component {
           );
         })}
         <Text>Please ask about allergen information</Text>
+
       </View>
     );
   }
@@ -64,9 +78,31 @@ class Menu extends Component {
 const styles = StyleSheet.create({
   menuPageContainer: {
     flex: 1,
-    backgroundColor: "rgb(243, 202, 203)",
-    alignItems: "center",
-    justifyContent: "center"
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'space-around'
+  },
+  menuImage: {
+    width: Dimensions.get('window').width,
+    height: 300
+  },
+  changeMenuButton: {
+    alignItems: 'center',
+    backgroundColor: 'rgba(112, 150, 36, 1)',
+    width: 200,
+    padding: 10,
+    borderRadius: 5
+  },
+  inputStyle: {
+    backgroundColor: 'rgba(175, 15, 103, 1)',
+    borderRadius: 5,
+    width: Dimensions.get('window').width - 20,
+    padding: 15
+  },
+  vendorButtonText: {
+    color: 'white',
+    fontFamily: 'BebasNeue-Regular',
+    fontSize: 20
   }
 });
 
