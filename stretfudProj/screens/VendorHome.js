@@ -97,7 +97,7 @@ class VendorHome extends Component {
           <TouchableOpacity
             style={styles.editMenuButton}
             onPress={() => {
-              navigation.navigate('Menu', username);
+              navigation.navigate("Menu", { username: username });
             }}
           >
             <Text style={styles.buttonText}>View/Edit Menu</Text>

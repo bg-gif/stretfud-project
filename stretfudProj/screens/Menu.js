@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import {
   StyleSheet,
@@ -11,10 +12,33 @@ import * as api from '../utils/api';
 import InputAdder from '../components/InputAdder';
 import Loader from '../components/Loader';
 import ErrorAlerter from '../components/ErrorAlerter';
+import VendorMenuCard from "../components/VendorMenuCard";
 
 class Menu extends Component {
   state = {
-    menu: '',
+    menuItems: [
+      {
+        item: "Beef Steak",
+        price: 13,
+        description: "a steak of beef",
+        available: true
+      },
+      {
+        item: "Cauliflower Steak",
+        price: 10,
+        description: "a steak of cauliflower",
+        available: true,
+        vegetarian: true,
+        vegan: true
+      },
+      {
+        item: "Chicken Steak",
+        price: 11.5,
+        description: "a steak of chicken",
+        available: true,
+        glutenFree: true
+      }
+    ],
     isLoading: true
   };
 
@@ -28,23 +52,20 @@ class Menu extends Component {
     this.setState({ menu: value });
   };
 
-  handleUpdate = () => {
-    api
-      .updateVendorInfo({
-        username: this.props.navigation.state.params,
-        menu: this.state.menu
-      })
-      .then(vendor => {
-        this.setState({ menu: vendor.menu });
-      })
-      .catch(err => {
-        ErrorAlerter('Menu could not be updated');
-      });
+  handleSwitch = name => {
+    const updatedMenu = this.state.menuItems.map(
+      ({ item, available, ...rest }) => {
+        if (item === name) available = !available;
+        return { item, available, ...rest };
+      }
+    );
+    this.setState({ menuItems: updatedMenu });
   };
 
   render() {
-    const { menu, isLoading } = this.state;
-    if (isLoading) return <Loader />;
+    const { menuItems, isLoading } = this.state;
+    //if (isLoading) return <Loader />;
+    console.log(this.props.navigation.state.params.username);
     return (
       <View style={styles.container}>
         {menu !== '' && (
@@ -69,7 +90,7 @@ class Menu extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  menuPageContainer: {
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
