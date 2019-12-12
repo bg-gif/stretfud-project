@@ -41,6 +41,7 @@ class SignIn extends React.Component {
           />
           <Text style={styles.header}>StrētFüd</Text>
         </View>
+
         <Picker
           selectedValue={this.state.signInType}
           style={styles.picker}
@@ -73,7 +74,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'black',
     borderRadius: 25,
-    backgroundColor: 'rgba(198, 197, 185, 1)'
+    backgroundColor: 'rgb(237, 237, 237)'
   },
   pickerItem: { height: 75, fontFamily: 'BebasNeue-Regular' },
   TextInput: {
@@ -96,8 +97,8 @@ const styles = StyleSheet.create({
     borderWidth: 16
   },
   header: {
-    color: 'white',
-    fontSize: 50,
+    color: 'rgb(237, 237, 237)',
+    fontSize: 65,
     fontFamily: 'BebasNeue-Regular'
   },
   logoView: {
