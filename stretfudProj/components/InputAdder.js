@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   inputBox: {
     textAlign: 'center',
     borderColor: 'transparent',
-    backgroundColor: 'rgba(198, 197, 185, 1)',
+    backgroundColor: 'rgb(237, 237, 237)',
     width: 250,
     height: 40,
     borderRadius: 25,
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     fontSize: 20
   },
   text: {
-    color: 'rgba(198, 197, 185, 1)',
+    color: 'rgb(237, 237, 237)',
     fontSize: 20,
     fontFamily: 'BebasNeue-Regular'
   },
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     flex: 0.5,
     flexDirection: 'row',
     justifyContent: 'center',
-    backgroundColor: 'rgba(198, 197, 185, 1)',
+    backgroundColor: 'rgb(237, 237, 237)',
     height: 40
   }
 });

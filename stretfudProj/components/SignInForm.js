@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
   buttonContent: {
     fontFamily: 'BebasNeue-Regular',
     fontSize: 20,
-    color: 'rgba(198, 197, 185, 1)'
+    color: 'rgb(237, 237, 237)'
   },
   missingTextWarning: {
     fontFamily: 'BebasNeue-Regular',

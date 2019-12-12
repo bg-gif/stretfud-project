@@ -1,9 +1,17 @@
-import React, { Component } from "react";
-import { StyleSheet, Text, TouchableOpacity, Image, View } from "react-native";
-import * as api from "../utils/api";
-import InputAdder from "../components/InputAdder";
-import Loader from "../components/Loader";
-import ErrorAlerter from "../components/ErrorAlerter";
+
+import React, { Component } from 'react';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  Image,
+  View,
+  Dimensions
+} from 'react-native';
+import * as api from '../utils/api';
+import InputAdder from '../components/InputAdder';
+import Loader from '../components/Loader';
+import ErrorAlerter from '../components/ErrorAlerter';
 import VendorMenuCard from "../components/VendorMenuCard";
 
 class Menu extends Component {
@@ -34,6 +42,16 @@ class Menu extends Component {
     isLoading: true
   };
 
+  componentDidMount() {
+    api.fetchVendor(this.props.navigation.state.params).then(vendor => {
+      this.setState({ menu: vendor.menu, isLoading: false });
+    });
+  }
+
+  handleTextChange = value => {
+    this.setState({ menu: value });
+  };
+
   handleSwitch = name => {
     const updatedMenu = this.state.menuItems.map(
       ({ item, available, ...rest }) => {
@@ -49,17 +67,23 @@ class Menu extends Component {
     //if (isLoading) return <Loader />;
     console.log(this.props.navigation.state.params.username);
     return (
-      <View style={styles.menuPageContainer}>
-        <Text>Menu Items</Text>
-        {menuItems.map(item => {
-          return (
-            <VendorMenuCard
-              key={item.item}
-              menuItem={item}
-              handleSwitch={this.handleSwitch}
-            />
-          );
-        })}
+      <View style={styles.container}>
+        {menu !== '' && (
+          <Image source={{ uri: menu }} style={styles.menuImage} />
+        )}
+        <View style={styles.inputStyle}>
+          <InputAdder
+            name="Menu URL"
+            value={menu}
+            handleTextChange={this.handleTextChange}
+          />
+        </View>
+        <TouchableOpacity
+          onPress={this.handleUpdate}
+          style={styles.changeMenuButton}
+        >
+          <Text style={styles.vendorButtonText}>Update Menu</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -68,9 +92,31 @@ class Menu extends Component {
 const styles = StyleSheet.create({
   menuPageContainer: {
     flex: 1,
-    backgroundColor: "rgb(243, 202, 203)",
-    alignItems: "center",
-    justifyContent: "center"
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'space-around'
+  },
+  menuImage: {
+    width: Dimensions.get('window').width,
+    height: 300
+  },
+  changeMenuButton: {
+    alignItems: 'center',
+    backgroundColor: 'rgba(112, 150, 36, 1)',
+    width: 200,
+    padding: 10,
+    borderRadius: 5
+  },
+  inputStyle: {
+    backgroundColor: 'rgba(175, 15, 103, 1)',
+    borderRadius: 5,
+    width: Dimensions.get('window').width - 20,
+    padding: 15
+  },
+  vendorButtonText: {
+    color: 'white',
+    fontFamily: 'BebasNeue-Regular',
+    fontSize: 20
   }
 });
 
