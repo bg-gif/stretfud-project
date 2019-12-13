@@ -178,3 +178,9 @@ exports.deleteMenuItemMod = menu_item_id => {
     .where({ menu_item_id })
     .del();
 };
+
+exports.sendMenuItem = (menuItem, username) => {
+  return connection('menu_items')
+    .insert({ username, ...menuItem })
+    .returning('*');
+};

@@ -7,7 +7,8 @@ const {
   patchVendor,
   getVendorMenu,
   patchVendorMenu,
-  deleteMenuItem
+  deleteMenuItem,
+  addMenuItem
 } = require("../controllers/vendors-controller");
 
 vendorsRouter
@@ -24,6 +25,7 @@ vendorsRouter
 
 vendorsRouter
   .route("/:username/menu")
+  .post(addMenuItem)
   .get(getVendorMenu)
   .all(handle405s);
 

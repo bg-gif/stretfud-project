@@ -8,6 +8,8 @@ const {
   checkMenuItemId,
   deleteMenuItemMod
 } = require("../models/vendors-model");
+  sendMenuItem
+} = require('../models/vendors-model');
 
 const { filterVendors } = require("../utils/utils");
 
@@ -85,6 +87,16 @@ exports.deleteMenuItem = (req, res, next) => {
   Promise.all([checkMenuItemId(item_id), deleteMenuItemMod(item_id)])
     .then(() => {
       res.status(204).send();
+    })
+    .catch(next);
+};
+
+exports.addMenuItem = (req, res, next) => {
+  const menuItem = req.body;
+  const { username } = req.params;
+  sendMenuItem(menuItem, username)
+    .then(([menu_item]) => {
+      res.status(201).send({ menu_item });
     })
     .catch(next);
 };
