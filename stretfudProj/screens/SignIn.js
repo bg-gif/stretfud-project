@@ -1,5 +1,13 @@
 import React from "react";
-import { StyleSheet, Text, View, Picker, Image } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Picker,
+  Image,
+  TextInput,
+  KeyboardAvoidingView
+} from "react-native";
 import SignInForm from "../components/SignInForm";
 import { UserConsumer } from "../components/UserContext";
 import { withUserHOC } from "../components/UserContext";
@@ -35,7 +43,7 @@ class SignIn extends React.Component {
   render() {
     if (!this.state.fontLoad) return <Text>Loading</Text>;
     return (
-      <View style={styles.container}>
+      <KeyboardAvoidingView style={styles.container} behavior="position">
         <View style={styles.logoView}>
           <Image
             source={require("../assets/stretfud-logo.png")}
@@ -57,7 +65,8 @@ class SignIn extends React.Component {
           signInType={this.state.signInType}
           navigation={this.props.navigation}
         />
-      </View>
+        <TextInput></TextInput>
+      </KeyboardAvoidingView>
     );
   }
 }

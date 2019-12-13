@@ -1,15 +1,25 @@
 import React from "react";
-import { StyleSheet, Text, View, Button } from "react-native";
+import { StyleSheet, Text, View, Button, Platform } from "react-native";
 
 class SignOut extends React.Component {
   render() {
+    console.log(this.props.user, "props");
+    const platform = Platform.OS;
+    let Color = "";
+    androidColor =
+      this.props.user === "user"
+        ? "rgba(175, 15, 103, 1)"
+        : "rgba(112, 150, 36, 1)";
+    iPhoneColor = "rgb(237, 237, 237)";
+    platform === "android" ? (Color = androidColor) : (Color = iPhoneColor);
+
     return (
       <Button
         onPress={() => {
           this.props.navigation.navigate("SignIn");
         }}
         title="Sign Out"
-        color="rgb(237, 237, 237)"
+        color={Color}
       ></Button>
     );
   }

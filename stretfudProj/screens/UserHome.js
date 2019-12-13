@@ -1,29 +1,31 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   StyleSheet,
   Text,
   View,
   Dimensions,
   TouchableOpacity
-} from 'react-native';
-import SignOut from './SignOut';
-import { withUserHOC } from '../components/UserContext';
-import Map from '../components/Map';
-import ToggleSwitch from 'toggle-switch-react-native';
+} from "react-native";
+import SignOut from "./SignOut";
+import { withUserHOC } from "../components/UserContext";
+import Map from "../components/Map";
+import ToggleSwitch from "toggle-switch-react-native";
+import Loader from "../components/Loader";
 
 class UserHome extends Component {
   state = {
     toggleVal: true,
-    refresh: false
+    refresh: false,
+    isLoading: true
   };
 
   static navigationOptions = ({ navigation }) => {
     return {
       headerRight: () => <SignOut navigation={navigation} />,
-      title: 'Home',
-      headerStyle: { backgroundColor: '#f56111' },
-      headerTintColor: '#fff',
-      headerTitleStyle: { fontWeight: 'bold' }
+      title: "Home",
+      headerStyle: { backgroundColor: "#f56111" },
+      headerTintColor: "#fff",
+      headerTitleStyle: { fontWeight: "bold" }
     };
   };
 
@@ -39,6 +41,7 @@ class UserHome extends Component {
           toggleVal={this.state.toggleVal}
           refresh={this.state.refresh}
           changeRefresh={this.changeRefresh}
+          changeLoading={this.changeLoading}
         />
         <View style={styles.userOptionsContainer}>
           <TouchableOpacity
@@ -71,34 +74,34 @@ class UserHome extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center'
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center"
   },
   userButton: {
-    alignItems: 'center',
+    alignItems: "center",
     width: 100,
     padding: 10,
-    backgroundColor: 'rgba(175, 15, 103, 1)',
+    backgroundColor: "rgba(175, 15, 103, 1)",
     borderRadius: 5,
     margin: 5
   },
   buttonContent: {
-    fontFamily: 'BebasNeue-Regular',
+    fontFamily: "BebasNeue-Regular",
     fontSize: 20,
-    color: 'rgb(237, 237, 237)'
+    color: "rgb(237, 237, 237)"
   },
   userOptionsContainer: {
-    backgroundColor: 'rgb(237, 237, 237)',
-    borderColor: 'rgba(112, 150, 36, 1)',
+    backgroundColor: "rgb(237, 237, 237)",
+    borderColor: "rgba(112, 150, 36, 1)",
     borderWidth: 2,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    width: Dimensions.get('window').width
+    flexDirection: "row",
+    justifyContent: "space-around",
+    width: Dimensions.get("window").width
   },
   toggleSwitch: {
-    color: 'rgba(175, 15, 103, 1)',
-    fontFamily: 'BebasNeue-Regular',
+    color: "rgba(175, 15, 103, 1)",
+    fontFamily: "BebasNeue-Regular",
     fontSize: 20
   }
 });

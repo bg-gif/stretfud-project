@@ -1,38 +1,20 @@
 import React from "react";
-import {
-  Text,
-  TextInput,
-  View,
-  StyleSheet,
-  InputAccessoryView
-} from "react-native";
+import { Text, TextInput, View, StyleSheet } from "react-native";
 
 const InputAdder = ({ name, handleTextChange, value, isEmpty }) => {
   const handleChange = text => {
     handleTextChange(text, name);
   };
-  const inputAccessoryViewID = name;
 
   return (
     <View style={styles.container}>
       <Text style={styles.text}>{name}</Text>
       <TextInput
-        inputAccessoryViewID={inputAccessoryViewID}
         onChangeText={handleChange}
         style={isEmpty ? styles.inputBoxEmpty : styles.inputBox}
         secureTextEntry={name === "password" || name === "confirmPassword"}
         value={value}
       ></TextInput>
-      <InputAccessoryView nativeID={inputAccessoryViewID}>
-        <View style={styles.keyboardView}>
-          <Text style={styles.inputAccessoryViewIDText}>{name}: </Text>
-          <TextInput
-            value={value}
-            secureTextEntry={name === "password" || name === "confirmPassword"}
-            style={styles.inputAccessoryViewIDValue}
-          ></TextInput>
-        </View>
-      </InputAccessoryView>
     </View>
   );
 };
