@@ -1,15 +1,15 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import InputAdder from './InputAdder';
-import * as Crypto from 'expo-crypto';
-import UserContext, { UserProvider } from './UserContext';
-import * as api from '../utils/api';
-import ErrorAlerter from './ErrorAlerter';
+import React from "react";
+import { View, Text, TouchableOpacity, StyleSheet, Button } from "react-native";
+import InputAdder from "./InputAdder";
+import * as Crypto from "expo-crypto";
+import UserContext, { UserProvider } from "./UserContext";
+import * as api from "../utils/api";
+import ErrorAlerter from "./ErrorAlerter";
 
 class SignInForm extends React.Component {
   state = {
-    username: '',
-    password: '',
+    username: "",
+    password: "",
     isEmpty: false
   };
 
@@ -21,21 +21,21 @@ class SignInForm extends React.Component {
     const { signInType, navigation } = this.props;
     const { username, password } = this.state;
     const destination =
-      signInType === 'user' ? 'UserHomePage' : 'VendorHomePage';
+      signInType === "user" ? "UserHomePage" : "VendorHomePage";
     if (!username || !password) {
       return this.setState({ isEmpty: true });
     }
-    Crypto.digestStringAsync('SHA-1', password).then(hashedPassword => {
+    Crypto.digestStringAsync("SHA-1", password).then(hashedPassword => {
       UserContext.username = username;
       api
         .postLoginAuth({ username, password: hashedPassword }, signInType)
         .then(varification => {
-          if (varification.msg === 'Verified') {
+          if (varification.msg === "Verified") {
             navigation.navigate(destination);
           }
         })
         .catch(err => {
-          ErrorAlerter('Username or Password is incorrect');
+          ErrorAlerter("Username or Password is incorrect");
         });
     });
   };
@@ -60,12 +60,21 @@ class SignInForm extends React.Component {
               Please input Username or Password
             </Text>
           )}
-          <TouchableOpacity
-            style={styles.signInButton}
-            onPress={this.handlePress}
-          >
-            <Text style={styles.buttonContent}>sign in</Text>
-          </TouchableOpacity>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              style={styles.signInButton}
+              onPress={() => this.props.navigation.push("SignUp")}
+              navigation={this.props.navigation}
+            >
+              <Text style={styles.buttonContent}>sign up</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.signInButton}
+              onPress={this.handlePress}
+            >
+              <Text style={styles.buttonContent}>sign in</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </UserProvider>
     );
@@ -75,26 +84,32 @@ class SignInForm extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 0.4,
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'space-around'
+    flexDirection: "column",
+    alignItems: "center",
+
+    justifyContent: "space-around"
   },
   signInButton: {
-    alignItems: 'center',
+    alignItems: "center",
     width: 100,
     padding: 10,
-    backgroundColor: 'rgba(175, 15, 103, 1)',
+    backgroundColor: "rgba(175, 15, 103, 1)",
     borderRadius: 5
   },
   buttonContent: {
-    fontFamily: 'BebasNeue-Regular',
+    fontFamily: "BebasNeue-Regular",
     fontSize: 20,
-    color: 'rgb(237, 237, 237)'
+    color: "rgb(237, 237, 237)"
   },
   missingTextWarning: {
-    fontFamily: 'BebasNeue-Regular',
+    fontFamily: "BebasNeue-Regular",
     fontSize: 20,
-    color: 'rgba(198, 197, 185, 1)'
+    color: "rgba(198, 197, 185, 1)"
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignSelf: "stretch"
   }
 });
 

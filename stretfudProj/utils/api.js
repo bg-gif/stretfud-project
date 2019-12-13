@@ -52,3 +52,9 @@ exports.updateMenuItem = ({ username, menu_item_id, available }) => {
       return menu_item;
     });
 };
+
+exports.addUser = userObj => {
+  return axios.post(`${base_URL}/users`, userObj).then(({ data: { user } }) => {
+    return user;
+  });
+};

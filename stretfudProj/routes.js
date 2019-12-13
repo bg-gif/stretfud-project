@@ -8,6 +8,8 @@ import VendorHome from "./screens/VendorHome";
 import Menu from "./screens/Menu";
 import SignOut from "./screens/SignOut";
 import ViewMenu from "./screens/ViewMenu";
+import SignIn from "./screens/SignIn";
+import SignUp from "./screens/SignUp";
 
 export const UserStack = createStackNavigator(
   {
@@ -39,6 +41,30 @@ export const VendorStack = createStackNavigator(
         headerStyle: { backgroundColor: "rgba(112, 150, 36, 1)" },
         headerTintColor: "rgb(237, 237, 237)",
         headerTitleStyle: { fontWeight: "bold" }
+      };
+    }
+  }
+);
+
+export const SignUpStack = createStackNavigator(
+  {
+    Home: SignIn,
+    SignUp: SignUp
+  },
+  {
+    defaultNavigationOptions: () => {
+      return {
+        title: "Sign In",
+        headerStyle: { backgroundColor: "rgba(112, 150, 36, 1)" },
+        headerTintColor: "rgb(237, 237, 237)",
+        headerTitleStyle: { fontWeight: "bold" }
+      };
+    }
+  },
+  {
+    navigationOptions: () => {
+      return {
+        title: "Sign Up"
       };
     }
   }
