@@ -52,3 +52,11 @@ exports.updateMenuItem = ({ username, menu_item_id, available }) => {
       return menu_item;
     });
 };
+
+exports.addUser = (destination, userObj) => {
+  return axios
+    .post(`${base_URL}/${destination}`, userObj)
+    .then(({ data: { user } }) => {
+      return user;
+    });
+};

@@ -18,6 +18,12 @@ import VendorMenuCard from '../components/VendorMenuCard';
 import Constants from 'expo-constants';
 
 class Menu extends Component {
+  static navigationOptions = ({ navigationOptions }) => {
+    return {
+      title: "Menu"
+    };
+  };
+
   state = {
     menuItems: [],
     isLoading: true

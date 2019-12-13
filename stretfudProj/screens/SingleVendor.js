@@ -6,6 +6,12 @@ import Loader from "../components/Loader";
 import UserMenuCard from "../components/UserMenuCard";
 
 class SingleVendor extends Component {
+  static navigationOptions = ({ navigationOptions, navigation }) => {
+    return {
+      title: navigation.state.params.vendor.businessname
+    };
+  };
+
   state = {
     menuItems: [],
     isLoading: true
@@ -38,6 +44,9 @@ class SingleVendor extends Component {
     const { menuItems, isLoading } = this.state;
     if (isLoading) return <Loader />;
 
+    const availableItems = menuItems.filter(item => {
+      if (item.available) return item;
+    });
     return (
       <View style={{ flex: 1 }}>
         <ScrollView
@@ -59,9 +68,12 @@ class SingleVendor extends Component {
             </Text>
           </View>
           <View style={styles.menuItemsContainer}>
-            {menuItems.map(menuItem => {
+            {availableItems.map(availableItem => {
               return (
-                <UserMenuCard key={menuItem.menu_item_id} menuItem={menuItem} />
+                <UserMenuCard
+                  key={availableItem.menu_item_id}
+                  menuItem={availableItem}
+                />
               );
             })}
           </View>
