@@ -10,7 +10,7 @@ exports.up = function(knex) {
     table.string('email');
     table.string('menu');
     table.string('opening_times').notNullable();
-    table.string('location').notNullable();
+    table.string('location');
     table.boolean('open_status');
     table.timestamp('created_at').defaultTo(knex.fn.now());
   });
