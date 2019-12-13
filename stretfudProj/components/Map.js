@@ -117,6 +117,7 @@ export default class App extends Component {
                   cuisine,
                   opening_times
                 } = vendor;
+                if (!location) return null;
                 const coords = location.split(',');
                 const openStatus = open_status ? 'Open' : 'Closed';
                 const color = open_status ? '#008000' : '#FF0000';
