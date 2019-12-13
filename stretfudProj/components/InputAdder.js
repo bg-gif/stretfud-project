@@ -7,7 +7,7 @@ import {
   InputAccessoryView
 } from "react-native";
 
-const InputAdder = ({ name, handleTextChange, value }) => {
+const InputAdder = ({ name, handleTextChange, value, isEmpty }) => {
   const handleChange = text => {
     handleTextChange(text, name);
   };
@@ -19,7 +19,7 @@ const InputAdder = ({ name, handleTextChange, value }) => {
       <TextInput
         inputAccessoryViewID={inputAccessoryViewID}
         onChangeText={handleChange}
-        style={styles.inputBox}
+        style={isEmpty ? styles.inputBoxEmpty : styles.inputBox}
         secureTextEntry={name === "password" || name === "confirmPassword"}
         value={value}
       ></TextInput>
@@ -46,6 +46,17 @@ const styles = StyleSheet.create({
   inputBox: {
     textAlign: "center",
     borderColor: "transparent",
+    backgroundColor: "rgb(237, 237, 237)",
+    width: 250,
+    height: 40,
+    borderRadius: 25,
+    fontWeight: "400",
+    fontSize: 20
+  },
+  inputBoxEmpty: {
+    textAlign: "center",
+    borderColor: "rgba(175, 15, 103, 1)",
+    borderWidth: 2,
     backgroundColor: "rgb(237, 237, 237)",
     width: 250,
     height: 40,

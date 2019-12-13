@@ -6,6 +6,12 @@ import Loader from "../components/Loader";
 import UserMenuCard from "../components/UserMenuCard";
 
 class SingleVendor extends Component {
+  static navigationOptions = ({ navigationOptions, navigation }) => {
+    return {
+      title: navigation.state.params.vendor.businessname
+    };
+  };
+
   state = {
     menuItems: [],
     isLoading: true

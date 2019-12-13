@@ -46,11 +46,13 @@ class SignInForm extends React.Component {
       <UserProvider value={username}>
         <View style={styles.container}>
           <InputAdder
+            isEmpty={isEmpty}
             name="username"
             handleTextChange={this.handleTextChange}
             value={username}
           />
           <InputAdder
+            isEmpty={isEmpty}
             name="password"
             handleTextChange={this.handleTextChange}
             value={password}

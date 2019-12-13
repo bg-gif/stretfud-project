@@ -15,6 +15,12 @@ import ErrorAlerter from "../components/ErrorAlerter";
 import VendorMenuCard from "../components/VendorMenuCard";
 
 class Menu extends Component {
+  static navigationOptions = ({ navigationOptions }) => {
+    return {
+      title: "Menu"
+    };
+  };
+
   state = {
     menuItems: [],
     isLoading: true

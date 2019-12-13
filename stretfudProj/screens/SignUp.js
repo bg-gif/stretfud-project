@@ -1,7 +1,13 @@
 import React from "react";
-import { View, Text, ScrollView, StyleSheet, Picker } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  StyleSheet,
+  Picker,
+  KeyboardAvoidingView
+} from "react-native";
 import UserSignUpForm from "../components/UserSignUpForm";
-import VendorSignUpForm from "../components/VendorSignUpForm";
 
 class SignUp extends React.Component {
   static navigationOptions = ({ navigationOptions }) => {
@@ -22,20 +28,21 @@ class SignUp extends React.Component {
     return (
       <View style={{ flex: 1 }}>
         <ScrollView contentContainerStyle={styles.container}>
-          <Picker
-            selectedValue={signUpType}
-            style={styles.picker}
-            onValueChange={this.handleChange}
-            itemStyle={styles.pickerItem}
-          >
-            <Picker.Item label="User" value="user" />
-            <Picker.Item label="Vendor" value="vendor" />
-          </Picker>
-          {signUpType === "user" ? (
-            <UserSignUpForm navigation={this.props.navigation} />
-          ) : (
-            <VendorSignUpForm navigation={this.props.navigation} />
-          )}
+          <KeyboardAvoidingView behavior="padding" style={styles.container}>
+            <Picker
+              selectedValue={signUpType}
+              style={styles.picker}
+              onValueChange={this.handleChange}
+              itemStyle={styles.pickerItem}
+            >
+              <Picker.Item label="User" value="user" />
+              <Picker.Item label="Vendor" value="vendor" />
+            </Picker>
+            <UserSignUpForm
+              signUpType={signUpType}
+              navigation={this.props.navigation}
+            />
+          </KeyboardAvoidingView>
         </ScrollView>
       </View>
     );
@@ -50,7 +57,8 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     backgroundColor: "rgba(112, 150, 36, 1)",
-    justifyContent: "space-around"
+    justifyContent: "space-around",
+    padding: 8
   },
   picker: {
     height: 75,

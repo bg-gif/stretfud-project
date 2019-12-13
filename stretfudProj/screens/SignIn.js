@@ -7,8 +7,10 @@ import * as Font from "expo-font";
 
 class SignIn extends React.Component {
   static contextType = UserConsumer;
-  static navigationOptions = {
-    tabBarLabel: "StetFud"
+  static navigationOptions = ({ navigationOptions }) => {
+    return {
+      title: "Stretfud"
+    };
   };
 
   state = {
