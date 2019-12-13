@@ -18,7 +18,7 @@ export const UserStack = createStackNavigator(
   {
     defaultNavigationOptions: ({ navigation }) => {
       return {
-        headerRight: () => <SignOut navigation={navigation} />,
+        headerRight: () => <SignOut navigation={navigation} user="user" />,
         headerStyle: { backgroundColor: "rgba(175, 15, 103, 1)" },
         headerTintColor: "rgb(237, 237, 237)",
         headerTitleStyle: { fontWeight: "bold" }
@@ -35,7 +35,7 @@ export const VendorStack = createStackNavigator(
   {
     defaultNavigationOptions: ({ navigation }) => {
       return {
-        headerRight: () => <SignOut navigation={navigation} />,
+        headerRight: () => <SignOut navigation={navigation} user="vendor" />,
         headerStyle: { backgroundColor: "rgba(112, 150, 36, 1)" },
         headerTintColor: "rgb(237, 237, 237)",
         headerTitleStyle: { fontWeight: "bold" }
