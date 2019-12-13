@@ -160,3 +160,9 @@ exports.updateMenuItem = (menu_item_id, options) => {
     })
     .returning('*');
 };
+
+exports.sendMenuItem = (menuItem, username) => {
+  return connection('menu_items')
+    .insert({ username, ...menuItem })
+    .returning('*');
+};

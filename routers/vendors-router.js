@@ -6,7 +6,8 @@ const {
   postVendor,
   patchVendor,
   getVendorMenu,
-  patchVendorMenu
+  patchVendorMenu,
+  addMenuItem
 } = require('../controllers/vendors-controller');
 
 vendorsRouter
@@ -23,6 +24,7 @@ vendorsRouter
 
 vendorsRouter
   .route('/:username/menu')
+  .post(addMenuItem)
   .get(getVendorMenu)
   .all(handle405s);
 

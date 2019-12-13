@@ -4,7 +4,8 @@ const {
   sendVendor,
   patchVendor,
   fetchMenuItems,
-  updateMenuItem
+  updateMenuItem,
+  sendMenuItem
 } = require('../models/vendors-model');
 
 const { filterVendors } = require('../utils/utils');
@@ -74,6 +75,16 @@ exports.patchVendorMenu = (req, res, next) => {
       return menu_item
         ? res.status(200).send({ menu_item })
         : Promise.reject({ status: 404, msg: 'Not Found' });
+    })
+    .catch(next);
+};
+
+exports.addMenuItem = (req, res, next) => {
+  const menuItem = req.body;
+  const { username } = req.params;
+  sendMenuItem(menuItem, username)
+    .then(([menu_item]) => {
+      res.status(201).send({ menu_item });
     })
     .catch(next);
 };
