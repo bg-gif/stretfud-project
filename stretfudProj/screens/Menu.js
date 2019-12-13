@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
@@ -6,13 +6,13 @@ import {
   Image,
   View,
   Dimensions
-} from "react-native";
-import * as api from "../utils/api";
+} from 'react-native';
+import * as api from '../utils/api';
 
-import Loader from "../components/Loader";
-import ErrorAlerter from "../components/ErrorAlerter";
+import Loader from '../components/Loader';
+import ErrorAlerter from '../components/ErrorAlerter';
 
-import VendorMenuCard from "../components/VendorMenuCard";
+import VendorMenuCard from '../components/VendorMenuCard';
 
 class Menu extends Component {
   state = {
@@ -27,7 +27,7 @@ class Menu extends Component {
         this.setState({ menuItems: menuItems, isLoading: false });
       })
       .catch(err => {
-        ErrorAlerter("Menu items could not be found");
+        ErrorAlerter('Menu items could not be found');
       });
   }
 
@@ -77,19 +77,20 @@ class Menu extends Component {
 const styles = StyleSheet.create({
   menuPageContainer: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "space-around",
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'space-around',
     padding: 15
   },
   headerContainer: {
-    backgroundColor: "rgba(175, 15, 103, 1)",
+    backgroundColor: 'rgba(175, 15, 103, 1)',
     borderRadius: 5,
-    padding: 5
+    padding: 5,
+    marginBottom: 10
   },
   headerText: {
-    color: "white",
-    fontFamily: "BebasNeue-Regular",
+    color: 'white',
+    fontFamily: 'BebasNeue-Regular',
     fontSize: 25
   }
 });
