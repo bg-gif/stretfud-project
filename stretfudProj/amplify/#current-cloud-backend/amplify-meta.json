@@ -1,0 +1,15 @@
+{
+    "providers": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-stretfudproj-aaa-152749-authRole",
+            "UnauthRoleArn": "arn:aws:iam::511463886626:role/amplify-stretfudproj-aaa-152749-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::511463886626:role/amplify-stretfudproj-aaa-152749-authRole",
+            "Region": "eu-west-1",
+            "DeploymentBucketName": "amplify-stretfudproj-aaa-152749-deployment",
+            "UnauthRoleName": "amplify-stretfudproj-aaa-152749-unauthRole",
+            "StackName": "amplify-stretfudproj-aaa-152749",
+            "StackId": "arn:aws:cloudformation:eu-west-1:511463886626:stack/amplify-stretfudproj-aaa-152749/f5e5f320-1cf3-11ea-9920-0a1dada20d7a",
+            "AmplifyAppId": "d2wt5rjov5gx84"
+        }
+    }
+}

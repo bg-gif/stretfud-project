@@ -1,0 +1,59 @@
+{
+    "providers": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-stretfudproj-aaa-152749-authRole",
+            "UnauthRoleArn": "arn:aws:iam::511463886626:role/amplify-stretfudproj-aaa-152749-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::511463886626:role/amplify-stretfudproj-aaa-152749-authRole",
+            "Region": "eu-west-1",
+            "DeploymentBucketName": "amplify-stretfudproj-aaa-152749-deployment",
+            "UnauthRoleName": "amplify-stretfudproj-aaa-152749-unauthRole",
+            "StackName": "amplify-stretfudproj-aaa-152749",
+            "StackId": "arn:aws:cloudformation:eu-west-1:511463886626:stack/amplify-stretfudproj-aaa-152749/f5e5f320-1cf3-11ea-9920-0a1dada20d7a",
+            "AmplifyAppId": "d2wt5rjov5gx84"
+        }
+    },
+    "auth": {
+        "stretfudproj7f70a210": {
+            "service": "Cognito",
+            "providerPlugin": "awscloudformation",
+            "dependsOn": [],
+            "lastPushTimeStamp": "2019-12-12T15:59:50.590Z",
+            "providerMetadata": {
+                "s3TemplateURL": "https://s3.amazonaws.com/amplify-stretfudproj-aaa-152749-deployment/amplify-cfn-templates/auth/stretfudproj7f70a210-cloudformation-template.yml",
+                "logicalId": "authstretfudproj7f70a210"
+            }
+        },
+        "userPoolGroups": {
+            "service": "Cognito-UserPool-Groups",
+            "providerPlugin": "awscloudformation",
+            "dependsOn": [
+                {
+                    "category": "auth",
+                    "resourceName": "stretfudproj7f70a210",
+                    "attributes": [
+                        "UserPoolId",
+                        "AppClientIDWeb",
+                        "AppClientID",
+                        "IdentityPoolId"
+                    ]
+                }
+            ],
+            "providerMetadata": {
+                "s3TemplateURL": "https://s3.amazonaws.com/amplify-stretfudproj-aaa-152749-deployment/amplify-cfn-templates/auth/template.json",
+                "logicalId": "authuserPoolGroups"
+            },
+            "lastPushTimeStamp": "2019-12-12T15:59:50.600Z"
+        }
+    },
+    "storage": {
+        "stretfud": {
+            "service": "S3",
+            "providerPlugin": "awscloudformation",
+            "providerMetadata": {
+                "s3TemplateURL": "https://s3.amazonaws.com/amplify-stretfudproj-aaa-152749-deployment/amplify-cfn-templates/storage/s3-cloudformation-template.json",
+                "logicalId": "storagestretfud"
+            },
+            "lastPushTimeStamp": "2019-12-12T15:59:50.585Z"
+        }
+    }
+}

@@ -10,11 +10,13 @@ import SignOut from './SignOut';
 import { withUserHOC } from '../components/UserContext';
 import Map from '../components/Map';
 import ToggleSwitch from 'toggle-switch-react-native';
+import Loader from '../components/Loader';
 
 class UserHome extends Component {
   state = {
     toggleVal: true,
-    refresh: false
+    refresh: false,
+    isLoading: true
   };
 
   static navigationOptions = ({ navigation }) => {
@@ -39,6 +41,7 @@ class UserHome extends Component {
           toggleVal={this.state.toggleVal}
           refresh={this.state.refresh}
           changeRefresh={this.changeRefresh}
+          changeLoading={this.changeLoading}
         />
         <View style={styles.userOptionsContainer}>
           <TouchableOpacity
