@@ -62,7 +62,7 @@ describe("server", () => {
               password: "password",
               realname: "Gregg Wallace",
               phone_num: "07825184365",
-              age: 55,
+              age: "55",
               email: "whoateallthepies@gmail.com"
             })
             .expect(201)
