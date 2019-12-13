@@ -1,18 +1,18 @@
-const connection = require('../db/connection');
+const connection = require("../db/connection");
 
 exports.fetchVendors = () => {
-  return connection('vendors')
+  return connection("vendors")
     .select(
-      'username',
-      'ownername',
-      'cuisine',
-      'location',
-      'opening_times',
-      'open_status',
-      'menu',
-      'businessname',
-      'phone_num',
-      'email'
+      "username",
+      "ownername",
+      "cuisine",
+      "location",
+      "opening_times",
+      "open_status",
+      "menu",
+      "businessname",
+      "phone_num",
+      "email"
     )
     .then(vendors => {
       return vendors;
@@ -20,29 +20,29 @@ exports.fetchVendors = () => {
 };
 
 exports.fetchVendorByUsername = Username => {
-  return connection('vendors')
+  return connection("vendors")
     .select(
-      'username',
-      'ownername',
-      'cuisine',
-      'location',
-      'opening_times',
-      'open_status',
-      'menu',
-      'businessname',
-      'phone_num',
-      'email'
+      "username",
+      "ownername",
+      "cuisine",
+      "location",
+      "opening_times",
+      "open_status",
+      "menu",
+      "businessname",
+      "phone_num",
+      "email"
     )
-    .where({ 'vendors.username': Username })
+    .where({ "vendors.username": Username })
     .then(vendor => {
       return vendor;
     });
 };
 
 exports.sendVendor = user => {
-  return connection('vendors')
+  return connection("vendors")
     .insert(user)
-    .returning('*')
+    .returning("*")
     .then(([vendor]) => {
       const {
         username,
@@ -76,16 +76,16 @@ exports.sendVendor = user => {
 exports.patchVendor = (update, username) => {
   const { location, open_status, menu } = update;
   if (!location && !open_status && !menu) {
-    return Promise.reject({ status: 400, msg: 'Bad Request' });
+    return Promise.reject({ status: 400, msg: "Bad Request" });
   }
-  return connection('vendors')
+  return connection("vendors")
     .where({ username })
     .modify(query => {
       if (location) query.update({ location });
       if (open_status) query.update({ open_status });
       if (menu) query.update({ menu });
     })
-    .returning('*')
+    .returning("*")
     .then(([response]) => {
       const {
         username,
@@ -115,14 +115,14 @@ exports.patchVendor = (update, username) => {
 };
 
 exports.fetchVendorInfo = username => {
-  return connection('vendors')
-    .select('username', 'password')
+  return connection("vendors")
+    .select("username", "password")
     .where({ username });
 };
 
 exports.fetchMenuItems = username => {
-  return connection('menu_items')
-    .select('*')
+  return connection("menu_items")
+    .select("*")
     .where({ username });
 };
 
@@ -145,9 +145,9 @@ exports.updateMenuItem = (menu_item_id, options) => {
     !vegan &&
     !gluten_free
   ) {
-    return Promise.reject({ status: 400, msg: 'Bad Request' });
+    return Promise.reject({ status: 400, msg: "Bad Request" });
   }
-  return connection('menu_items')
+  return connection("menu_items")
     .where({ menu_item_id })
     .modify(query => {
       if (available) query.update({ available });
@@ -158,5 +158,23 @@ exports.updateMenuItem = (menu_item_id, options) => {
       if (vegan) query.update({ vegan });
       if (gluten_free) query.update({ gluten_free });
     })
-    .returning('*');
+    .returning("*");
+};
+
+exports.checkMenuItemId = menu_item_id => {
+  return connection("menu_items")
+    .select("*")
+    .where({ menu_item_id })
+    .then(menu_item => {
+      if (menu_item.length === 0) {
+        return Promise.reject({ status: 404, msg: "menu_item not found" });
+      }
+    });
+};
+
+exports.deleteMenuItemMod = menu_item_id => {
+  return connection("menu_items")
+    .select("*")
+    .where({ menu_item_id })
+    .del();
 };
