@@ -425,9 +425,9 @@ describe("server", () => {
             });
         });
       });
-      describe('INVALID METHODS', () => {
-        it('status:405, responds with method not allowed', () => {
-          const methodArr = ['put', 'patch', 'delete'];
+      describe("INVALID METHODS", () => {
+        it("status:405, responds with method not allowed", () => {
+          const methodArr = ["put", "patch", "delete"];
           const promiseArr = methodArr.map(method => {
             return request[method]("/api/vendors")
               .expect(405)
@@ -552,76 +552,73 @@ describe("server", () => {
               });
             });
           });
-          describe("INVALID METHODS", () => {
-            it("status:405, responds with method not allowed", () => {
-              const methodArr = ["post", "put", "delete"];
-          describe('POST', () => {
-            it('status:201, adds menu item to db and returns added menu item ', () => {
+          describe("POST", () => {
+            it("status:201, adds menu item to db and returns added menu item ", () => {
               return request
-                .post('/api/vendors/oppri/menu')
+                .post("/api/vendors/oppri/menu")
                 .send({
-                  name: 'pizza',
+                  name: "pizza",
                   price: 23.65,
                   description: "it's pizza. what do you expect?"
                 })
                 .expect(201)
                 .then(({ body: { menu_item } }) => {
-                  expect(menu_item.name).to.equal('pizza');
-                  expect(menu_item).to.contain.keys('menu_item_id');
+                  expect(menu_item.name).to.equal("pizza");
+                  expect(menu_item).to.contain.keys("menu_item_id");
                 });
             });
-            it('status:400, returns bad request on no name input', () => {
+            it("status:400, returns bad request on no name input", () => {
               return request
-                .post('/api/vendors/oppri/menu')
+                .post("/api/vendors/oppri/menu")
                 .send({
                   price: 23.65,
                   description: "it's pizza. what do you expect?"
                 })
                 .expect(400)
                 .then(({ body: { msg } }) => {
-                  expect(msg).to.equal('Bad Request');
+                  expect(msg).to.equal("Bad Request");
                 });
             });
-            it('status:400, returns bad request on no price input', () => {
+            it("status:400, returns bad request on no price input", () => {
               return request
-                .post('/api/vendors/oppri/menu')
+                .post("/api/vendors/oppri/menu")
                 .send({
-                  name: 'pizza',
+                  name: "pizza",
                   description: "it's pizza. what do you expect?"
                 })
                 .expect(400)
                 .then(({ body: { msg } }) => {
-                  expect(msg).to.equal('Bad Request');
+                  expect(msg).to.equal("Bad Request");
                 });
             });
-            it('status:400, returns bad request on bad input data type', () => {
+            it("status:400, returns bad request on bad input data type", () => {
               return request
-                .post('/api/vendors/oppri/menu')
+                .post("/api/vendors/oppri/menu")
                 .send({
-                  name: 'pizza',
-                  price: 'elephant'
+                  name: "pizza",
+                  price: "elephant"
                 })
                 .expect(400)
                 .then(({ body: { msg } }) => {
-                  expect(msg).to.equal('Bad Request');
+                  expect(msg).to.equal("Bad Request");
                 });
             });
-            it('status:400, returns bad request on bad input key type', () => {
+            it("status:400, returns bad request on bad input key type", () => {
               return request
-                .post('/api/vendors/oppri/menu')
+                .post("/api/vendors/oppri/menu")
                 .send({
-                  nome: 'pizza',
-                  price: 'elephant'
+                  nome: "pizza",
+                  price: "elephant"
                 })
                 .expect(400)
                 .then(({ body: { msg } }) => {
-                  expect(msg).to.equal('Bad Request');
+                  expect(msg).to.equal("Bad Request");
                 });
             });
           });
-          describe('INVALID METHODS', () => {
-            it('status:405, responds with method not allowed', () => {
-              const methodArr = ['post', 'put', 'delete'];
+          describe("INVALID METHODS", () => {
+            it("status:405, responds with method not allowed", () => {
+              const methodArr = ["put", "delete"];
               const promiseArr = methodArr.map(method => {
                 return request[method]("/api/vendors/oppri/menu")
                   .expect(405)
@@ -846,7 +843,7 @@ describe("server", () => {
             });
             describe("INVALID METHODS", () => {
               it("status:405, responds with method not allowed", () => {
-                const methodArr = ["post", "put", "delete"];
+                const methodArr = ["post", "put"];
                 const promiseArr = methodArr.map(method => {
                   return request[method]("/api/vendors/oppri/menu/1")
                     .expect(405)

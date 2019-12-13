@@ -180,7 +180,7 @@ exports.deleteMenuItemMod = menu_item_id => {
 };
 
 exports.sendMenuItem = (menuItem, username) => {
-  return connection('menu_items')
+  return connection("menu_items")
     .insert({ username, ...menuItem })
-    .returning('*');
+    .returning("*");
 };

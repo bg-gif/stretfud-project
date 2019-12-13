@@ -6,10 +6,9 @@ const {
   fetchMenuItems,
   updateMenuItem,
   checkMenuItemId,
-  deleteMenuItemMod
-} = require("../models/vendors-model");
+  deleteMenuItemMod,
   sendMenuItem
-} = require('../models/vendors-model');
+} = require("../models/vendors-model");
 
 const { filterVendors } = require("../utils/utils");
 
