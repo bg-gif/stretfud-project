@@ -54,7 +54,7 @@ describe('server', () => {
     });
     describe('/users', () => {
       describe('POST', () => {
-        it.only('status 201, posts a user, returns the posted user', () => {
+        it('status 201, posts a user, returns the posted user', () => {
           return request
             .post('/api/users')
             .send({
@@ -229,7 +229,6 @@ describe('server', () => {
               });
           });
         });
-
         describe('INVALID METHODS', () => {
           it('status:405, responds with method not allowed', () => {
             const methodArr = ['post', 'put', 'delete'];
@@ -272,7 +271,7 @@ describe('server', () => {
             .post('/api/vendors')
             .send({
               username: 'TejanosBoss',
-              ownername: 'Carl Berens',
+              realname: 'Carl Berens',
               cuisine: 'mexican',
               location: '54.338936, -1.434165',
               opening_times: '12-7pm',
