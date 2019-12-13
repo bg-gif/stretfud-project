@@ -12,7 +12,8 @@ import Constants from 'expo-constants';
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
 import { fetchVendorsByLocation } from '../utils/api';
-import Loader from './Loader';
+import Loader from '../components/Loader';
+
 import ErrorAlerter from './ErrorAlerter';
 
 const geolib = require('geolib');
@@ -29,8 +30,8 @@ export default class App extends Component {
     errorMessage: null,
     long: null,
     lat: null,
-    isLoading: true,
-    vendors: []
+    vendors: [],
+    isLoading: false
   };
 
   componentWillMount() {
@@ -40,6 +41,7 @@ export default class App extends Component {
           'Oops, this will not work on Sketch in an Android emulator. Try it on your device!'
       });
     } else {
+      this.setState({ isLoading: true });
       this._getLocationAsync();
     }
   }
@@ -62,14 +64,13 @@ export default class App extends Component {
       {
         location,
         long: location.coords.longitude,
-        lat: location.coords.latitude,
-        isLoading: false
+        lat: location.coords.latitude
       },
       () => {
         const { long, lat } = this.state;
         fetchVendorsByLocation(lat, long).then(vendors => {
-          this.setState({ vendors }, () => {
-            this.props.changeRefresh;
+          this.setState({ vendors, isLoading: false }, () => {
+            this.props.changeRefresh();
           });
         });
       }

@@ -23,7 +23,7 @@ const InputAdder = ({ name, handleTextChange, value }) => {
         secureTextEntry={name === 'password'}
         value={value}
       ></TextInput>
-      <InputAccessoryView nativeID={inputAccessoryViewID}>
+      {/* <InputAccessoryView nativeID={inputAccessoryViewID}>
         <View style={styles.keyboardView}>
           <Text style={styles.inputAccessoryViewIDText}>{name}: </Text>
           <TextInput
@@ -32,7 +32,7 @@ const InputAdder = ({ name, handleTextChange, value }) => {
             style={styles.inputAccessoryViewIDValue}
           ></TextInput>
         </View>
-      </InputAccessoryView>
+      </InputAccessoryView> */}
     </View>
   );
 };
