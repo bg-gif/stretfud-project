@@ -1,7 +1,7 @@
 module.exports = [
   {
     username: 'oppri',
-    ownername: 'steve prime',
+    realname: 'steve prime',
     businessname: 'Steves steaks',
     cuisine: 'steak house',
     location: '53.796329, -1.542809',
@@ -15,7 +15,7 @@ module.exports = [
   },
   {
     username: 'frankgrimes',
-    ownername: 'Frank Grimes',
+    realname: 'Frank Grimes',
     businessname: 'The Pit',
     cuisine: 'BBQ',
     location: '53.794764, -1.542165',
@@ -29,7 +29,7 @@ module.exports = [
   },
   {
     username: 'rodneyp',
-    ownername: 'Rodney Potter',
+    realname: 'Rodney Potter',
     businessname: 'The Spice Bowl',
     cuisine: 'South Korean Hotpot',
     location: '53.795715, -1.545040',
@@ -43,7 +43,7 @@ module.exports = [
   },
   {
     username: 'bezzat',
-    ownername: 'Beatrice Trotter',
+    realname: 'Beatrice Trotter',
     businessname: 'Spit Roast',
     cuisine: 'Hogroast',
     opening_times: '6am - 6pm',
@@ -56,7 +56,7 @@ module.exports = [
   },
   {
     username: 'amannyh',
-    ownername: 'Amanda Hugenkiss',
+    realname: 'Amanda Hugenkiss',
     businessname: 'Boring British Breakfasts',
     cuisine: 'All-day Breakfast',
     location: '54.792522, -1.949630',
@@ -70,7 +70,7 @@ module.exports = [
   },
   {
     username: 'alexpj',
-    ownername: 'Alex PJ',
+    realname: 'Alex PJ',
     businessname: 'PJs Van',
     cuisine: "It's a surprise",
     location: '53.798799, -1.753437',
