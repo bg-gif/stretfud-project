@@ -20,7 +20,7 @@ import Constants from 'expo-constants';
 class Menu extends Component {
   static navigationOptions = ({ navigationOptions }) => {
     return {
-      title: "Menu"
+      title: 'Menu'
     };
   };
 
@@ -65,10 +65,6 @@ class Menu extends Component {
       <SafeAreaView style={styles.container}>
         <ScrollView contentContainerStyle={styles.menuPageContainer}>
           <View>
-            <View style={styles.headerContainer}>
-              <Text style={styles.headerText}>Menu Items</Text>
-            </View>
-
             {menuItems.map(item => {
               return (
                 <VendorMenuCard
@@ -96,16 +92,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-around'
   },
-  headerContainer: {
-    backgroundColor: 'rgba(175, 15, 103, 1)',
-    borderRadius: 5,
-    padding: 5,
-    marginBottom: 10
-  },
   headerText: {
     color: 'white',
     fontFamily: 'BebasNeue-Regular',
-    fontSize: 25
+    fontSize: 25,
+    textAlign: 'center'
   }
 });
 
