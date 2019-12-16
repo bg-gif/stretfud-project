@@ -12,7 +12,6 @@ exports.filterVendors = (vendors, location) => {
 
     let vendorLocation = { latitude, longitude };
     let distance = geolib.getDistance(locationObj, vendorLocation, 1);
-    console.log(distance < 1609);
     return distance < 1609;
   });
 };

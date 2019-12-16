@@ -8,10 +8,10 @@ const { PORT = 9090 } = process.env;
 
 io.on('connection', socket => {
   console.log('New Client Connected');
-  socket.on('Incoming', data => {
+  socket.on('incoming', data => {
     console.log('here');
     console.log(data);
-    socket.broadcast.emit('Outgoing', { data });
+    socket.broadcast.emit('outgoing', { data });
   });
   socket.on('disconnect', () => {
     console.log('Client disconnected');
