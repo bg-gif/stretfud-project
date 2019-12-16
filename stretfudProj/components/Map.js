@@ -11,7 +11,7 @@ import MapView, { Marker, Callout } from "react-native-maps";
 import Constants from "expo-constants";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
-import { fetchVendorsByLocation } from "../utils/api";
+import { fetchVendorsByLocation, fetchVendors } from "../utils/api";
 import Loader from "../components/Loader";
 
 import ErrorAlerter from "./ErrorAlerter";
@@ -31,8 +31,8 @@ export default class App extends Component {
     long: null,
     lat: null,
     vendors: [],
-    isLoading: false,
-    showAll: false
+    allVendors: [],
+    isLoading: false
   };
 
   componentWillMount() {
@@ -70,8 +70,15 @@ export default class App extends Component {
       },
       () => {
         const { longitude, latitude } = this.state.start;
+
         fetchVendorsByLocation(latitude, longitude).then(vendors => {
           this.setState({ vendors, isLoading: false }, () => {
+            this.props.changeRefresh();
+          });
+        });
+
+        fetchVendors().then(vendors => {
+          this.setState({ allVendors: vendors, isLoading: false }, () => {
             this.props.changeRefresh();
           });
         });
@@ -80,7 +87,8 @@ export default class App extends Component {
   };
 
   render() {
-    const { lat, long, vendors, isLoading, start } = this.state;
+    const { lat, long, vendors, isLoading, start, allVendors } = this.state;
+    const Vendors = this.props.nearMe ? vendors : allVendors;
 
     return isLoading ? (
       <Loader />
@@ -104,7 +112,7 @@ export default class App extends Component {
           />
           {vendors === undefined
             ? ErrorAlerter("Could not find vendors")
-            : vendors.map(vendor => {
+            : Vendors.map(vendor => {
                 const {
                   location,
                   open_status,
