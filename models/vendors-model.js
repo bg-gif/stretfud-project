@@ -184,3 +184,22 @@ exports.sendMenuItem = (menuItem, username) => {
     .insert({ username, ...menuItem })
     .returning('*');
 };
+
+exports.fetchOrders = username => {
+  return connection('orders')
+    .leftJoin('order_items', 'order_items.order_id', 'orders.order_id')
+    .leftJoin(
+      'menu_items',
+      'order_items.menu_item_id',
+      'menu_items.menu_item_id'
+    )
+    .select(
+      'orders.order_id',
+      'orders.created_at',
+      'orders.status',
+      'orders.user_username',
+      'menu_items.price',
+      'menu_items.name'
+    )
+    .where('orders.vendor_username', username);
+};

@@ -1,10 +1,10 @@
 module.exports = [
   {
-    user_username: 1,
-    vendor_username: 2
+    user_username: 'megatron',
+    vendor_username: 'oppri'
   },
   {
-    user_username: 2,
-    vendor_username: 3
+    user_username: 'megatron',
+    vendor_username: 'oppri'
   }
 ];

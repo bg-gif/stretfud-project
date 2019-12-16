@@ -4,6 +4,7 @@ const vendorsRouter = require('./vendors-router');
 const usersRouter = require('../routers/users-router');
 const uploadRouter = require('../routers/upload-router');
 const loginRouter = require('./login-router');
+const ordersRouter = require('../routers/orders-router');
 const ends = require('../endpoints.json');
 
 const endPoints = (req, res, next) => {
@@ -14,6 +15,7 @@ apiRouter.use('/vendors', vendorsRouter);
 apiRouter.use('/users', usersRouter);
 apiRouter.use('/upload', uploadRouter);
 apiRouter.use('/login', loginRouter);
+apiRouter.use('/orders', ordersRouter);
 apiRouter
   .route('/')
   .get(endPoints)

@@ -7,7 +7,8 @@ const {
   updateMenuItem,
   checkMenuItemId,
   deleteMenuItemMod,
-  sendMenuItem
+  sendMenuItem,
+  fetchOrders
 } = require('../models/vendors-model');
 
 const { filterVendors } = require('../utils/utils');
@@ -96,6 +97,16 @@ exports.addMenuItem = (req, res, next) => {
   sendMenuItem(menuItem, username)
     .then(([menu_item]) => {
       res.status(201).send({ menu_item });
+    })
+    .catch(next);
+};
+
+exports.getOrders = (req, res, next) => {
+  const { username } = req.params;
+  console.log('here');
+  fetchOrders(username)
+    .then(orders => {
+      res.status(200).send({ orders });
     })
     .catch(next);
 };
