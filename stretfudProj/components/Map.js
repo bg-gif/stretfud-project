@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   Platform,
   StyleSheet,
@@ -6,23 +6,23 @@ import {
   View,
   Dimensions,
   Image
-} from 'react-native';
-import MapView, { Marker, Callout } from 'react-native-maps';
-import Constants from 'expo-constants';
-import * as Location from 'expo-location';
-import * as Permissions from 'expo-permissions';
-import { fetchVendorsByLocation } from '../utils/api';
-import Loader from '../components/Loader';
+} from "react-native";
+import MapView, { Marker, Callout } from "react-native-maps";
+import Constants from "expo-constants";
+import * as Location from "expo-location";
+import * as Permissions from "expo-permissions";
+import { fetchVendorsByLocation } from "../utils/api";
+import Loader from "../components/Loader";
 
-import ErrorAlerter from './ErrorAlerter';
+import ErrorAlerter from "./ErrorAlerter";
 
-const geolib = require('geolib');
+const geolib = require("geolib");
 
 const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
+  ios: "Press Cmd+R to reload,\n" + "Cmd+D or shake for dev menu",
   android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu'
+    "Double tap R on your keyboard to reload,\n" +
+    "Shake or press menu button for dev menu"
 });
 
 export default class App extends Component {
@@ -31,14 +31,15 @@ export default class App extends Component {
     long: null,
     lat: null,
     vendors: [],
-    isLoading: false
+    isLoading: false,
+    showAll: false
   };
 
   componentWillMount() {
-    if (Platform.OS === 'android' && !Constants.isDevice) {
+    if (Platform.OS === "android" && !Constants.isDevice) {
       this.setState({
         errorMessage:
-          'Oops, this will not work on Sketch in an Android emulator. Try it on your device!'
+          "Oops, this will not work on Sketch in an Android emulator. Try it on your device!"
       });
     } else {
       this.setState({ isLoading: true });
@@ -52,9 +53,9 @@ export default class App extends Component {
 
   _getLocationAsync = async () => {
     let { status } = await Permissions.askAsync(Permissions.LOCATION);
-    if (status !== 'granted') {
+    if (status !== "granted") {
       this.setState({
-        errorMessage: 'Permission to access location was denied'
+        errorMessage: "Permission to access location was denied"
       });
     }
 
@@ -104,10 +105,10 @@ export default class App extends Component {
             }}
             radius={805}
             strokeWidth={1}
-            strokeColor={'#1a66ff'}
+            strokeColor={"#1a66ff"}
           />
           {vendors === undefined
-            ? ErrorAlerter('Could not find vendors')
+            ? ErrorAlerter("Could not find vendors")
             : vendors.map(vendor => {
                 const {
                   location,
@@ -118,9 +119,9 @@ export default class App extends Component {
                   opening_times
                 } = vendor;
                 if (!location) return null;
-                const coords = location.split(',');
-                const openStatus = open_status ? 'Open' : 'Closed';
-                const color = open_status ? '#008000' : '#FF0000';
+                const coords = location.split(",");
+                const openStatus = open_status ? "Open" : "Closed";
+                const color = open_status ? "#008000" : "#FF0000";
                 if (this.props.toggleVal || open_status) {
                   return (
                     <Marker
@@ -136,7 +137,7 @@ export default class App extends Component {
                       <Callout
                         style={styles.customView}
                         onPress={() => {
-                          this.props.navigation.navigate('SingleVendor', {
+                          this.props.navigation.navigate("SingleVendor", {
                             vendor
                           });
                         }}
@@ -163,7 +164,7 @@ export default class App extends Component {
                             <View name="Logo">
                               <Image
                                 resizeMethod="resize"
-                                source={require('../assets/stretfud-logo.png')}
+                                source={require("../assets/stretfud-logo.png")}
                                 style={styles.logo}
                               />
                             </View>
@@ -190,24 +191,24 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#800080'
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#800080"
   },
   welcome: {
     fontSize: 20,
-    textAlign: 'center',
+    textAlign: "center",
     margin: 10
   },
   instructions: {
-    textAlign: 'center',
-    color: '#333333',
+    textAlign: "center",
+    color: "#333333",
     marginBottom: 5
   },
   mapStyle: {
     flex: 1,
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height
+    width: Dimensions.get("window").width,
+    height: Dimensions.get("window").height
   },
   customView: {
     height: 140
@@ -216,27 +217,27 @@ const styles = StyleSheet.create({
     height: 140
   },
   businessCardHeader: {
-    fontFamily: 'BebasNeue-Regular',
+    fontFamily: "BebasNeue-Regular",
     fontSize: 30,
-    color: 'rgba(175, 15, 103, 1)',
-    textAlign: 'center'
+    color: "rgba(175, 15, 103, 1)",
+    textAlign: "center"
   },
   businessCardInfo: {
-    fontFamily: 'BebasNeue-Regular',
+    fontFamily: "BebasNeue-Regular",
     fontSize: 20,
-    color: 'rgba(175, 15, 103, 1)',
-    textAlign: 'left',
+    color: "rgba(175, 15, 103, 1)",
+    textAlign: "left",
     paddingLeft: 5
   },
   cardContent: {
-    flexDirection: 'row',
-    justifyContent: 'space-between'
+    flexDirection: "row",
+    justifyContent: "space-between"
   },
   logo: {
     width: 100,
     height: 100,
     borderRadius: 75,
-    borderColor: 'rgba(175, 15, 103, 1)',
+    borderColor: "rgba(175, 15, 103, 1)",
     borderWidth: 4,
     paddingRight: 10
   }
