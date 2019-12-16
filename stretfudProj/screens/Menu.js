@@ -87,7 +87,6 @@ const styles = StyleSheet.create({
     marginTop: Constants.statusBarHeight
   },
   menuPageContainer: {
-    // flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'space-around'
