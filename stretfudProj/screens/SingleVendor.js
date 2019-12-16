@@ -4,17 +4,27 @@ import * as api from "../utils/api";
 import ErrorAlerter from "../components/ErrorAlerter";
 import Loader from "../components/Loader";
 import UserMenuCard from "../components/UserMenuCard";
+import ShoppingCartViewer from "../components/ShoppingCartViewer";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 class SingleVendor extends Component {
   static navigationOptions = ({ navigationOptions, navigation }) => {
     return {
-      title: navigation.state.params.vendor.businessname
+      title: navigation.state.params.vendor.businessname,
+      headerRight: () => (
+        <ShoppingCartViewer
+          navigation={navigation}
+          count={navigation.getParam("cartParam")}
+          vendor={navigation.state.params.vendor.username}
+        />
+      )
     };
   };
 
   state = {
     menuItems: [],
-    isLoading: true
+    isLoading: true,
+    cart: []
   };
 
   componentDidMount() {
@@ -25,10 +35,25 @@ class SingleVendor extends Component {
       .then(menuItems => {
         this.setState({ menuItems: menuItems, isLoading: false });
       })
+      .then(() => {
+        this.props.navigation.setParams({ cartParam: this.state.cart });
+      })
       .catch(err => {
         ErrorAlerter("Menu items could not be found");
       });
   }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.cart !== this.state.cart) {
+      this.props.navigation.setParams({ cartParam: this.state.cart });
+    }
+  }
+
+  addItem = newItemObj => {
+    this.setState(currentState => {
+      return { cart: [newItemObj, ...currentState.cart] };
+    });
+  };
 
   render() {
     const {
@@ -37,7 +62,8 @@ class SingleVendor extends Component {
       cuisine,
       email,
       phone_num,
-      open_status
+      open_status,
+      username
     } = this.props.navigation.state.params.vendor;
 
     const open = open_status ? "Open" : "Closed";
@@ -70,10 +96,14 @@ class SingleVendor extends Component {
           <View style={styles.menuItemsContainer}>
             {availableItems.map(availableItem => {
               return (
-                <UserMenuCard
+                <TouchableOpacity
                   key={availableItem.menu_item_id}
-                  menuItem={availableItem}
-                />
+                  onPress={() => {
+                    this.addItem(availableItem);
+                  }}
+                >
+                  <UserMenuCard menuItem={availableItem} />
+                </TouchableOpacity>
               );
             })}
           </View>

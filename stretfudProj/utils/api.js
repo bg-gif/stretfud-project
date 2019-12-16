@@ -60,3 +60,9 @@ exports.addUser = (destination, userObj) => {
       return user;
     });
 };
+
+exports.postOrder = orderObj => {
+  return axios.post(`${base_URL}/orders`, orderObj).then(({ data }) => {
+    console.log(data);
+  });
+};

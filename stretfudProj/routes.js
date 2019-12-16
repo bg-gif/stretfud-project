@@ -10,12 +10,15 @@ import SignOut from "./screens/SignOut";
 import ViewMenu from "./screens/ViewMenu";
 import SignIn from "./screens/SignIn";
 import SignUp from "./screens/SignUp";
+import ShoppingCartViewer from "./components/ShoppingCartViewer";
+import ShoppingCart from "./screens/ShoppingCart";
 
 export const UserStack = createStackNavigator(
   {
     Home: UserHome,
     SingleVendor,
-    ViewMenu
+    ViewMenu,
+    ShoppingCart
   },
   {
     defaultNavigationOptions: ({ navigation }) => {
@@ -31,7 +34,9 @@ export const UserStack = createStackNavigator(
   {
     navigationOptions: () => {
       return {
-        title: "Home"
+        title: "Home",
+        headerLeft: () => <SignOut navigation={navigation} />,
+        headerRight: () => <ShoppingCartViewer navigation={navigation} />
       };
     }
   }
