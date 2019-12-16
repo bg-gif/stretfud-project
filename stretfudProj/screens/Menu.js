@@ -1,21 +1,11 @@
 import React, { Component } from 'react';
-import {
-  StyleSheet,
-  Text,
-  ScrollView,
-  Image,
-  View,
-  Dimensions,
-  SafeAreaView
-} from 'react-native';
+import { StyleSheet, ScrollView, View, SafeAreaView } from 'react-native';
 import * as api from '../utils/api';
-
 import Loader from '../components/Loader';
 import ErrorAlerter from '../components/ErrorAlerter';
-
 import VendorMenuCard from '../components/VendorMenuCard';
-// import { SafeAreaView } from 'react-navigation';
 import Constants from 'expo-constants';
+import MenuItemAdder from '../components/MenuItemAdder';
 
 class Menu extends Component {
   static navigationOptions = ({ navigationOptions }) => {
@@ -80,6 +70,7 @@ class Menu extends Component {
               );
             })}
           </View>
+          <MenuItemAdder />
         </ScrollView>
       </SafeAreaView>
     );
