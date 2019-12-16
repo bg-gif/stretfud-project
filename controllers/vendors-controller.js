@@ -20,7 +20,6 @@ exports.getVendors = (req, res, next) => {
         res.status(200).send({ vendors });
       } else {
         const filteredVendors = filterVendors(vendors, location);
-        console.log(filteredVendors);
         res.status(200).send({ vendors: filteredVendors });
       }
     })
