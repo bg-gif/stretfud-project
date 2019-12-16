@@ -57,6 +57,10 @@ class Menu extends Component {
       });
   };
 
+  handleDeleteItem = menu_Item_id => {
+    console.log('delete confirmed: ', +menu_Item_id);
+  };
+
   render() {
     const { menuItems, isLoading } = this.state;
 
@@ -71,6 +75,7 @@ class Menu extends Component {
                   key={item.name}
                   menuItem={item}
                   handleSwitch={this.handleSwitch}
+                  handleDeleteItem={this.handleDeleteItem}
                 />
               );
             })}

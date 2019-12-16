@@ -5,10 +5,11 @@ import {
   StyleSheet,
   Switch,
   Dimensions,
-  ScrollView
+  Alert
 } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
-const VendorMenuCard = ({ menuItem, handleSwitch }) => {
+const VendorMenuCard = ({ menuItem, handleSwitch, handleDeleteItem }) => {
   const handleAvailability = () => {
     handleSwitch(username, menu_item_id, available);
   };
@@ -16,7 +17,6 @@ const VendorMenuCard = ({ menuItem, handleSwitch }) => {
     name,
     description,
     available,
-    allergens,
     gluten_free,
     vegan,
     vegetarian,
@@ -24,6 +24,21 @@ const VendorMenuCard = ({ menuItem, handleSwitch }) => {
     menu_item_id,
     username
   } = menuItem;
+
+  removeItem = () => {
+    Alert.alert('Delete Item', 'Are you sure you want to remove this item?', [
+      {
+        text: 'Yes',
+        onPress: () => {
+          handleDeleteItem(menu_item_id);
+        }
+      },
+      {
+        text: 'No'
+      }
+    ]);
+    //console.log(menu_item_id);
+  };
 
   return (
     <View style={styles.menuCard}>
@@ -34,20 +49,32 @@ const VendorMenuCard = ({ menuItem, handleSwitch }) => {
       <View style={styles.menuDetails}>
         <View style={styles.detailsContainer}>
           <Text style={styles.descriptionText}>{description}</Text>
-          {gluten_free === true && (
-            <Text style={styles.descriptionText}>GF</Text>
-          )}
-          {vegan === true && <Text style={styles.descriptionText}>VG</Text>}
-          {vegetarian === true && <Text style={styles.descriptionText}>V</Text>}
+          <View style={styles.dietaryRequirementsContainer}>
+            {gluten_free === true && (
+              <Text style={styles.descriptionText}>GF </Text>
+            )}
+            {vegan === true && <Text style={styles.descriptionText}>VG </Text>}
+            {vegetarian === true && (
+              <Text style={styles.descriptionText}>V </Text>
+            )}
+          </View>
         </View>
-
-        <View style={styles.availabilityButtonContainer}>
-          <Text style={styles.availabilityText}>Available: </Text>
-          <Switch
-            onValueChange={handleAvailability}
+        <View style={styles.optionsContainer}>
+          <View style={styles.availabilityButtonContainer}>
+            <Text style={styles.availabilityText}>Available: </Text>
+            <Switch
+              onValueChange={handleAvailability}
+              name={menu_item_id}
+              value={available}
+            />
+          </View>
+          <TouchableOpacity
             name={menu_item_id}
-            value={available}
-          />
+            onPress={this.removeItem}
+            style={styles.vendorButton}
+          >
+            <Text style={styles.vendorButtonText}>Remove</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </View>
@@ -66,14 +93,16 @@ const styles = StyleSheet.create({
     marginTop: 15
   },
   menuDetails: {
-    flexDirection: 'row'
+    flexDirection: 'row',
+    marginBottom: 10
   },
   detailsContainer: {
     flex: 2,
-    padding: 5
+    padding: 5,
+    flexDirection: 'column',
+    justifyContent: 'space-between'
   },
   availabilityButtonContainer: {
-    flex: 1,
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: 'center',
@@ -96,11 +125,34 @@ const styles = StyleSheet.create({
   descriptionText: {
     fontFamily: 'BebasNeue-Regular',
     fontSize: 17,
-    color: 'rgba(175, 15, 103, 1)'
+    color: 'rgba(175, 15, 103, 1)',
+    paddingBottom: 5
   },
   availabilityText: {
     fontFamily: 'BebasNeue-Regular',
     fontSize: 17,
     color: 'rgba(175, 15, 103, 1)'
+  },
+  optionsContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    height: 90
+  },
+  vendorButton: {
+    alignItems: 'center',
+    backgroundColor: 'rgba(112, 150, 36, 1)',
+    width: 100,
+    padding: 5,
+    borderRadius: 5
+  },
+  vendorButtonText: {
+    color: 'white',
+    fontFamily: 'BebasNeue-Regular',
+    fontSize: 18
+  },
+  dietaryRequirementsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start'
   }
 });

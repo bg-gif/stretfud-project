@@ -1,9 +1,9 @@
 {
   "devToolsPort": 19002,
-  "expoServerPort": null,
-  "packagerPort": null,
-  "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null
+  "expoServerPort": 19000,
+  "packagerPort": 19004,
+  "packagerPid": 47898,
+  "expoServerNgrokUrl": "https://vq-iqk.jimstev2447.stretfudproj.exp.direct",
+  "packagerNgrokUrl": "https://packager.vq-iqk.jimstev2447.stretfudproj.exp.direct",
+  "ngrokPid": 47909
 }
