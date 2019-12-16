@@ -60,10 +60,7 @@ describe("server", () => {
             .send({
               username: "Gregg11",
               password: "password",
-              realname: "Gregg Wallace",
-              phone_num: "07825184365",
-              age: "55",
-              email: "whoateallthepies@gmail.com"
+              realname: "Gregg Wallace"
             })
             .expect(201)
             .then(({ body: { user } }) => {
@@ -232,7 +229,6 @@ describe("server", () => {
               });
           });
         });
-
         describe("INVALID METHODS", () => {
           it("status:405, responds with method not allowed", () => {
             const methodArr = ["post", "put", "delete"];
@@ -275,7 +271,7 @@ describe("server", () => {
             .post("/api/vendors")
             .send({
               username: "TejanosBoss",
-              ownername: "Carl Berens",
+              realname: "Carl Berens",
               cuisine: "mexican",
               location: "54.338936, -1.434165",
               opening_times: "12-7pm",

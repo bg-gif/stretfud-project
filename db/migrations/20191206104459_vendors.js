@@ -3,14 +3,14 @@ exports.up = function(knex) {
     table.string('username').notNullable();
     table.unique('username');
     table.string('businessname').notNullable();
-    table.string('ownername').notNullable();
+    table.string('realname').notNullable();
     table.string('password').notNullable();
     table.string('phone_num');
     table.string('cuisine').notNullable();
     table.string('email');
     table.string('menu');
     table.string('opening_times').notNullable();
-    table.string('location').notNullable();
+    table.string('location');
     table.boolean('open_status');
     table.timestamp('created_at').defaultTo(knex.fn.now());
   });
