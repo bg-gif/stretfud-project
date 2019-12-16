@@ -47,7 +47,7 @@ export default class App extends Component {
     }
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevState) {
     if (this.props.refresh) this._getLocationAsync();
   }
 
@@ -63,13 +63,14 @@ export default class App extends Component {
 
     this.setState(
       {
-        location,
-        long: location.coords.longitude,
-        lat: location.coords.latitude
+        start: {
+          longitude: location.coords.longitude,
+          latitude: location.coords.latitude
+        }
       },
       () => {
-        const { long, lat } = this.state;
-        fetchVendorsByLocation(lat, long).then(vendors => {
+        const { longitude, latitude } = this.state.start;
+        fetchVendorsByLocation(latitude, longitude).then(vendors => {
           this.setState({ vendors, isLoading: false }, () => {
             this.props.changeRefresh();
           });
@@ -79,11 +80,8 @@ export default class App extends Component {
   };
 
   render() {
-    const { lat, long, vendors, isLoading } = this.state;
-    const coordinates = {
-      latitude: lat,
-      longitude: long
-    };
+    const { lat, long, vendors, isLoading, start } = this.state;
+
     return isLoading ? (
       <Loader />
     ) : (
@@ -91,18 +89,15 @@ export default class App extends Component {
         <MapView
           style={styles.mapStyle}
           initialRegion={{
-            latitude: lat,
-            longitude: long,
+            latitude: start.latitude,
+            longitude: start.longitude,
             latitudeDelta: 0.02,
             longitudeDelta: 0.02
           }}
         >
           <MapView.Circle
             // key={lat + long}
-            center={{
-              latitude: coordinates.latitude,
-              longitude: coordinates.longitude
-            }}
+            center={start}
             radius={805}
             strokeWidth={1}
             strokeColor={"#1a66ff"}
@@ -125,6 +120,7 @@ export default class App extends Component {
                 if (this.props.toggleVal || open_status) {
                   return (
                     <Marker
+                      draggable
                       key={username}
                       coordinate={{
                         latitude: +coords[0],
@@ -176,10 +172,18 @@ export default class App extends Component {
                 }
               })}
           <Marker
-            coordinate={{
-              latitude: coordinates.latitude,
-              longitude: coordinates.longitude
-            }}
+            draggable
+            onDragEnd={e =>
+              this.setState({ start: e.nativeEvent.coordinate }, () => {
+                const { longitude, latitude } = this.state.start;
+                fetchVendorsByLocation(latitude, longitude).then(vendors => {
+                  this.setState({ vendors, isLoading: false }, () => {
+                    this.props.changeRefresh();
+                  });
+                });
+              })
+            }
+            coordinate={start}
             pinColor="#0000A0"
           />
         </MapView>

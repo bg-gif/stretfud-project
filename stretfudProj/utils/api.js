@@ -1,5 +1,5 @@
-const axios = require("axios");
-const base_URL = "https://stretfud.herokuapp.com/api";
+const axios = require('axios');
+const base_URL = 'https://stretfud.herokuapp.com/api';
 
 exports.fetchVendor = username => {
   return axios.get(`${base_URL}/vendors/${username}`).then(({ data }) => {
@@ -29,7 +29,7 @@ exports.postLoginAuth = (loginObj, destination) => {
 
 exports.fetchVendorsByLocation = (lat, long) => {
   return axios
-    .get(`${base_URL}/vendors?=${lat},${long}`)
+    .get(`${base_URL}/vendors?location=${lat},${long}`)
     .then(({ data: { vendors } }) => {
       return vendors;
     });
