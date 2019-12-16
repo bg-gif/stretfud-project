@@ -7,12 +7,12 @@ exports.filterVendors = (vendors, location) => {
       latitude: location.split(',')[0],
       longitude: location.split(',')[1]
     };
-    let lat = +vendor.location.split(',')[0];
-    let long = +vendor.location.split(',')[1];
+    let latitude = +vendor.location.split(',')[0];
+    let longitude = +vendor.location.split(',')[1];
 
-    let vendorLocation = { latitude: lat, longitude: long };
+    let vendorLocation = { latitude, longitude };
     let distance = geolib.getDistance(locationObj, vendorLocation, 1);
-
+    console.log(distance < 1609);
     return distance < 1609;
   });
 };

@@ -246,7 +246,7 @@ describe('server', () => {
     });
     describe('/vendors', () => {
       describe('GET', () => {
-        it('status:200, return and object with key of vendors and an array of vendors', () => {
+        it.only('status:200, return and object with key of vendors and an array of vendors', () => {
           return request
             .get('/api/vendors')
             .expect(200)
@@ -272,7 +272,7 @@ describe('server', () => {
             .send({
               username: 'TejanosBoss',
               realname: 'Carl Berens',
-              cuisine: 'mexican',
+              cuisine: 'Mexican',
               location: '54.338936, -1.434165',
               opening_times: '12-7pm',
               phone_num: '01609 777770',

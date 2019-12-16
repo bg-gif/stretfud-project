@@ -8,9 +8,9 @@ const {
   checkMenuItemId,
   deleteMenuItemMod,
   sendMenuItem
-} = require("../models/vendors-model");
+} = require('../models/vendors-model');
 
-const { filterVendors } = require("../utils/utils");
+const { filterVendors } = require('../utils/utils');
 
 exports.getVendors = (req, res, next) => {
   let location = req.query.location;
@@ -20,6 +20,7 @@ exports.getVendors = (req, res, next) => {
         res.status(200).send({ vendors });
       } else {
         const filteredVendors = filterVendors(vendors, location);
+        console.log(filteredVendors);
         res.status(200).send({ vendors: filteredVendors });
       }
     })
@@ -76,7 +77,7 @@ exports.patchVendorMenu = (req, res, next) => {
     .then(([menu_item]) => {
       return menu_item
         ? res.status(200).send({ menu_item })
-        : Promise.reject({ status: 404, msg: "Not Found" });
+        : Promise.reject({ status: 404, msg: 'Not Found' });
     })
     .catch(next);
 };
