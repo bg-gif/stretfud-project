@@ -3,7 +3,6 @@ import { StyleSheet, Text, View, Button, Platform } from "react-native";
 
 class SignOut extends React.Component {
   render() {
-    console.log(this.props.user, "props");
     const platform = Platform.OS;
     let Color = "";
     androidColor =
