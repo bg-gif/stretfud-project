@@ -1,7 +1,6 @@
 import React from "react";
-import { View, Text, Button, SafeAreaView } from "react-native";
+import { SafeAreaView } from "react-native";
 import SignOut from "./SignOut";
-import BackMover from "../components/BackMover";
 import * as api from "../utils/api";
 import { withUserHOC } from "../components/UserContext";
 import ErrorAlerter from "../components/ErrorAlerter";

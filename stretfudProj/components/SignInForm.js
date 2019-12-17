@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Button } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import InputAdder from "./InputAdder";
 import * as Crypto from "expo-crypto";
 import UserContext, { UserProvider } from "./UserContext";

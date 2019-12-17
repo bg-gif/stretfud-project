@@ -1,15 +1,6 @@
 import React, { Component } from "react";
-import {
-  StyleSheet,
-  Text,
-  ScrollView,
-  Image,
-  View,
-  Dimensions,
-  SafeAreaView
-} from "react-native";
+import { StyleSheet, Text, ScrollView, View, SafeAreaView } from "react-native";
 import * as api from "../utils/api";
-import { withUserHOC } from "../components/UserContext";
 import Loader from "../components/Loader";
 import ErrorAlerter from "../components/ErrorAlerter";
 import OrderCard from "../components/OrderCard";
@@ -25,9 +16,14 @@ class Orders extends Component {
 
   componentDidMount() {
     const { username } = this.props.navigation.state.params;
-    api.fetchVendorOrders(username).then(orders => {
-      this.setState({ orders });
-    });
+    api
+      .fetchVendorOrders(username)
+      .then(orders => {
+        this.setState({ orders });
+      })
+      .catch(err => {
+        ErrorAlerter("Orders could not be found");
+      });
   }
 
   componentDidUpdate(prevProps, prevState) {
