@@ -1,5 +1,5 @@
-const axios = require("axios");
-const base_URL = "https://stretfud.herokuapp.com/api";
+const axios = require('axios');
+const base_URL = 'https://stretfud.herokuapp.com/api';
 
 exports.fetchVendor = username => {
   return axios.get(`${base_URL}/vendors/${username}`).then(({ data }) => {
@@ -51,4 +51,10 @@ exports.updateMenuItem = ({ username, menu_item_id, available }) => {
     .then(({ data: { menu_item } }) => {
       return menu_item;
     });
+};
+
+exports.fetchVendorOrders = (username, status) => {
+  status
+    ? axios.get(`${base_URL}/vendors/${username}/orders?status=${status}`)
+    : axios.get(`${base_URL}/vendors/${username}/orders`);
 };

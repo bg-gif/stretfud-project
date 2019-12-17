@@ -1,13 +1,14 @@
-import React from "react";
-import { createStackNavigator } from "react-navigation-stack";
+import React from 'react';
+import { createStackNavigator } from 'react-navigation-stack';
 // import { StyleSheet } from "react-native";
 
-import UserHome from "./screens/UserHome";
-import SingleVendor from "./screens/SingleVendor";
-import VendorHome from "./screens/VendorHome";
-import Menu from "./screens/Menu";
-import SignOut from "./screens/SignOut";
-import ViewMenu from "./screens/ViewMenu";
+import UserHome from './screens/UserHome';
+import SingleVendor from './screens/SingleVendor';
+import VendorHome from './screens/VendorHome';
+import Menu from './screens/Menu';
+import SignOut from './screens/SignOut';
+import ViewMenu from './screens/ViewMenu';
+import Orders from './screens/Orders';
 
 export const UserStack = createStackNavigator(
   {
@@ -19,9 +20,9 @@ export const UserStack = createStackNavigator(
     defaultNavigationOptions: ({ navigation }) => {
       return {
         headerRight: () => <SignOut navigation={navigation} />,
-        headerStyle: { backgroundColor: "rgba(175, 15, 103, 1)" },
-        headerTintColor: "rgb(237, 237, 237)",
-        headerTitleStyle: { fontWeight: "bold" }
+        headerStyle: { backgroundColor: 'rgba(175, 15, 103, 1)' },
+        headerTintColor: 'rgb(237, 237, 237)',
+        headerTitleStyle: { fontWeight: 'bold' }
       };
     }
   }
@@ -30,15 +31,16 @@ export const UserStack = createStackNavigator(
 export const VendorStack = createStackNavigator(
   {
     Home: VendorHome,
-    Menu
+    Menu,
+    Orders
   },
   {
     defaultNavigationOptions: ({ navigation }) => {
       return {
         headerRight: () => <SignOut navigation={navigation} />,
-        headerStyle: { backgroundColor: "rgba(112, 150, 36, 1)" },
-        headerTintColor: "rgb(237, 237, 237)",
-        headerTitleStyle: { fontWeight: "bold" }
+        headerStyle: { backgroundColor: 'rgba(112, 150, 36, 1)' },
+        headerTintColor: 'rgb(237, 237, 237)',
+        headerTitleStyle: { fontWeight: 'bold' }
       };
     }
   }
