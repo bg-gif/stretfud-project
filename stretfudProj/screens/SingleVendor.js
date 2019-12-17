@@ -1,20 +1,32 @@
-import React, { Component } from 'react';
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
-import * as api from '../utils/api';
-import ErrorAlerter from '../components/ErrorAlerter';
-import Loader from '../components/Loader';
-import UserMenuCard from '../components/UserMenuCard';
+
+import React, { Component } from "react";
+import { StyleSheet, Text, View, ScrollView } from "react-native";
+import * as api from "../utils/api";
+import ErrorAlerter from "../components/ErrorAlerter";
+import Loader from "../components/Loader";
+import UserMenuCard from "../components/UserMenuCard";
+import ShoppingCartViewer from "../components/ShoppingCartViewer";
+import { TouchableOpacity } from "react-native-gesture-handler";
+
 
 class SingleVendor extends Component {
   static navigationOptions = ({ navigationOptions, navigation }) => {
     return {
-      title: navigation.state.params.vendor.businessname
+      title: navigation.state.params.vendor.businessname,
+      headerRight: () => (
+        <ShoppingCartViewer
+          navigation={navigation}
+          count={navigation.getParam("cartParam")}
+          vendor={navigation.state.params.vendor.username}
+        />
+      )
     };
   };
 
   state = {
     menuItems: [],
-    isLoading: true
+    isLoading: true,
+    cart: []
   };
 
   componentDidMount() {
@@ -25,10 +37,35 @@ class SingleVendor extends Component {
       .then(menuItems => {
         this.setState({ menuItems: menuItems, isLoading: false });
       })
+      .then(() => {
+        this.props.navigation.setParams({
+          cartParam: this.state.cart,
+          emptyCart: this.emptyCart
+        });
+      })
       .catch(err => {
         ErrorAlerter('Menu items could not be found');
       });
   }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.cart !== this.state.cart) {
+      this.props.navigation.setParams({
+        cartParam: this.state.cart,
+        emptyCart: this.emptyCart
+      });
+    }
+  }
+
+  addItem = newItemObj => {
+    this.setState(currentState => {
+      return { cart: [newItemObj, ...currentState.cart] };
+    });
+  };
+
+  emptyCart = () => {
+    this.setState({ cart: [] });
+  };
 
   render() {
     const {
@@ -37,7 +74,8 @@ class SingleVendor extends Component {
       cuisine,
       email,
       phone_num,
-      open_status
+      open_status,
+      username
     } = this.props.navigation.state.params.vendor;
 
     const open = open_status ? 'Open' : 'Closed';
@@ -67,13 +105,25 @@ class SingleVendor extends Component {
               {open}
             </Text>
           </View>
+          {open_status ? (
+            <Text style={styles.orderMsg}>Touch item to add to cart</Text>
+          ) : (
+            <Text style={styles.orderMsg}>
+              Ordering not available while closed
+            </Text>
+          )}
           <View style={styles.menuItemsContainer}>
             {availableItems.map(availableItem => {
               return (
-                <UserMenuCard
+                <TouchableOpacity
+                  disabled={!open_status}
                   key={availableItem.menu_item_id}
-                  menuItem={availableItem}
-                />
+                  onPress={() => {
+                    this.addItem(availableItem);
+                  }}
+                >
+                  <UserMenuCard menuItem={availableItem} />
+                </TouchableOpacity>
               );
             })}
           </View>
@@ -142,6 +192,12 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderColor: 'rgba(175, 15, 103, 1)',
     borderWidth: 2
+  },
+  orderMsg: {
+    paddingTop: 5,
+    fontFamily: "BebasNeue-Regular",
+    fontSize: 20,
+    color: "rgba(198, 197, 185, 1)"
   }
 });
 

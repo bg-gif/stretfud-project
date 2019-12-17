@@ -1,12 +1,5 @@
-import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Switch,
-  Dimensions,
-  ScrollView
-} from 'react-native';
+import React from "react";
+import { View, Text, StyleSheet, Switch, Dimensions } from "react-native";
 
 const VendorMenuCard = ({ menuItem, handleSwitch }) => {
   const handleAvailability = () => {
@@ -58,15 +51,15 @@ export default VendorMenuCard;
 
 const styles = StyleSheet.create({
   menuCard: {
-    flexDirection: 'column',
-    borderColor: 'rgba(175, 15, 103, 1)',
+    flexDirection: "column",
+    borderColor: "rgba(175, 15, 103, 1)",
     borderRadius: 5,
     borderWidth: 4,
     marginBottom: 15,
     marginTop: 15
   },
   menuDetails: {
-    flexDirection: 'row'
+    flexDirection: "row"
   },
   detailsContainer: {
     flex: 2,
@@ -74,33 +67,33 @@ const styles = StyleSheet.create({
   },
   availabilityButtonContainer: {
     flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    alignItems: "center",
     paddingRight: 10
   },
   menuItemHeader: {
-    flexDirection: 'row',
-    backgroundColor: 'rgba(175, 15, 103, 1)',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    backgroundColor: "rgba(175, 15, 103, 1)",
+    justifyContent: "space-between",
+    alignItems: "center",
     paddingRight: 5,
     paddingLeft: 5,
-    width: Dimensions.get('window').width - 30
+    width: Dimensions.get("window").width - 30
   },
   menuItemHeaderText: {
-    color: 'white',
-    fontFamily: 'BebasNeue-Regular',
+    color: "white",
+    fontFamily: "BebasNeue-Regular",
     fontSize: 25
   },
   descriptionText: {
-    fontFamily: 'BebasNeue-Regular',
+    fontFamily: "BebasNeue-Regular",
     fontSize: 17,
-    color: 'rgba(175, 15, 103, 1)'
+    color: "rgba(175, 15, 103, 1)"
   },
   availabilityText: {
-    fontFamily: 'BebasNeue-Regular',
+    fontFamily: "BebasNeue-Regular",
     fontSize: 17,
-    color: 'rgba(175, 15, 103, 1)'
+    color: "rgba(175, 15, 103, 1)"
   }
 });

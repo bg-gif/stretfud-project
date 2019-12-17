@@ -1,12 +1,5 @@
 import React, { Component } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Button,
-  Image,
-  Dimensions
-} from "react-native";
+import { StyleSheet, View, Image, Dimensions } from "react-native";
 import ImageZoom from "react-native-image-pan-zoom";
 import SignOut from "./SignOut";
 
