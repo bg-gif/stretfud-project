@@ -15,6 +15,7 @@ import ShoppingCart from "./screens/ShoppingCart";
 import UserOrders from "./screens/UserOrders";
 import OrdersNavigator from "./components/OrdersNavigator";
 import HomeMover from "./components/HomeMover";
+import Orders from "./screens/Orders";
 
 export const UserStack = createStackNavigator(
   {

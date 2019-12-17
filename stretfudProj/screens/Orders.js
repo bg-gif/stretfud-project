@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   StyleSheet,
   Text,
@@ -7,15 +7,15 @@ import {
   View,
   Dimensions,
   SafeAreaView
-} from 'react-native';
-import * as api from '../utils/api';
-import { withUserHOC } from '../components/UserContext';
-import Loader from '../components/Loader';
-import ErrorAlerter from '../components/ErrorAlerter';
-import OrderCard from '../components/OrderCard';
-import Constants from 'expo-constants';
+} from "react-native";
+import * as api from "../utils/api";
+import { withUserHOC } from "../components/UserContext";
+import Loader from "../components/Loader";
+import ErrorAlerter from "../components/ErrorAlerter";
+import OrderCard from "../components/OrderCard";
+import Constants from "expo-constants";
 
-class Menu extends Component {
+class Orders extends Component {
   state = {
     isLoading: false,
     orders: [],
@@ -47,6 +47,7 @@ class Menu extends Component {
   render() {
     const { orders, isLoading } = this.state;
     const orderNums = Object.keys(orders);
+    let count = 0;
     if (isLoading) return <Loader />;
     return (
       <SafeAreaView style={styles.container}>
@@ -59,7 +60,7 @@ class Menu extends Component {
               return (
                 <OrderCard
                   order={orders[num]}
-                  key={orders[num]}
+                  key={`${orders}${++count}`}
                   refresh={this.refresh}
                 />
               );
@@ -78,21 +79,21 @@ const styles = StyleSheet.create({
   },
   menuPageContainer: {
     // flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'space-around'
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "space-around"
   },
   headerContainer: {
-    backgroundColor: 'rgba(175, 15, 103, 1)',
+    backgroundColor: "rgba(175, 15, 103, 1)",
     borderRadius: 5,
     padding: 5,
     marginBottom: 10
   },
   headerText: {
-    color: 'white',
-    fontFamily: 'BebasNeue-Regular',
+    color: "white",
+    fontFamily: "BebasNeue-Regular",
     fontSize: 25
   }
 });
 
-export default Menu;
+export default Orders;

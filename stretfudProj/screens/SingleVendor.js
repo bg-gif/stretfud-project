@@ -66,7 +66,6 @@ class SingleVendor extends Component {
   };
 
   render() {
-    console.log(this.props);
     const {
       businessname,
       opening_times,

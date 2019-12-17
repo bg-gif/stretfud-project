@@ -29,7 +29,6 @@ class ShoppingCart extends Component {
         this.props.navigation.setParams({ cartParam: [] });
       })
       .catch(err => {
-        console.log(err);
         ErrorAlerter("Could not send order at this time.");
       });
   };
@@ -43,7 +42,6 @@ class ShoppingCart extends Component {
   };
 
   render() {
-    //console.log(this.props.navigation.navigationOptions);
     const cartArray = this.props.navigation.state.params.cartParam;
     if (cartArray.length === 0) return <EmptyCartAlerter />;
     const total = cartArray.reduce((acc, val) => {
