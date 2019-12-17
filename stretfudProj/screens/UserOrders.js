@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Button } from "react-native";
+import { View, Text, Button, SafeAreaView } from "react-native";
 import SignOut from "./SignOut";
 import BackMover from "../components/BackMover";
 import * as api from "../utils/api";

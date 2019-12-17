@@ -7,14 +7,14 @@ import {
   View,
   Dimensions,
   SafeAreaView
-} from 'react-native';
-import * as api from '../utils/api';
-import { withUserHOC } from '../components/UserContext';
-import Loader from '../components/Loader';
-import ErrorAlerter from '../components/ErrorAlerter';
-import OrderCard from '../components/OrderCard';
-import Constants from 'expo-constants';
-let socket = require('socket.io-client')(`ws://stretfud.herokuapp.com:80`);
+} from "react-native";
+import * as api from "../utils/api";
+import { withUserHOC } from "../components/UserContext";
+import Loader from "../components/Loader";
+import ErrorAlerter from "../components/ErrorAlerter";
+import OrderCard from "../components/OrderCard";
+import Constants from "expo-constants";
+let socket = require("socket.io-client")(`ws://stretfud.herokuapp.com:80`);
 
 class Orders extends Component {
   state = {
@@ -50,7 +50,7 @@ class Orders extends Component {
     const orderNums = Object.keys(orders);
     let count = 0;
     if (isLoading) return <Loader />;
-    socket.on('outgoing', data => {
+    socket.on("outgoing", data => {
       if (data.vendor === username) {
         this.refresh();
       }
@@ -66,11 +66,7 @@ class Orders extends Component {
               return (
                 <OrderCard
                   order={orders[num]}
-<<<<<<< HEAD
-                  key={index}
-=======
                   key={`${orders}${++count}`}
->>>>>>> cd564bcfc816033bff1b306d6364cbe8c472d7ad
                   refresh={this.refresh}
                 />
               );
