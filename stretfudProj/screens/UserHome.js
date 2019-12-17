@@ -11,6 +11,7 @@ import { withUserHOC } from "../components/UserContext";
 import Map from "../components/Map";
 import ToggleSwitch from "toggle-switch-react-native";
 import Loader from "../components/Loader";
+import OrdersNavigator from "../components/OrdersNavigator";
 
 class UserHome extends Component {
   state = {
@@ -21,7 +22,13 @@ class UserHome extends Component {
 
   static navigationOptions = ({ navigation }) => {
     return {
-      headerRight: () => <SignOut navigation={navigation} />,
+      headerLeft: () => <SignOut navigation={navigation} />,
+      headerRight: () => (
+        <OrdersNavigator
+          navigation={navigation}
+          user={this.props.user.username}
+        />
+      ),
       title: "Home",
       headerStyle: { backgroundColor: "#f56111" },
       headerTintColor: "#fff",

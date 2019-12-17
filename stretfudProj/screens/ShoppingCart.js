@@ -6,7 +6,6 @@ import EmptyCartAlerter from "../components/EmptyCartAlerter";
 import ItemRemover from "../components/ItemRemover";
 import * as utils from "../utils/utils";
 import OrderAlerter from "../components/OrderAlerter";
-
 import ErrorAlerter from "../components/ErrorAlerter";
 
 class ShoppingCart extends Component {

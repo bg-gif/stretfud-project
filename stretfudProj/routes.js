@@ -1,6 +1,6 @@
 import React from "react";
 import { createStackNavigator } from "react-navigation-stack";
-// import { StyleSheet } from "react-native";
+import { Button } from "react-native";
 
 import UserHome from "./screens/UserHome";
 import SingleVendor from "./screens/SingleVendor";
@@ -12,19 +12,28 @@ import SignIn from "./screens/SignIn";
 import SignUp from "./screens/SignUp";
 import ShoppingCartViewer from "./components/ShoppingCartViewer";
 import ShoppingCart from "./screens/ShoppingCart";
+import UserOrders from "./screens/UserOrders";
+import OrdersNavigator from "./components/OrdersNavigator";
+import HomeMover from "./components/HomeMover";
 
 export const UserStack = createStackNavigator(
   {
     Home: UserHome,
     SingleVendor,
     ViewMenu,
-    ShoppingCart
+    ShoppingCart,
+    UserOrders
   },
   {
     defaultNavigationOptions: ({ navigation }) => {
       return {
         title: "Home",
-        headerRight: () => <SignOut navigation={navigation} />,
+        headerRight: () => (
+          <>
+            <SignOut navigation={navigation} />
+            <OrdersNavigator navigation={navigation} />
+          </>
+        ),
         headerStyle: { backgroundColor: "rgba(175, 15, 103, 1)" },
         headerTintColor: "rgb(237, 237, 237)",
         headerTitleStyle: { fontWeight: "bold" }
@@ -37,6 +46,25 @@ export const UserStack = createStackNavigator(
         title: "Home",
         headerLeft: () => <SignOut navigation={navigation} />,
         headerRight: () => <ShoppingCartViewer navigation={navigation} />
+      };
+    }
+  },
+  {
+    navigationOptions: () => {
+      return {
+        title: "Orders",
+        headerRight: () => <SignOut navigation={navigation} />,
+        headerLeft: () => (
+          <>
+            <Button
+              title="Back"
+              onPress={() => {
+                navigation.goBack();
+              }}
+            />
+            <HomeMover navigation={navigation} />
+          </>
+        )
       };
     }
   }

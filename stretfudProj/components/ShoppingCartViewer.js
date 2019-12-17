@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Platform, Text, TouchableOpacity } from "react-native";
+import { Platform, Text, TouchableOpacity, Button } from "react-native";
 
 class ShoppingCartViewer extends React.Component {
   render() {
@@ -14,18 +14,33 @@ class ShoppingCartViewer extends React.Component {
     iPhoneColor = "rgb(237, 237, 237)";
     platform === "android" ? (Color = androidColor) : (Color = iPhoneColor);
     return (
-      <TouchableOpacity
+      <Button
+        title={
+          count === undefined
+            ? "Shopping Cart 0"
+            : `Shopping Cart ${count.length}`
+        }
+        color={Color}
         onPress={() => {
           this.props.navigation.navigate("ShoppingCart", {
             cartParam: count,
             vendor
           });
         }}
-      >
-        <Text style={{ color: Color }}>
-          Shopping Cart {count && count.length}
-        </Text>
-      </TouchableOpacity>
+      />
+
+      // <TouchableOpacity
+      //   onPress={() => {
+      //     this.props.navigation.navigate("ShoppingCart", {
+      //       cartParam: count,
+      //       vendor
+      //     });
+      //   }}
+      // >
+      //   <Text style={{ color: Color }}>
+      //     Shopping Cart {count && count.length}
+      //   </Text>
+      // </TouchableOpacity>
     );
   }
 }
