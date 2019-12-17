@@ -1,31 +1,11 @@
-<<<<<<< HEAD
 import React, { Component } from 'react';
-import {
-  StyleSheet,
-  Text,
-  ScrollView,
-  Image,
-  View,
-  Dimensions,
-  SafeAreaView
-} from 'react-native';
+import { StyleSheet, Text, ScrollView, View, SafeAreaView } from 'react-native';
 import * as api from '../utils/api';
-import { withUserHOC } from '../components/UserContext';
 import Loader from '../components/Loader';
 import ErrorAlerter from '../components/ErrorAlerter';
 import OrderCard from '../components/OrderCard';
 import Constants from 'expo-constants';
 let socket = require('socket.io-client')(`ws://stretfud.herokuapp.com:80`);
-=======
-import React, { Component } from "react";
-import { StyleSheet, Text, ScrollView, View, SafeAreaView } from "react-native";
-import * as api from "../utils/api";
-import Loader from "../components/Loader";
-import ErrorAlerter from "../components/ErrorAlerter";
-import OrderCard from "../components/OrderCard";
-import Constants from "expo-constants";
-let socket = require("socket.io-client")(`ws://stretfud.herokuapp.com:80`);
->>>>>>> e59948bf857ace5a6e34f92983040310f64f7cbd
 
 class Orders extends Component {
   state = {
@@ -42,7 +22,7 @@ class Orders extends Component {
         this.setState({ orders });
       })
       .catch(err => {
-        ErrorAlerter("Orders could not be found");
+        ErrorAlerter('Orders could not be found');
       });
   }
 
@@ -64,13 +44,10 @@ class Orders extends Component {
   render() {
     const { orders, isLoading } = this.state;
     const orderNums = Object.keys(orders);
-<<<<<<< HEAD
-    const { username } = this.props.navigation.state.params;
-=======
->>>>>>> e59948bf857ace5a6e34f92983040310f64f7cbd
+    const username = this.props.navigation.state.params;
     let count = 0;
     if (isLoading) return <Loader />;
-    socket.on("outgoing", data => {
+    socket.on('outgoing', data => {
       if (data.vendor === username) {
         this.refresh();
       }
