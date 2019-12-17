@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
-import { StyleSheet, ScrollView, View, SafeAreaView } from 'react-native';
+import {
+  StyleSheet,
+  ScrollView,
+  View,
+  SafeAreaView,
+  KeyboardAvoidingView
+} from 'react-native';
 import * as api from '../utils/api';
 import Loader from '../components/Loader';
 import ErrorAlerter from '../components/ErrorAlerter';
@@ -78,22 +84,26 @@ class Menu extends Component {
     return (
       <SafeAreaView style={styles.container}>
         <ScrollView contentContainerStyle={styles.menuPageContainer}>
-          <View>
-            {menuItems.map(item => {
-              return (
-                <VendorMenuCard
-                  key={item.menu_item_id}
-                  menuItem={item}
-                  handleSwitch={this.handleSwitch}
-                  handleDeleteItem={this.handleDeleteItem}
-                />
-              );
-            })}
-          </View>
-          <MenuItemAdder
-            username={username}
-            handleAddItem={this.handleAddItem}
-          />
+          <KeyboardAvoidingView behavior="padding">
+            <View>
+              {menuItems.map(item => {
+                return (
+                  <VendorMenuCard
+                    key={item.menu_item_id}
+                    menuItem={item}
+                    handleSwitch={this.handleSwitch}
+                    handleDeleteItem={this.handleDeleteItem}
+                  />
+                );
+              })}
+            </View>
+            <View style={{ paddingTop: 30, paddingBottom: 20 }}>
+              <MenuItemAdder
+                username={username}
+                handleAddItem={this.handleAddItem}
+              />
+            </View>
+          </KeyboardAvoidingView>
         </ScrollView>
       </SafeAreaView>
     );
