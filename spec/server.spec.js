@@ -140,7 +140,7 @@ describe('server', () => {
               });
           }
         });
-        it('status:4, Invalid menu item id key', () => {
+        it('status:400, Invalid menu item id key', () => {
           {
             return request
               .post('/api/orders')
@@ -156,9 +156,47 @@ describe('server', () => {
           }
         });
       });
+      describe('PATCH', () => {
+        it('status:200, returns updated order', () => {
+          return request
+            .patch('/api/orders')
+            .send({ order_id: 1, status: 'confirmed' })
+            .expect(200)
+            .then(({ body: { order } }) => {
+              expect(order.status).to.equal('confirmed');
+            });
+        });
+        it('status:404, valid but non existent order number', () => {
+          return request
+            .patch('/api/orders')
+            .send({ order_id: 200, status: 'confirmed' })
+            .expect(404)
+            .then(({ body: { msg } }) => {
+              expect(msg).to.equal('Not Found');
+            });
+        });
+        it('status:400, invalid order number data type', () => {
+          return request
+            .patch('/api/orders')
+            .send({ order_id: 'banana', status: 'confirmed' })
+            .expect(400)
+            .then(({ body: { msg } }) => {
+              expect(msg).to.equal('Bad Request');
+            });
+        });
+        it('status:400, invalid key on body', () => {
+          return request
+            .patch('/api/orders')
+            .send({ ordr_id: 'banana', status: 'confirmed' })
+            .expect(400)
+            .then(({ body: { msg } }) => {
+              expect(msg).to.equal('Bad Request');
+            });
+        });
+      });
       describe('INVALID METHODS', () => {
         it('status:405, responds with method not allowed', () => {
-          const methodArr = ['get', 'patch', 'put', 'delete'];
+          const methodArr = ['get', 'put', 'delete'];
           const promiseArr = methodArr.map(method => {
             return request[method]('/api/orders')
               .expect(405)
@@ -707,6 +745,30 @@ describe('server', () => {
                 .expect(404)
                 .then(({ body: { msg } }) => {
                   expect(msg).to.equal('Not Found');
+                });
+            });
+            it('status:200, returns array of orders not completed', () => {
+              return request
+                .get('/api/vendors/oppri/orders?status=open')
+                .expect(200)
+                .then(({ body: { orders } }) => {
+                  expect(orders).to.be.a('array');
+                });
+            });
+            it('status:200, returns array of orders completed', () => {
+              return request
+                .get('/api/vendors/oppri/orders?status=closed')
+                .expect(200)
+                .then(({ body: { orders } }) => {
+                  expect(orders).to.be.a('array');
+                });
+            });
+            it('status:400, bad request on invalid status', () => {
+              return request
+                .get('/api/vendors/oppri/orders?status=clsed')
+                .expect(400)
+                .then(({ body: { msg } }) => {
+                  expect(msg).to.equal('Bad Request');
                 });
             });
           });

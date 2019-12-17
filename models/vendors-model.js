@@ -185,21 +185,61 @@ exports.sendMenuItem = (menuItem, username) => {
     .returning('*');
 };
 
-exports.fetchOrders = username => {
-  return connection('orders')
-    .leftJoin('order_items', 'order_items.order_id', 'orders.order_id')
-    .leftJoin(
-      'menu_items',
-      'order_items.menu_item_id',
-      'menu_items.menu_item_id'
-    )
-    .select(
-      'orders.order_id',
-      'orders.created_at',
-      'orders.status',
-      'orders.user_username',
-      'menu_items.price',
-      'menu_items.name'
-    )
-    .where('orders.vendor_username', username);
+exports.fetchOrders = (username, status) => {
+  if (status !== 'open' && status !== 'closed' && status !== undefined) {
+    return Promise.reject({ status: 400, msg: 'Bad Request' });
+  }
+  if (status === 'closed') {
+    return connection('orders')
+      .leftJoin('order_items', 'order_items.order_id', 'orders.order_id')
+      .leftJoin(
+        'menu_items',
+        'order_items.menu_item_id',
+        'menu_items.menu_item_id'
+      )
+      .select(
+        'orders.order_id',
+        'orders.created_at',
+        'orders.status',
+        'orders.user_username',
+        'menu_items.price',
+        'menu_items.name'
+      )
+      .where('orders.vendor_username', username)
+      .where('orders.status', 'collected');
+  } else if (status === 'open') {
+    return connection('orders')
+      .leftJoin('order_items', 'order_items.order_id', 'orders.order_id')
+      .leftJoin(
+        'menu_items',
+        'order_items.menu_item_id',
+        'menu_items.menu_item_id'
+      )
+      .select(
+        'orders.order_id',
+        'orders.created_at',
+        'orders.status',
+        'orders.user_username',
+        'menu_items.price',
+        'menu_items.name'
+      )
+      .where('orders.vendor_username', username)
+      .whereNot('orders.status', 'collected');
+  } else
+    return connection('orders')
+      .leftJoin('order_items', 'order_items.order_id', 'orders.order_id')
+      .leftJoin(
+        'menu_items',
+        'order_items.menu_item_id',
+        'menu_items.menu_item_id'
+      )
+      .select(
+        'orders.order_id',
+        'orders.created_at',
+        'orders.status',
+        'orders.user_username',
+        'menu_items.price',
+        'menu_items.name'
+      )
+      .where('orders.vendor_username', username);
 };

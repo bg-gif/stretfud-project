@@ -15,3 +15,15 @@ exports.sendOrder = (user_username, vendor_username, order) => {
       return Promise.all(response).then(() => {});
     });
 };
+
+exports.updateOrder = (status, order_id) => {
+  return !status || !order_id
+    ? Promise.reject({ status: 400, msg: 'Bad Request' })
+    : connection('orders')
+        .select('*')
+        .where({ order_id })
+        .modify(query => {
+          if (status) query.update({ status });
+        })
+        .returning('*');
+};
