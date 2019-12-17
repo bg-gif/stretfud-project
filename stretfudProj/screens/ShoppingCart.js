@@ -2,24 +2,45 @@ import React, { Component } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { withUserHOC } from "../components/UserContext";
 import * as api from "../utils/api";
+import EmptyCartAlerter from "../components/EmptyCartAlerter";
+import ItemRemover from "../components/ItemRemover";
+import * as utils from "../utils/utils";
+import OrderAlerter from "../components/OrderAlerter";
 
-//import EmptyCartAlerter from "../components/EmptyCartAlerter";
+import ErrorAlerter from "../components/ErrorAlerter";
 
 class ShoppingCart extends Component {
   handlePress = () => {
     const user = this.props.user.username;
     const vendor = this.props.navigation.state.params.vendor;
-    const order_items = this.props.navigation.state.params.cartParam;
-    const orderObj = { user, vendor, order_items: [...order_items] };
-    console.log(orderObj);
+    const order = this.props.navigation.state.params.cartParam;
+    const orderObj = { user, vendor, order: [...order] };
+
+    api
+      .postOrder(JSON.stringify(orderObj))
+      .then(() => {
+        OrderAlerter();
+      })
+      .catch(err => {
+        console.log(err);
+        ErrorAlerter("Could not send order at this time.");
+      });
+  };
+
+  handleRemoval = menuItem => {
+    const newCart = utils.removeItem(
+      this.props.navigation.state.params.cartParam,
+      menuItem
+    );
+    this.props.navigation.setParams({ cartParam: newCart });
   };
 
   render() {
     const cartArray = this.props.navigation.state.params.cartParam;
+    if (cartArray.length === 0) return <EmptyCartAlerter />;
     const total = cartArray.reduce((acc, val) => {
       return { price: +acc.price + +val.price };
     });
-
     return (
       <View style={styles.orderContainer}>
         {cartArray.map((item, index) => {
@@ -27,6 +48,10 @@ class ShoppingCart extends Component {
             <View key={item.name + index} style={styles.itemContainer}>
               <Text style={styles.text}>{item.name} </Text>
               <Text style={styles.text}>£{item.price}</Text>
+              <ItemRemover
+                handleRemoval={this.handleRemoval}
+                item={item.name}
+              />
             </View>
           );
         })}
@@ -53,6 +78,8 @@ const styles = StyleSheet.create({
   itemContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "center",
+    paddingBottom: 30,
     width: 300
   },
   submitOrderButton: {

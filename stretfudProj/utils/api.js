@@ -62,7 +62,9 @@ exports.addUser = (destination, userObj) => {
 };
 
 exports.postOrder = orderObj => {
-  return axios.post(`${base_URL}/orders`, orderObj).then(({ data }) => {
-    console.log(data);
-  });
+  return axios
+    .post(`${base_URL}/orders`, JSON.parse(orderObj))
+    .then(({ data: { msg } }) => {
+      return msg;
+    });
 };
