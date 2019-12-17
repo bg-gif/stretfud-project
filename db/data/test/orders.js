@@ -1,10 +1,9 @@
 module.exports = [
   {
-    user_username: 'megatron',
-    vendor_username: 'oppri'
-  },
-  {
-    user_username: 'megatron',
-    vendor_username: 'oppri'
+    order: {
+      user: "megatron",
+      vendor: "oppri",
+      order: [{ menu_item_id: 1 }]
+    }
   }
 ];
