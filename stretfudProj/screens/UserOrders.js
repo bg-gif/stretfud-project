@@ -35,7 +35,7 @@ class UserOrders extends React.Component {
     let count = 0;
     //if (this.state.orders === undefined) return <Text>No Orders</Text>;
     return (
-      <SafeViewArea style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1 }}>
         <ScrollView>
           {orders.map(order => {
             return (
@@ -46,7 +46,7 @@ class UserOrders extends React.Component {
             );
           })}
         </ScrollView>
-      </SafeViewArea>
+      </SafeAreaView>
     );
   }
 }
