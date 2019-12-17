@@ -31,7 +31,11 @@ class ShoppingCart extends Component {
         socket.emit("incoming", { user, vendor });
       })
       .catch(err => {
+<<<<<<< HEAD
+        ErrorAlerter('Could not send order at this time.');
+=======
         ErrorAlerter("Could not send order at this time.");
+>>>>>>> e59948bf857ace5a6e34f92983040310f64f7cbd
       });
   };
 

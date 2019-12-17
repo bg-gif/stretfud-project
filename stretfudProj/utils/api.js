@@ -76,6 +76,7 @@ exports.updateStatus = (status, order_id) => {
   const send = { status: '', order_id };
   if (status === 'pending') send.status = 'confirmed';
   if (status === 'confirmed') send.status = 'ready for collection';
+  if (status === 'ready for collection') send.status = 'collected';
   return axios.patch(`${base_URL}/orders`, send).then(({ data: order }) => {
     return order;
   });
