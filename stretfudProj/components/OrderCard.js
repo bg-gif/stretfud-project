@@ -1,55 +1,105 @@
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-import * as utils from "../utils/utils";
+import React, { Component } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Switch,
+  Dimensions,
+  ScrollView
+} from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import * as api from "../utils/api";
 
-const OrderCard = ({ order }) => {
-  return (
-    <View style={styles.orderContainer}>
-      <View style={styles.orderName}>
-        <Text style={styles.nameText}>{order.name}</Text>
+class OrderCard extends Component {
+  constructor() {
+    super();
+    this.state = {
+      confirmed: false
+    };
+  }
+
+  handleStatus = () => {
+    const order = this.props.order;
+    const orderStatus = order[0].status;
+    const orderId = order[0].order_id;
+    api.updateStatus(orderStatus, orderId).then(response => {
+      this.props.refresh();
+      console.log(response);
+    });
+  };
+
+  render() {
+    const order = this.props.order;
+    const orderStatus = order[0].status;
+    return (
+      <View style={styles.menuCard}>
+        <Text>Customer Name: {order[0].user_username}</Text>
+        <Text>Status: {orderStatus}</Text>
+        {order.map((item, index) => {
+          return <Text key={index}>{item.name}</Text>;
+        })}
+        <TouchableOpacity onPress={this.handleStatus}>
+          <Text>Status: {orderStatus}</Text>
+        </TouchableOpacity>
       </View>
-      <View style={styles.detailConainter}>
-        <Text style={styles.dateText}>
-          {utils.formatDate(order.created_at)}
-        </Text>
-        <Text style={styles.statusText}>{order.status}</Text>
-      </View>
-    </View>
-  );
-};
+    );
+  }
+}
+
+export default OrderCard;
 
 const styles = StyleSheet.create({
-  orderContainer: {
+  menuCard: {
     flexDirection: "column",
-    justifyContent: "center",
-    borderColor: "rgba(112, 150, 36, 1)",
+    borderColor: "rgba(175, 15, 103, 1)",
     borderRadius: 5,
     borderWidth: 4,
-    margin: 15
+    marginBottom: 15,
+    marginTop: 15
   },
-  orderName: {
-    backgroundColor: "rgba(112, 150, 36, 1)",
-    alignItems: "center"
+  menuDetails: {
+    flexDirection: "row"
   },
-  nameText: {
+  detailsContainer: {
+    flex: 2,
+    padding: 5
+  },
+  availabilityButtonContainer: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    alignItems: "center",
+    paddingRight: 10
+  },
+  menuItemHeader: {
+    flexDirection: "row",
+    backgroundColor: "rgba(175, 15, 103, 1)",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingRight: 5,
+    paddingLeft: 5,
+    width: Dimensions.get("window").width - 30
+  },
+  menuItemHeaderText: {
     color: "white",
     fontFamily: "BebasNeue-Regular",
     fontSize: 25
   },
-  detailConainter: {
-    alignItems: "center"
-  },
-  statusText: {
-    color: "rgba(112, 150, 36, 1)",
+  descriptionText: {
     fontFamily: "BebasNeue-Regular",
-    fontSize: 20,
-    padding: 3
+    fontSize: 17,
+    color: "rgba(175, 15, 103, 1)"
   },
-  dateText: {
-    color: "rgba(112, 150, 36, 1)",
+  vendorStatusContainer: {
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    height: 50
+  },
+  availabilityText: {
     fontFamily: "BebasNeue-Regular",
-    fontSize: 15
+    fontSize: 17,
+    color: "rgba(175, 15, 103, 1)"
   }
 });
-
-export default OrderCard;

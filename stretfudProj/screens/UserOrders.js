@@ -5,7 +5,7 @@ import BackMover from "../components/BackMover";
 import * as api from "../utils/api";
 import { withUserHOC } from "../components/UserContext";
 import ErrorAlerter from "../components/ErrorAlerter";
-import OrderCard from "../components/OrderCard";
+import UserOrderCard from "../components/UserOrderCard";
 import { ScrollView } from "react-native-gesture-handler";
 
 class UserOrders extends React.Component {
@@ -39,7 +39,10 @@ class UserOrders extends React.Component {
         <ScrollView>
           {orders.map(order => {
             return (
-              <OrderCard key={`${order.created_at}${++count}`} order={order} />
+              <UserOrderCard
+                key={`${order.created_at}${++count}`}
+                order={order}
+              />
             );
           })}
         </ScrollView>

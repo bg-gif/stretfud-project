@@ -27,7 +27,7 @@ export const UserStack = createStackNavigator(
   {
     defaultNavigationOptions: ({ navigation }) => {
       return {
-        //title: "Home",
+        title: "Home",
         headerRight: () => (
           <>
             <SignOut navigation={navigation} />
@@ -37,6 +37,34 @@ export const UserStack = createStackNavigator(
         headerStyle: { backgroundColor: "rgba(175, 15, 103, 1)" },
         headerTintColor: "rgb(237, 237, 237)",
         headerTitleStyle: { fontWeight: "bold" }
+      };
+    }
+  },
+  {
+    navigationOptions: () => {
+      return {
+        title: "Home",
+        headerLeft: () => <SignOut navigation={navigation} />,
+        headerRight: () => <ShoppingCartViewer navigation={navigation} />
+      };
+    }
+  },
+  {
+    navigationOptions: () => {
+      return {
+        title: "Orders",
+        headerRight: () => <SignOut navigation={navigation} />,
+        headerLeft: () => (
+          <>
+            <Button
+              title="Back"
+              onPress={() => {
+                navigation.goBack();
+              }}
+            />
+            <HomeMover navigation={navigation} />
+          </>
+        )
       };
     }
   }
@@ -54,7 +82,8 @@ export const UserStack = createStackNavigator(
 export const VendorStack = createStackNavigator(
   {
     Home: VendorHome,
-    Menu
+    Menu,
+    Orders
   },
   {
     defaultNavigationOptions: ({ navigation }) => {

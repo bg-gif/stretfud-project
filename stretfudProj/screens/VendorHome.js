@@ -1,23 +1,24 @@
-import React, { Component } from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import StatusSetter from "../components/StatusSetter";
-import LocationSetter from "../components/LocationSetter";
-import * as api from "../utils/api";
-import { withUserHOC } from "../components/UserContext";
-import { formatLocation } from "../utils/utils";
-import Loader from "../components/Loader";
-import ErrorAlerter from "../components/ErrorAlerter";
+import React, { Component } from 'react';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import StatusSetter from '../components/StatusSetter';
+import LocationSetter from '../components/LocationSetter';
+import * as api from '../utils/api';
+import { withUserHOC } from '../components/UserContext';
+import { formatLocation } from '../utils/utils';
+import Loader from '../components/Loader';
+import ErrorAlerter from '../components/ErrorAlerter';
+import UpdateOrder from '../components/UpdateOrder';
 
 class VendorHome extends Component {
   static navigationOptions = {
-    title: "Vendor Home"
+    title: 'Vendor Home'
   };
   state = {
-    businessName: "Joes Burgers",
-    email: "joe@joesbugrers.com",
+    businessName: 'Joes Burgers',
+    email: 'joe@joesbugrers.com',
     openStatus: false,
-    currentLocation: "",
-    openingTimes: "",
+    currentLocation: '',
+    openingTimes: '',
     isLoading: true
   };
 
@@ -46,7 +47,7 @@ class VendorHome extends Component {
         this.setState({ openStatus: updatedVendor.open_status });
       })
       .catch(err => {
-        ErrorAlerter("Open Status could not be updated");
+        ErrorAlerter('Open Status could not be updated');
       });
   };
 
@@ -62,7 +63,7 @@ class VendorHome extends Component {
         });
       })
       .catch(err => {
-        ErrorAlerter("Location could not be updated");
+        ErrorAlerter('Location could not be updated');
       });
   };
 
@@ -94,16 +95,24 @@ class VendorHome extends Component {
         </View>
         <View style={styles.vendorButtonsContainer}>
           <LocationSetter handleLocation={this.handleLocation} />
-          {currentLocation !== "" && (
+          {currentLocation !== '' && (
             <Text style={this.buttonText}>New Location Set!</Text>
           )}
           <TouchableOpacity
             style={styles.editMenuButton}
             onPress={() => {
-              navigation.navigate("Menu", { username: username });
+              navigation.navigate('Menu', { username: username });
             }}
           >
             <Text style={styles.buttonText}>View/Edit Menu</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.editMenuButton}
+            onPress={() => {
+              navigation.navigate('Orders', { username: username });
+            }}
+          >
+            <Text style={styles.buttonText}>Orders</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.vendorStatusContainer}>
@@ -120,67 +129,67 @@ class VendorHome extends Component {
 const styles = StyleSheet.create({
   venderHomePage: {
     flex: 1,
-    flexDirection: "column",
-    backgroundColor: "white"
+    flexDirection: 'column',
+    backgroundColor: 'white'
   },
   vendorInfoContainer: {
     flex: 2,
-    flexDirection: "column",
+    flexDirection: 'column',
     padding: 10
   },
   vendorButtonsContainer: {
     flex: 2,
-    flexDirection: "column",
-    justifyContent: "space-evenly",
-    alignItems: "center",
+    flexDirection: 'column',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
     height: 200
   },
   vendorDetailsContainer: {
     flex: 1,
-    flexDirection: "column",
-    justifyContent: "space-around",
+    flexDirection: 'column',
+    justifyContent: 'space-around',
     borderRadius: 5,
-    textAlign: "left",
-    backgroundColor: "rgba(175, 15, 103, 1)"
+    textAlign: 'left',
+    backgroundColor: 'rgba(175, 15, 103, 1)'
   },
   vendorStatusContainer: {
     flex: 1,
-    flexDirection: "column",
-    justifyContent: "space-evenly",
-    alignItems: "center",
+    flexDirection: 'column',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
     height: 200
   },
   detailText: {
-    color: "white",
-    fontFamily: "BebasNeue-Regular",
+    color: 'white',
+    fontFamily: 'BebasNeue-Regular',
     fontSize: 25,
     paddingLeft: 10
   },
   headerText: {
-    color: "rgba(175, 15, 103, 1)",
-    fontFamily: "BebasNeue-Regular",
+    color: 'rgba(175, 15, 103, 1)',
+    fontFamily: 'BebasNeue-Regular',
     fontSize: 40,
-    textAlign: "center"
+    textAlign: 'center'
   },
   openStatusContainer: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   buttonText: {
-    color: "white",
-    fontFamily: "BebasNeue-Regular",
+    color: 'white',
+    fontFamily: 'BebasNeue-Regular',
     fontSize: 20
   },
   vendorOptionsContainer: {
     flex: 3,
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center"
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center'
   },
   editMenuButton: {
-    alignItems: "center",
-    backgroundColor: "rgba(112, 150, 36, 1)",
+    alignItems: 'center',
+    backgroundColor: 'rgba(112, 150, 36, 1)',
     width: 200,
     padding: 10,
     borderRadius: 5
