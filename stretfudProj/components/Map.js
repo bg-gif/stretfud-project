@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   Platform,
   StyleSheet,
@@ -6,23 +6,21 @@ import {
   View,
   Dimensions,
   Image
-} from 'react-native';
-import MapView, { Marker, Callout } from 'react-native-maps';
-import Constants from 'expo-constants';
-import * as Location from 'expo-location';
-import * as Permissions from 'expo-permissions';
-import { fetchVendorsByLocation } from '../utils/api';
-import Loader from '../components/Loader';
+} from "react-native";
+import MapView, { Marker, Callout } from "react-native-maps";
+import Constants from "expo-constants";
+import * as Location from "expo-location";
+import * as Permissions from "expo-permissions";
+import { fetchVendorsByLocation, fetchVendors } from "../utils/api";
+import Loader from "../components/Loader";
 
-import ErrorAlerter from './ErrorAlerter';
-
-const geolib = require('geolib');
+import ErrorAlerter from "./ErrorAlerter";
 
 const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
+  ios: "Press Cmd+R to reload,\n" + "Cmd+D or shake for dev menu",
   android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu'
+    "Double tap R on your keyboard to reload,\n" +
+    "Shake or press menu button for dev menu"
 });
 
 export default class App extends Component {
@@ -31,30 +29,32 @@ export default class App extends Component {
     long: null,
     lat: null,
     vendors: [],
-    isLoading: false
+    allVendors: [],
+    isLoading: false,
+    nearMe: null
   };
 
   componentWillMount() {
-    if (Platform.OS === 'android' && !Constants.isDevice) {
+    if (Platform.OS === "android" && !Constants.isDevice) {
       this.setState({
         errorMessage:
-          'Oops, this will not work on Sketch in an Android emulator. Try it on your device!'
+          "Oops, this will not work on Sketch in an Android emulator. Try it on your device!"
       });
     } else {
-      this.setState({ isLoading: true });
+      this.setState({ isLoading: true, nearMe: this.props.nearMe });
       this._getLocationAsync();
     }
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevState) {
     if (this.props.refresh) this._getLocationAsync();
   }
 
   _getLocationAsync = async () => {
     let { status } = await Permissions.askAsync(Permissions.LOCATION);
-    if (status !== 'granted') {
+    if (status !== "granted") {
       this.setState({
-        errorMessage: 'Permission to access location was denied'
+        errorMessage: "Permission to access location was denied"
       });
     }
 
@@ -62,14 +62,22 @@ export default class App extends Component {
 
     this.setState(
       {
-        location,
-        long: location.coords.longitude,
-        lat: location.coords.latitude
+        start: {
+          longitude: location.coords.longitude,
+          latitude: location.coords.latitude
+        }
       },
       () => {
-        const { long, lat } = this.state;
-        fetchVendorsByLocation(lat, long).then(vendors => {
+        const { longitude, latitude } = this.state.start;
+
+        fetchVendorsByLocation(latitude, longitude).then(vendors => {
           this.setState({ vendors, isLoading: false }, () => {
+            this.props.changeRefresh();
+          });
+        });
+
+        fetchVendors().then(vendors => {
+          this.setState({ allVendors: vendors, isLoading: false }, () => {
             this.props.changeRefresh();
           });
         });
@@ -78,37 +86,33 @@ export default class App extends Component {
   };
 
   render() {
-    const { lat, long, vendors, isLoading } = this.state;
-    const coordinates = {
-      latitude: lat,
-      longitude: long
-    };
+    const { lat, long, vendors, isLoading, start, allVendors } = this.state;
+    const Vendors = this.props.nearMe ? vendors : allVendors;
+    const zoom = this.props.nearMe ? 0.02 : 0.07;
+
     return isLoading ? (
       <Loader />
     ) : (
       <View style={styles.container}>
         <MapView
           style={styles.mapStyle}
-          initialRegion={{
-            latitude: lat,
-            longitude: long,
-            latitudeDelta: 0.02,
-            longitudeDelta: 0.02
+          region={{
+            latitude: start.latitude,
+            longitude: start.longitude,
+            latitudeDelta: zoom,
+            longitudeDelta: zoom
           }}
         >
           <MapView.Circle
             // key={lat + long}
-            center={{
-              latitude: coordinates.latitude,
-              longitude: coordinates.longitude
-            }}
+            center={start}
             radius={805}
             strokeWidth={1}
-            strokeColor={'#1a66ff'}
+            strokeColor={"#1a66ff"}
           />
           {vendors === undefined
-            ? ErrorAlerter('Could not find vendors')
-            : vendors.map(vendor => {
+            ? ErrorAlerter("Could not find vendors")
+            : Vendors.map(vendor => {
                 const {
                   location,
                   open_status,
@@ -118,9 +122,9 @@ export default class App extends Component {
                   opening_times
                 } = vendor;
                 if (!location) return null;
-                const coords = location.split(',');
-                const openStatus = open_status ? 'Open' : 'Closed';
-                const color = open_status ? '#008000' : '#FF0000';
+                const coords = location.split(",");
+                const openStatus = open_status ? "Open" : "Closed";
+                const color = open_status ? "#008000" : "#FF0000";
                 if (this.props.toggleVal || open_status) {
                   return (
                     <Marker
@@ -136,7 +140,7 @@ export default class App extends Component {
                       <Callout
                         style={styles.customView}
                         onPress={() => {
-                          this.props.navigation.navigate('SingleVendor', {
+                          this.props.navigation.navigate("SingleVendor", {
                             vendor
                           });
                         }}
@@ -163,7 +167,7 @@ export default class App extends Component {
                             <View name="Logo">
                               <Image
                                 resizeMethod="resize"
-                                source={require('../assets/stretfud-logo.png')}
+                                source={require("../assets/stretfud-logo.png")}
                                 style={styles.logo}
                               />
                             </View>
@@ -175,10 +179,18 @@ export default class App extends Component {
                 }
               })}
           <Marker
-            coordinate={{
-              latitude: coordinates.latitude,
-              longitude: coordinates.longitude
-            }}
+            draggable
+            onDragEnd={e =>
+              this.setState({ start: e.nativeEvent.coordinate }, () => {
+                const { longitude, latitude } = this.state.start;
+                fetchVendorsByLocation(latitude, longitude).then(vendors => {
+                  this.setState({ vendors, isLoading: false }, () => {
+                    this.props.changeRefresh();
+                  });
+                });
+              })
+            }
+            coordinate={start}
             pinColor="#0000A0"
           />
         </MapView>
@@ -190,24 +202,24 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#800080'
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#800080"
   },
   welcome: {
     fontSize: 20,
-    textAlign: 'center',
+    textAlign: "center",
     margin: 10
   },
   instructions: {
-    textAlign: 'center',
-    color: '#333333',
+    textAlign: "center",
+    color: "#333333",
     marginBottom: 5
   },
   mapStyle: {
     flex: 1,
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height
+    width: Dimensions.get("window").width,
+    height: Dimensions.get("window").height
   },
   customView: {
     height: 140
@@ -216,27 +228,27 @@ const styles = StyleSheet.create({
     height: 140
   },
   businessCardHeader: {
-    fontFamily: 'BebasNeue-Regular',
+    fontFamily: "BebasNeue-Regular",
     fontSize: 30,
-    color: 'rgba(175, 15, 103, 1)',
-    textAlign: 'center'
+    color: "rgba(175, 15, 103, 1)",
+    textAlign: "center"
   },
   businessCardInfo: {
-    fontFamily: 'BebasNeue-Regular',
+    fontFamily: "BebasNeue-Regular",
     fontSize: 20,
-    color: 'rgba(175, 15, 103, 1)',
-    textAlign: 'left',
+    color: "rgba(175, 15, 103, 1)",
+    textAlign: "left",
     paddingLeft: 5
   },
   cardContent: {
-    flexDirection: 'row',
-    justifyContent: 'space-between'
+    flexDirection: "row",
+    justifyContent: "space-between"
   },
   logo: {
     width: 100,
     height: 100,
     borderRadius: 75,
-    borderColor: 'rgba(175, 15, 103, 1)',
+    borderColor: "rgba(175, 15, 103, 1)",
     borderWidth: 4,
     paddingRight: 10
   }

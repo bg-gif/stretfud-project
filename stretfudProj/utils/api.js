@@ -1,5 +1,5 @@
-const axios = require('axios');
-const base_URL = 'https://stretfud.herokuapp.com/api';
+const axios = require("axios");
+const base_URL = "https://stretfud.herokuapp.com/api";
 
 exports.fetchVendor = username => {
   return axios.get(`${base_URL}/vendors/${username}`).then(({ data }) => {
@@ -29,7 +29,7 @@ exports.postLoginAuth = (loginObj, destination) => {
 
 exports.fetchVendorsByLocation = (lat, long) => {
   return axios
-    .get(`${base_URL}/vendors?=${lat},${long}`)
+    .get(`${base_URL}/vendors?location=${lat},${long}`)
     .then(({ data: { vendors } }) => {
       return vendors;
     });
@@ -73,6 +73,13 @@ exports.deleteMenuItem = (username, menu_item_id) => {
   return axios
     .delete(`${base_URL}/vendors/${username}/menu/${menu_item_id}`)
     .then(() => {
-      return { msg: 'Item Deleted' };
+      return { msg: "Item Deleted" };
     });
+};
+
+exports.fetchVendors = () => {
+  return axios.get(`${base_URL}/vendors`).then(({ data: { vendors } }) => {
+    console.log(vendors);
+    return vendors;
+  });
 };

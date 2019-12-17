@@ -16,7 +16,8 @@ class UserHome extends Component {
   state = {
     toggleVal: true,
     refresh: false,
-    isLoading: true
+    isLoading: true,
+    nearMe: true
   };
 
   static navigationOptions = ({ navigation }) => {
@@ -42,6 +43,8 @@ class UserHome extends Component {
           refresh={this.state.refresh}
           changeRefresh={this.changeRefresh}
           changeLoading={this.changeLoading}
+          changeRefresh={this.changeRefresh}
+          nearMe={this.state.nearMe}
         />
         <View style={styles.userOptionsContainer}>
           <TouchableOpacity
@@ -52,6 +55,19 @@ class UserHome extends Component {
           >
             <Text style={styles.buttonContent}>Refresh</Text>
           </TouchableOpacity>
+          <ToggleSwitch
+            isOn={this.state.nearMe}
+            onColor="green"
+            offColor="red"
+            label="Near Me"
+            labelStyle={styles.toggleSwitch}
+            size="small"
+            onToggle={() =>
+              this.setState(currentState => {
+                return { nearMe: !currentState.nearMe };
+              })
+            }
+          />
           <ToggleSwitch
             isOn={this.state.toggleVal}
             onColor="green"
