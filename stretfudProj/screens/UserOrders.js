@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Button } from "react-native";
+import { View, SafeAreaView } from "react-native";
 import SignOut from "./SignOut";
 import BackMover from "../components/BackMover";
 import * as api from "../utils/api";
@@ -35,7 +35,7 @@ class UserOrders extends React.Component {
     let count = 0;
     //if (this.state.orders === undefined) return <Text>No Orders</Text>;
     return (
-      <View style={{ flex: 1 }}>
+      <SafeViewArea style={{ flex: 1 }}>
         <ScrollView>
           {orders.map(order => {
             return (
@@ -46,7 +46,7 @@ class UserOrders extends React.Component {
             );
           })}
         </ScrollView>
-      </View>
+      </SafeViewArea>
     );
   }
 }
