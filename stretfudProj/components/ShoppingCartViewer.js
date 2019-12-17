@@ -3,6 +3,7 @@ import { Platform, Text, TouchableOpacity, Button } from "react-native";
 
 class ShoppingCartViewer extends React.Component {
   render() {
+    const emptyCart = this.props.navigation.state.params.emptyCart;
     const vendor = this.props.navigation.state.params.vendor.username;
     const count = this.props.navigation.state.params.cartParam;
     const platform = Platform.OS;
@@ -13,6 +14,7 @@ class ShoppingCartViewer extends React.Component {
         : "rgba(112, 150, 36, 1)";
     iPhoneColor = "rgb(237, 237, 237)";
     platform === "android" ? (Color = androidColor) : (Color = iPhoneColor);
+
     return (
       <Button
         title={
@@ -24,23 +26,11 @@ class ShoppingCartViewer extends React.Component {
         onPress={() => {
           this.props.navigation.navigate("ShoppingCart", {
             cartParam: count,
-            vendor
+            vendor,
+            emptyCart
           });
         }}
       />
-
-      // <TouchableOpacity
-      //   onPress={() => {
-      //     this.props.navigation.navigate("ShoppingCart", {
-      //       cartParam: count,
-      //       vendor
-      //     });
-      //   }}
-      // >
-      //   <Text style={{ color: Color }}>
-      //     Shopping Cart {count && count.length}
-      //   </Text>
-      // </TouchableOpacity>
     );
   }
 }

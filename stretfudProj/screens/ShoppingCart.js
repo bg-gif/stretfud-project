@@ -9,16 +9,24 @@ import OrderAlerter from "../components/OrderAlerter";
 import ErrorAlerter from "../components/ErrorAlerter";
 
 class ShoppingCart extends Component {
+  static navigationOptions = ({ navigationOptions, navigation }) => {
+    return {
+      title: "Cart"
+    };
+  };
   handlePress = () => {
     const user = this.props.user.username;
     const vendor = this.props.navigation.state.params.vendor;
     const order = this.props.navigation.state.params.cartParam;
     const orderObj = { user, vendor, order: [...order] };
+    const emptyCart = this.props.navigation.state.params.emptyCart;
 
     api
       .postOrder(JSON.stringify(orderObj))
       .then(() => {
         OrderAlerter();
+        emptyCart();
+        this.props.navigation.setParams({ cartParam: [] });
       })
       .catch(err => {
         console.log(err);
@@ -35,6 +43,7 @@ class ShoppingCart extends Component {
   };
 
   render() {
+    //console.log(this.props.navigation.navigationOptions);
     const cartArray = this.props.navigation.state.params.cartParam;
     if (cartArray.length === 0) return <EmptyCartAlerter />;
     const total = cartArray.reduce((acc, val) => {

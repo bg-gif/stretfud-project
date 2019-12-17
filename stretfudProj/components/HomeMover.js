@@ -17,7 +17,7 @@ class HomeMover extends Component {
         title="Home"
         color="white"
         onPress={() => {
-          this.props.navigation.navigate("Home");
+          this.props.navigation.navigate("UserHome");
         }}
       />
     );

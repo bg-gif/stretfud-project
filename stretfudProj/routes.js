@@ -27,7 +27,7 @@ export const UserStack = createStackNavigator(
   {
     defaultNavigationOptions: ({ navigation }) => {
       return {
-        title: "Home",
+        //title: "Home",
         headerRight: () => (
           <>
             <SignOut navigation={navigation} />
@@ -39,35 +39,16 @@ export const UserStack = createStackNavigator(
         headerTitleStyle: { fontWeight: "bold" }
       };
     }
-  },
-  {
-    navigationOptions: () => {
-      return {
-        title: "Home",
-        headerLeft: () => <SignOut navigation={navigation} />,
-        headerRight: () => <ShoppingCartViewer navigation={navigation} />
-      };
-    }
-  },
-  {
-    navigationOptions: () => {
-      return {
-        title: "Orders",
-        headerRight: () => <SignOut navigation={navigation} />,
-        headerLeft: () => (
-          <>
-            <Button
-              title="Back"
-              onPress={() => {
-                navigation.goBack();
-              }}
-            />
-            <HomeMover navigation={navigation} />
-          </>
-        )
-      };
-    }
   }
+  // {
+  //   navigationOptions: () => {
+  //     return {
+  //       title: "Cart",
+  //       headerLeft: () => <SignOut navigation={navigation} />,
+  //       headerRight: () => <ShoppingCartViewer navigation={navigation} />
+  //     };
+  //   }
+  // }
 );
 
 export const VendorStack = createStackNavigator(

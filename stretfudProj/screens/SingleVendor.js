@@ -36,7 +36,10 @@ class SingleVendor extends Component {
         this.setState({ menuItems: menuItems, isLoading: false });
       })
       .then(() => {
-        this.props.navigation.setParams({ cartParam: this.state.cart });
+        this.props.navigation.setParams({
+          cartParam: this.state.cart,
+          emptyCart: this.emptyCart
+        });
       })
       .catch(err => {
         ErrorAlerter("Menu items could not be found");
@@ -45,7 +48,10 @@ class SingleVendor extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.cart !== this.state.cart) {
-      this.props.navigation.setParams({ cartParam: this.state.cart });
+      this.props.navigation.setParams({
+        cartParam: this.state.cart,
+        emptyCart: this.emptyCart
+      });
     }
   }
 
@@ -55,7 +61,12 @@ class SingleVendor extends Component {
     });
   };
 
+  emptyCart = () => {
+    this.setState({ cart: [] });
+  };
+
   render() {
+    console.log(this.props);
     const {
       businessname,
       opening_times,
@@ -93,10 +104,18 @@ class SingleVendor extends Component {
               {open}
             </Text>
           </View>
+          {open_status ? (
+            <Text style={styles.orderMsg}>Touch item to add to cart</Text>
+          ) : (
+            <Text style={styles.orderMsg}>
+              Ordering not available while closed
+            </Text>
+          )}
           <View style={styles.menuItemsContainer}>
             {availableItems.map(availableItem => {
               return (
                 <TouchableOpacity
+                  disabled={!open_status}
                   key={availableItem.menu_item_id}
                   onPress={() => {
                     this.addItem(availableItem);
@@ -172,6 +191,12 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderColor: "rgba(175, 15, 103, 1)",
     borderWidth: 2
+  },
+  orderMsg: {
+    paddingTop: 5,
+    fontFamily: "BebasNeue-Regular",
+    fontSize: 20,
+    color: "rgba(198, 197, 185, 1)"
   }
 });
 

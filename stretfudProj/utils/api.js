@@ -68,3 +68,11 @@ exports.postOrder = orderObj => {
       return msg;
     });
 };
+
+exports.fetchUserOrders = username => {
+  return axios
+    .get(`${base_URL}/users/${username}/orders`)
+    .then(({ data: { orders } }) => {
+      return orders;
+    });
+};
