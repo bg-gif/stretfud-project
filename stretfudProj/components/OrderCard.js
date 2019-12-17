@@ -7,6 +7,8 @@ import {
   Dimensions,
   ScrollView
 } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import * as api from '../utils/api';
 
 class OrderCard extends Component {
   constructor() {
@@ -16,43 +18,35 @@ class OrderCard extends Component {
     };
   }
 
+  handleStatus = () => {
+    const order = this.props.order;
+    const orderStatus = order[0].status;
+    const orderId = order[0].order_id;
+    api.updateStatus(orderStatus, orderId).then(response => {
+      this.props.refresh();
+      console.log(response);
+    });
+  };
+
   render() {
+    const order = this.props.order;
+    const orderStatus = order[0].status;
     return (
       <View style={styles.menuCard}>
-        <Text>Order</Text>
-        {/* <View style={styles.menuItemHeader}>
-          <Text style={styles.menuItemHeaderText}>{name}</Text>
-          <Text style={styles.menuItemHeaderText}>£{price}</Text>
-        </View>
-        <View style={styles.menuDetails}>
-          <View style={styles.detailsContainer}>
-            <Text style={styles.descriptionText}>{description}</Text>
-            {gluten_free === true && (
-              <Text style={styles.descriptionText}>GF</Text>
-            )}
-            {vegan === true && <Text style={styles.descriptionText}>VG</Text>}
-            {vegetarian === true && (
-              <Text style={styles.descriptionText}>V</Text>
-            )}
-          </View>
-
-          <View style={styles.availabilityButtonContainer}>
-            <Text style={styles.availabilityText}>Available: </Text>
-            <Switch
-              onValueChange={handleAvailability}
-              name={menu_item_id}
-              value={available}
-            />
-          </View>
-          <TouchableOpacity style={styles.confirmButton} onPress={() => {}}>
-            <Text style={styles.buttonText}>Orders</Text>
-          </TouchableOpacity> */}
+        <Text>Customer Name: {order[0].user_username}</Text>
+        <Text>Status: {orderStatus}</Text>
+        {order.map((item, index) => {
+          return <Text key={index}>{item.name}</Text>;
+        })}
+        <TouchableOpacity onPress={this.handleStatus}>
+          <Text>Status: {orderStatus}</Text>
+        </TouchableOpacity>
       </View>
     );
   }
 }
 
-export default VendorMenuCard;
+export default OrderCard;
 
 const styles = StyleSheet.create({
   menuCard: {
@@ -95,6 +89,13 @@ const styles = StyleSheet.create({
     fontFamily: 'BebasNeue-Regular',
     fontSize: 17,
     color: 'rgba(175, 15, 103, 1)'
+  },
+  vendorStatusContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    height: 50
   },
   availabilityText: {
     fontFamily: 'BebasNeue-Regular',

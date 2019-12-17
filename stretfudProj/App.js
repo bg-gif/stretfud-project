@@ -1,13 +1,13 @@
 import React from "react";
 import { createAppContainer } from "react-navigation";
 import { createSwitchNavigator } from "react-navigation";
-import SignIn from "./screens/SignIn";
-import { UserStack, VendorStack } from "./routes";
+
+import { UserStack, VendorStack, SignUpStack } from "./routes";
 import UserContext, { UserProvider } from "./components/UserContext";
 
 const RootSwitch = createSwitchNavigator(
   {
-    SignIn: SignIn,
+    SignIn: SignUpStack,
     UserHomePage: UserStack,
     VendorHomePage: VendorStack
   },

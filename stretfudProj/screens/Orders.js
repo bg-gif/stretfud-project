@@ -9,51 +9,44 @@ import {
   SafeAreaView
 } from 'react-native';
 import * as api from '../utils/api';
-
+import { withUserHOC } from '../components/UserContext';
 import Loader from '../components/Loader';
 import ErrorAlerter from '../components/ErrorAlerter';
-
-import VendorMenuCard from '../components/VendorMenuCard';
-// import { SafeAreaView } from 'react-navigation';
+import OrderCard from '../components/OrderCard';
 import Constants from 'expo-constants';
 
 class Menu extends Component {
   state = {
     isLoading: false,
-    orders: []
+    orders: [],
+    refresh: true
   };
 
   componentDidMount() {
-    let status = 'open';
-    const { username } = this.props.user.username;
-    console.log(username);
-    api
-      .fetchVendorOrders(username, status)
-      .then(this.setState({ orders }), () => {
-        console.log(username);
-      });
+    const { username } = this.props.navigation.state.params;
+    api.fetchVendorOrders(username).then(orders => {
+      this.setState({ orders });
+    });
   }
 
-  handleSwitch = (username, menu_item_id, available) => {
-    let newStatus = !available;
-    newStatus = newStatus.toString();
-    api
-      .updateMenuItem({ username, menu_item_id, available: newStatus })
-      .then(menuObj => {
-        const updatedMenu = this.state.menuItems.map(
-          ({ menu_item_id, available, ...rest }) => {
-            if (menu_item_id === menuObj.menu_item_id)
-              available = menuObj.available;
-            return { menu_item_id, available, ...rest };
-          }
-        );
-        this.setState({ menuItems: updatedMenu });
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.refresh !== this.state.refresh) {
+      const { username } = this.props.navigation.state.params;
+      api.fetchVendorOrders(username).then(orders => {
+        this.setState({ orders });
       });
+    }
+  }
+
+  refresh = () => {
+    this.setState(currentState => {
+      return { refresh: !currentState.refresh };
+    });
   };
 
   render() {
     const { orders, isLoading } = this.state;
-
+    const orderNums = Object.keys(orders);
     if (isLoading) return <Loader />;
     return (
       <SafeAreaView style={styles.container}>
@@ -62,16 +55,15 @@ class Menu extends Component {
             <View style={styles.headerContainer}>
               <Text style={styles.headerText}>Orders</Text>
             </View>
-
-            {/* {menuItems.map(item => {
+            {orderNums.map(num => {
               return (
-                <VendorMenuCard
-                  key={item.name}
-                  menuItem={item}
-                  handleSwitch={this.handleSwitch}
+                <OrderCard
+                  order={orders[num]}
+                  key={orders[num]}
+                  refresh={this.refresh}
                 />
               );
-            })} */}
+            })}
           </View>
         </ScrollView>
       </SafeAreaView>
