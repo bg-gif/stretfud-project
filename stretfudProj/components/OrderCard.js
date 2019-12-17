@@ -36,14 +36,22 @@ class OrderCard extends Component {
     const order = this.props.order;
     const orderStatus = order[0].status;
     return (
-      <View style={styles.menuCard}>
-        <Text>Customer Name: {order[0].user_username}</Text>
-        <Text>Status: {orderStatus}</Text>
-        {order.map((item, index) => {
-          return <Text key={index}>{item.name}</Text>;
-        })}
+      <View style={styles.orderCard}>
         <TouchableOpacity onPress={this.handleStatus}>
-          <Text>Status: {orderStatus}</Text>
+          <View style={styles.orderDetails}>
+            <Text style={styles.orderText}>
+              Customer Name: {order[0].user_username}
+            </Text>
+
+            {order.map((item, index) => {
+              return (
+                <Text key={index} style={styles.orderText}>
+                  {item.name}
+                </Text>
+              );
+            })}
+            <Text style={styles.statusText}>Status: {orderStatus}</Text>
+          </View>
         </TouchableOpacity>
       </View>
     );
@@ -53,57 +61,26 @@ class OrderCard extends Component {
 export default OrderCard;
 
 const styles = StyleSheet.create({
-  menuCard: {
+  orderCard: {
     flexDirection: 'column',
     borderColor: 'rgba(175, 15, 103, 1)',
     borderRadius: 5,
     borderWidth: 4,
     marginBottom: 15,
-    marginTop: 15
+    marginTop: 15,
+    alignItems: 'center'
   },
-  menuDetails: {
-    flexDirection: 'row'
+  orderDetails: {
+    alignItems: 'center'
   },
-  detailsContainer: {
-    flex: 2,
-    padding: 5
-  },
-  availabilityButtonContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    paddingRight: 10
-  },
-  menuItemHeader: {
-    flexDirection: 'row',
-    backgroundColor: 'rgba(175, 15, 103, 1)',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingRight: 5,
-    paddingLeft: 5,
-    width: Dimensions.get('window').width - 30
-  },
-  menuItemHeaderText: {
-    color: 'white',
-    fontFamily: 'BebasNeue-Regular',
-    fontSize: 25
-  },
-  descriptionText: {
+  orderText: {
     fontFamily: 'BebasNeue-Regular',
     fontSize: 17,
     color: 'rgba(175, 15, 103, 1)'
   },
-  vendorStatusContainer: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-    height: 50
-  },
-  availabilityText: {
+  statusText: {
     fontFamily: 'BebasNeue-Regular',
-    fontSize: 17,
+    fontSize: 22,
     color: 'rgba(175, 15, 103, 1)'
   }
 });

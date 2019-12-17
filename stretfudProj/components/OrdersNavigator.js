@@ -15,7 +15,7 @@ class OrdersNavigator extends React.Component {
     return (
       <Button
         title="Orders"
-        color="white"
+        color={Color}
         onPress={() => {
           this.props.navigation.navigate("UserOrders");
         }}

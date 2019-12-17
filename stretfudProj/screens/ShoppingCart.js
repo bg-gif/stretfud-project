@@ -31,8 +31,12 @@ class ShoppingCart extends Component {
         socket.emit('incoming', { user, vendor });
       })
       .catch(err => {
+<<<<<<< HEAD
         console.log(err);
         ErrorAlerter('Could not send order at this time.');
+=======
+        ErrorAlerter("Could not send order at this time.");
+>>>>>>> cd564bcfc816033bff1b306d6364cbe8c472d7ad
       });
   };
 
@@ -45,7 +49,6 @@ class ShoppingCart extends Component {
   };
 
   render() {
-    //console.log(this.props.navigation.navigationOptions);
     const cartArray = this.props.navigation.state.params.cartParam;
     if (cartArray.length === 0) return <EmptyCartAlerter />;
     const total = cartArray.reduce((acc, val) => {
