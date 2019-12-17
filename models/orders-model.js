@@ -1,6 +1,9 @@
 const connection = require('../db/connection');
 
 exports.sendOrder = (user_username, vendor_username, order) => {
+  if (!user_username || !vendor_username || !order) {
+    return Promise.reject({ status: 400, msg: 'Bad Request' });
+  }
   return connection('orders')
     .insert({ user_username, vendor_username })
     .returning('order_id')

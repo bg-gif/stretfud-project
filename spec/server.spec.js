@@ -155,6 +155,21 @@ describe('server', () => {
               });
           }
         });
+        it('status:400, Invalid menu item id key', () => {
+          {
+            return request
+              .post('/api/orders')
+              .send({
+                user: 'megatron',
+                vendor: 'oppri',
+                oder: [{ menu_item_id: 1 }, { menu_i_id: 2 }]
+              })
+              .expect(400)
+              .then(({ body: { msg } }) => {
+                expect(msg).to.equal('Bad Request');
+              });
+          }
+        });
       });
       describe('PATCH', () => {
         it('status:200, returns updated order', () => {
