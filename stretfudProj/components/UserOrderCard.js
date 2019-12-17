@@ -3,6 +3,7 @@ import { View, Text, StyleSheet } from "react-native";
 import * as utils from "../utils/utils";
 
 const UserOrderCard = ({ order }) => {
+  if (order.status === "collected") return null;
   return (
     <View style={styles.orderContainer}>
       <View style={styles.orderName}>
