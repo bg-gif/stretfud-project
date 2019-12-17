@@ -37,7 +37,6 @@ const VendorMenuCard = ({ menuItem, handleSwitch, handleDeleteItem }) => {
         text: 'No'
       }
     ]);
-    //console.log(menu_item_id);
   };
 
   return (

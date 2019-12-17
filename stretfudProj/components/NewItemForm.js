@@ -68,21 +68,11 @@ class NewItemForm extends Component {
           gluten_free
         })
           .then(({ menu_item }) => {
-            console.log(menu_item);
             handleAddItem(menu_item);
           })
           .catch(err => {
-            console.log(err);
+            ErrorAlerter('Adding Items is unavaliable right now');
           });
-        console.log({
-          username,
-          name,
-          formattedPrice,
-          description,
-          vegetarian,
-          vegan,
-          gluten_free
-        });
       }
       this.setState({ isEmpty: false });
     }
