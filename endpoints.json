@@ -1,0 +1,137 @@
+{
+  "GET /api": {
+    "description": "serves up a json representation of all the available endpoints of the api"
+  },
+  "POST api/users": {
+    "description": "adds a user and returns new user info",
+    "exampleBody": {
+      "username": "steve",
+      "password": "steve",
+      "realname": "steve",
+      "email": "steve@stevemail.steve",
+      "age": 42,
+      "phone_num": "78383783839"
+    },
+    "exampleResponse": {
+      "user": {
+        "username": "steve",
+        "realname": "steve",
+        "email": "steve@stevemail.steve",
+        "age": 42,
+        "phone_num": "78383783839",
+        "created_at": "Timestamp"
+      }
+    }
+  },
+  "GET api/users/:username": {
+    "description": "returns user info on endpoint of username",
+    "exampleResponse": {
+      "user": {
+        "username": "steve",
+        "realname": "steve",
+        "email": "steve@stevemail.steve",
+        "age": 42,
+        "phone_num": "78383783839"
+      }
+    }
+  },
+  "PATCH api/users/:username": {
+    "description": "updates either phone number or email address of user by username",
+    "exampleBody": { "phone_num": "78383783839" },
+    "exampleResponse": {
+      "user": {
+        "username": "steve",
+        "realname": "steve",
+        "email": "steve@stevemail.steve",
+        "age": 42,
+        "phone_num": "78383783839"
+      }
+    }
+  },
+  "GET api/vendors": {
+    "description": "returns an array of all vendor details",
+    "exampleResponse": { "vendors": ["array of vendors"] }
+  },
+  "POST api/vendors": {
+    "description": "adds a new vendor and returns the added vendor",
+    "exampleBody": {
+      "vendor": {
+        "username": "steve",
+        "cuisine": "steve food",
+        "location": "56.342202, -2.794841",
+        "opening_times": "9-5",
+        "password": "password",
+        "ownername": "steve",
+        "email": "steve@stevemail.steve",
+        "phone_num": "78383783839"
+      }
+    },
+    "exampleResponse": {
+      "vendor": {
+        "username": "steve",
+        "cuisine": "steve food",
+        "location": "56.342202, -2.794841",
+        "opening_times": "9-5",
+        "ownername": "steve",
+        "email": "steve@stevemail.steve",
+        "phone_num": "78383783839",
+        "created_at": "Timestamp"
+      }
+    }
+  },
+  "GET api/vendors/:username": {
+    "description": "gets specific vendor info by username, returning an object with key of vendor and value of vendor object",
+    "exampleResponse": {
+      "vendor": {
+        "username": "oppri",
+        "ownername": "steve prime",
+        "cuisine": "steak house",
+        "location": "53.796329, -1.542809",
+        "opening_times": "9am - 9pm",
+        "open_status": false,
+        "menu": "https://d1csarkz8obe9u.cloudfront.net/posterpreviews/menu-flyer-template-5632286b490608db0301a085b91cde86_screen.jpg?ts=1561491978",
+        "businessname": "Steves steaks",
+        "phone_num": "01602 616666",
+        "email": "steakysteve@gmail.com"
+      }
+    }
+  },
+  "PATCH api/vendors/:username": {
+    "description": "updates vendor by username and by key on body. Available patches are location, open_status and menu",
+    "exampleBody": { "location": "56.342202, -2.794841" },
+    "exampleResponse": {
+      "vendor": {
+        "username": "oppri",
+        "ownername": "steve prime",
+        "cuisine": "steak house",
+        "location": "53.796329, -1.542809",
+        "opening_times": "9am - 9pm",
+        "open_status": false,
+        "menu": "https://d1csarkz8obe9u.cloudfront.net/posterpreviews/menu-flyer-template-5632286b490608db0301a085b91cde86_screen.jpg?ts=1561491978",
+        "businessname": "Steves steaks",
+        "phone_num": "01602 616666",
+        "email": "steakysteve@gmail.com"
+      }
+    }
+  },
+  "POST api/login/users": {
+    "description": "takes username and password and checks both against stored information in database, returns validated or rejects with 404/400",
+    "exampleBody": {
+      "username": "steve",
+      "password": "stevespassword"
+    },
+    "exampleResponse": {
+      "msg": "Verified"
+    }
+  },
+  "POST api/login/vendors": {
+    "description": "takes username and password and checks both against stored information in database, returns validated or rejects with 404/400",
+    "exampleBody": {
+      "username": "steve",
+      "password": "stevespassword"
+    },
+    "exampleResponse": {
+      "msg": "Verified"
+    }
+  }
+}

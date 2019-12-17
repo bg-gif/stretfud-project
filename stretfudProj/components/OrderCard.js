@@ -1,15 +1,8 @@
-import React, { Component } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Switch,
-  Dimensions,
-  ScrollView
-} from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import * as api from '../utils/api';
-let socket = require('socket.io-client')(`ws://stretfud.herokuapp.com:80`);
+import React, { Component } from "react";
+import { View, Text, StyleSheet } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import * as api from "../utils/api";
+let socket = require("socket.io-client")(`ws://stretfud.herokuapp.com:80`);
 
 class OrderCard extends Component {
   constructor() {
@@ -27,8 +20,7 @@ class OrderCard extends Component {
     const user = order[0].user_username;
     api.updateStatus(orderStatus, orderId).then(response => {
       this.props.refresh();
-      socket.emit('incoming', { vendor, user });
-      console.log(response);
+      socket.emit("incoming", { vendor, user });
     });
   };
 
@@ -63,25 +55,25 @@ export default OrderCard;
 
 const styles = StyleSheet.create({
   orderCard: {
-    flexDirection: 'column',
-    borderColor: 'rgba(175, 15, 103, 1)',
+    flexDirection: "column",
+    borderColor: "rgba(175, 15, 103, 1)",
     borderRadius: 5,
     borderWidth: 4,
     marginBottom: 15,
     marginTop: 15,
-    alignItems: 'center'
+    alignItems: "center"
   },
   orderDetails: {
-    alignItems: 'center'
+    alignItems: "center"
   },
   orderText: {
-    fontFamily: 'BebasNeue-Regular',
+    fontFamily: "BebasNeue-Regular",
     fontSize: 17,
-    color: 'rgba(175, 15, 103, 1)'
+    color: "rgba(175, 15, 103, 1)"
   },
   statusText: {
-    fontFamily: 'BebasNeue-Regular',
+    fontFamily: "BebasNeue-Regular",
     fontSize: 22,
-    color: 'rgba(175, 15, 103, 1)'
+    color: "rgba(175, 15, 103, 1)"
   }
 });

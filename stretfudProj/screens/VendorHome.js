@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 import StatusSetter from '../components/StatusSetter';
 import LocationSetter from '../components/LocationSetter';
 import * as api from '../utils/api';
@@ -7,8 +7,6 @@ import { withUserHOC } from '../components/UserContext';
 import { formatLocation } from '../utils/utils';
 import Loader from '../components/Loader';
 import ErrorAlerter from '../components/ErrorAlerter';
-import UpdateOrder from '../components/UpdateOrder';
-let socket = require('socket.io-client')(`ws://stretfud.herokuapp.com:80`);
 
 class VendorHome extends Component {
   static navigationOptions = {
@@ -88,8 +86,12 @@ class VendorHome extends Component {
     return (
       <View style={styles.venderHomePage}>
         <View style={styles.vendorInfoContainer}>
-          <Text style={styles.headerText}>Vendor Home</Text>
           <View style={styles.vendorDetailsContainer}>
+            <Image
+              resizeMethod="resize"
+              source={require('../assets/stretfud-logo.png')}
+              style={styles.logo}
+            />
             <Text style={styles.detailText}>name: {businessName}</Text>
             <Text style={styles.detailText}>email: {email}</Text>
             <Text style={styles.detailText}>opening times: {openingTimes}</Text>
@@ -111,7 +113,7 @@ class VendorHome extends Component {
           <TouchableOpacity
             style={styles.editMenuButton}
             onPress={() => {
-              navigation.navigate('Orders', { username: username });
+              navigation.navigate("Orders", { username: username });
             }}
           >
             <Text style={styles.buttonText}>Orders</Text>
@@ -167,12 +169,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     paddingLeft: 10
   },
-  headerText: {
-    color: 'rgba(175, 15, 103, 1)',
-    fontFamily: 'BebasNeue-Regular',
-    fontSize: 40,
-    textAlign: 'center'
-  },
+
   openStatusContainer: {
     flex: 1,
     justifyContent: 'center',
@@ -195,6 +192,15 @@ const styles = StyleSheet.create({
     width: 200,
     padding: 10,
     borderRadius: 5
+  },
+  logo: {
+    width: 100,
+    height: 100,
+    borderRadius: 75,
+    borderColor: 'rgba(112, 150, 36, 1)',
+    borderWidth: 4,
+    paddingRight: 10,
+    alignSelf: 'center'
   }
 });
 

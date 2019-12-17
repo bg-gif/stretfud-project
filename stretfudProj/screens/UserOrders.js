@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from 'react';
 import { View, Text, Button } from 'react-native';
 import SignOut from './SignOut';
@@ -8,11 +9,22 @@ import ErrorAlerter from '../components/ErrorAlerter';
 import UserOrderCard from '../components/UserOrderCard';
 import { ScrollView } from 'react-native-gesture-handler';
 let socket = require('socket.io-client')(`ws://stretfud.herokuapp.com:80`);
+=======
+import React from "react";
+import { SafeAreaView } from "react-native";
+import SignOut from "./SignOut";
+import * as api from "../utils/api";
+import { withUserHOC } from "../components/UserContext";
+import ErrorAlerter from "../components/ErrorAlerter";
+import UserOrderCard from "../components/UserOrderCard";
+import { ScrollView } from "react-native-gesture-handler";
+let socket = require("socket.io-client")(`ws://stretfud.herokuapp.com:80`);
+>>>>>>> e59948bf857ace5a6e34f92983040310f64f7cbd
 
 class UserOrders extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
-      title: 'Orders',
+      title: "Orders",
       headerRight: () => <SignOut navigation={navigation} />,
       headerLeft: () => <HomeMover navigation={navigation} />
     };
@@ -29,7 +41,7 @@ class UserOrders extends React.Component {
       .then(orders => {
         this.setState({ orders: orders });
       })
-      .catch(err => ErrorAlerter('Orders could not be found'));
+      .catch(err => ErrorAlerter("Orders could not be found"));
   };
 
   componentDidMount() {
@@ -38,14 +50,14 @@ class UserOrders extends React.Component {
       .then(orders => {
         this.setState({ orders: orders });
       })
-      .catch(err => ErrorAlerter('Orders could not be found'));
+      .catch(err => ErrorAlerter("Orders could not be found"));
   }
 
   render() {
     const { orders } = this.state;
     let count = 0;
     //if (this.state.orders === undefined) return <Text>No Orders</Text>;
-    socket.on('outgoing', data => {
+    socket.on("outgoing", data => {
       console.log(data);
       if (data.user === this.props.user.username) {
         this.refresh();
