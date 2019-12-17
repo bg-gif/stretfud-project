@@ -156,6 +156,19 @@ describe('server', () => {
           }
         });
       });
+      describe('INVALID METHODS', () => {
+        it('status:405, responds with method not allowed', () => {
+          const methodArr = ['get', 'patch', 'put', 'delete'];
+          const promiseArr = methodArr.map(method => {
+            return request[method]('/api/orders')
+              .expect(405)
+              .then(({ body: { msg } }) => {
+                expect(msg).to.equal('Method not allowed');
+              });
+          });
+          return Promise.all[promiseArr];
+        });
+      });
     });
     describe('/users', () => {
       describe('POST', () => {
@@ -269,6 +282,48 @@ describe('server', () => {
               });
           });
           return Promise.all[promiseArr];
+        });
+      });
+      describe('/orders', () => {
+        describe('GET', () => {
+          it('status:200, returns array of all order items', () => {
+            return request
+              .get('/api/users/megatron/orders')
+              .expect(200)
+              .then(({ body: { orders } }) => {
+                expect(orders).to.be.a('array');
+              });
+          });
+          it('status:200, empty array for valid user but no orders', () => {
+            return request
+              .get('/api/users/starscream/orders')
+              .expect(200)
+              .then(({ body: { orders } }) => {
+                expect(orders).to.be.a('array');
+                expect(orders).to.have.length(0);
+              });
+          });
+          it('status:404, invalid username', () => {
+            return request
+              .get('/api/vendors/meg/orders')
+              .expect(404)
+              .then(({ body: { msg } }) => {
+                expect(msg).to.equal('Not Found');
+              });
+          });
+        });
+        describe('INVALID METHODS', () => {
+          it('status:405, responds with method not allowed', () => {
+            const methodArr = ['post', 'patch', 'put', 'delete'];
+            const promiseArr = methodArr.map(method => {
+              return request[method]('/api/users/megatron/orders')
+                .expect(405)
+                .then(({ body: { msg } }) => {
+                  expect(msg).to.equal('Method not allowed');
+                });
+            });
+            return Promise.all[promiseArr];
+          });
         });
       });
       describe('/username', () => {
@@ -628,7 +683,7 @@ describe('server', () => {
           });
         });
         describe('/orders', () => {
-          describe.only('GET', () => {
+          describe('GET', () => {
             it('status:200, returns array of all order items', () => {
               return request
                 .get('/api/vendors/oppri/orders')
@@ -636,6 +691,36 @@ describe('server', () => {
                 .then(({ body: { orders } }) => {
                   expect(orders).to.be.a('array');
                 });
+            });
+            it('status:200, empty array for valid user but no orders', () => {
+              return request
+                .get('/api/vendors/ironhide/orders')
+                .expect(200)
+                .then(({ body: { orders } }) => {
+                  expect(orders).to.be.a('array');
+                  expect(orders).to.have.length(0);
+                });
+            });
+            it('status:404, invalid username', () => {
+              return request
+                .get('/api/vendors/oppi/orders')
+                .expect(404)
+                .then(({ body: { msg } }) => {
+                  expect(msg).to.equal('Not Found');
+                });
+            });
+          });
+          describe('INVALID METHODS', () => {
+            it('status:405, responds with method not allowed', () => {
+              const methodArr = ['post', 'patch', 'put', 'delete'];
+              const promiseArr = methodArr.map(method => {
+                return request[method]('/api/vendors/oppri/orders')
+                  .expect(405)
+                  .then(({ body: { msg } }) => {
+                    expect(msg).to.equal('Method not allowed');
+                  });
+              });
+              return Promise.all[promiseArr];
             });
           });
         });

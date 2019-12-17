@@ -3,13 +3,19 @@ const { handle405s } = require('../errors/index');
 const {
   getUserById,
   postUser,
-  patchUserByUsername
+  patchUserByUsername,
+  getOrders
 } = require('../controllers/users-controller.js');
 
 usersRouter
   .route('/:username')
   .get(getUserById)
   .patch(patchUserByUsername)
+  .all(handle405s);
+
+usersRouter
+  .route('/:username/orders')
+  .get(getOrders)
   .all(handle405s);
 
 usersRouter

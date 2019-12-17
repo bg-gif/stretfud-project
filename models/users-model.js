@@ -44,3 +44,33 @@ exports.updateUserByUsername = (username, update) => {
       return { username, realname, phone_num, email, age };
     });
 };
+
+exports.getOrders = (req, res, next) => {
+  const { username } = req.params;
+  Promise.all([fetchOrders(username), fetchUserById(username)])
+    .then(([orders, user]) => {
+      if (user.length === 0)
+        return Promise.reject({ status: 404, msg: 'Not Found' });
+      res.status(200).send({ orders });
+    })
+    .catch(next);
+};
+
+exports.fetchOrders = username => {
+  return connection('orders')
+    .leftJoin('order_items', 'order_items.order_id', 'orders.order_id')
+    .leftJoin(
+      'menu_items',
+      'order_items.menu_item_id',
+      'menu_items.menu_item_id'
+    )
+    .select(
+      'orders.order_id',
+      'orders.created_at',
+      'orders.status',
+      'orders.user_username',
+      'menu_items.price',
+      'menu_items.name'
+    )
+    .where('orders.user_username', username);
+};

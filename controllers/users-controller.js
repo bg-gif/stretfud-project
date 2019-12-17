@@ -1,7 +1,8 @@
 const {
   fetchUserById,
   postUserMod,
-  updateUserByUsername
+  updateUserByUsername,
+  fetchOrders
 } = require('../models/users-model.js');
 
 exports.getUserById = (req, res, next) => {
@@ -28,6 +29,17 @@ exports.patchUserByUsername = (req, res, next) => {
   updateUserByUsername(username, update)
     .then(user => {
       res.status(200).send({ user });
+    })
+    .catch(next);
+};
+
+exports.getOrders = (req, res, next) => {
+  const { username } = req.params;
+  Promise.all([fetchOrders(username), fetchUserById(username)])
+    .then(([orders, user]) => {
+      if (user.length === 0)
+        return Promise.reject({ status: 404, msg: 'Not Found' });
+      res.status(200).send({ orders });
     })
     .catch(next);
 };

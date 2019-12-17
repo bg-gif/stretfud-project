@@ -103,9 +103,10 @@ exports.addMenuItem = (req, res, next) => {
 
 exports.getOrders = (req, res, next) => {
   const { username } = req.params;
-  console.log('here');
-  fetchOrders(username)
-    .then(orders => {
+  Promise.all([fetchOrders(username), fetchVendorByUsername(username)])
+    .then(([orders, user]) => {
+      if (user.length === 0)
+        return Promise.reject({ status: 404, msg: 'Not Found' });
       res.status(200).send({ orders });
     })
     .catch(next);
