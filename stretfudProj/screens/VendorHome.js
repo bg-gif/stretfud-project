@@ -8,6 +8,7 @@ import { formatLocation } from '../utils/utils';
 import Loader from '../components/Loader';
 import ErrorAlerter from '../components/ErrorAlerter';
 import UpdateOrder from '../components/UpdateOrder';
+let socket = require('socket.io-client')(`ws://stretfud.herokuapp.com:80`);
 
 class VendorHome extends Component {
   static navigationOptions = {
@@ -81,6 +82,7 @@ class VendorHome extends Component {
       openingTimes,
       isLoading
     } = this.state;
+    this.props.user.username;
 
     if (isLoading) return <Loader />;
     return (

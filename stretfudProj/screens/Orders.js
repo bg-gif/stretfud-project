@@ -14,6 +14,7 @@ import Loader from '../components/Loader';
 import ErrorAlerter from '../components/ErrorAlerter';
 import OrderCard from '../components/OrderCard';
 import Constants from 'expo-constants';
+let socket = require('socket.io-client')(`ws://stretfud.herokuapp.com:80`);
 
 class Menu extends Component {
   state = {
@@ -47,7 +48,13 @@ class Menu extends Component {
   render() {
     const { orders, isLoading } = this.state;
     const orderNums = Object.keys(orders);
+    const { username } = this.props.navigation.state.params;
     if (isLoading) return <Loader />;
+    socket.on('outgoing', data => {
+      if (data.vendor === username) {
+        this.refresh();
+      }
+    });
     return (
       <SafeAreaView style={styles.container}>
         <ScrollView contentContainerStyle={styles.menuPageContainer}>
@@ -55,11 +62,11 @@ class Menu extends Component {
             <View style={styles.headerContainer}>
               <Text style={styles.headerText}>Orders</Text>
             </View>
-            {orderNums.map(num => {
+            {orderNums.map((num, index) => {
               return (
                 <OrderCard
                   order={orders[num]}
-                  key={orders[num]}
+                  key={index}
                   refresh={this.refresh}
                 />
               );

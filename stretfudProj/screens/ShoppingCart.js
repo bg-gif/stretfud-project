@@ -1,17 +1,18 @@
-import React, { Component } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import { withUserHOC } from "../components/UserContext";
-import * as api from "../utils/api";
-import EmptyCartAlerter from "../components/EmptyCartAlerter";
-import ItemRemover from "../components/ItemRemover";
-import * as utils from "../utils/utils";
-import OrderAlerter from "../components/OrderAlerter";
-import ErrorAlerter from "../components/ErrorAlerter";
+import React, { Component } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { withUserHOC } from '../components/UserContext';
+import * as api from '../utils/api';
+import EmptyCartAlerter from '../components/EmptyCartAlerter';
+import ItemRemover from '../components/ItemRemover';
+import * as utils from '../utils/utils';
+import OrderAlerter from '../components/OrderAlerter';
+import ErrorAlerter from '../components/ErrorAlerter';
+let socket = require('socket.io-client')(`ws://stretfud.herokuapp.com:80`);
 
 class ShoppingCart extends Component {
   static navigationOptions = ({ navigationOptions, navigation }) => {
     return {
-      title: "Cart"
+      title: 'Cart'
     };
   };
   handlePress = () => {
@@ -27,10 +28,11 @@ class ShoppingCart extends Component {
         OrderAlerter();
         emptyCart();
         this.props.navigation.setParams({ cartParam: [] });
+        socket.emit('incoming', { user, vendor });
       })
       .catch(err => {
         console.log(err);
-        ErrorAlerter("Could not send order at this time.");
+        ErrorAlerter('Could not send order at this time.');
       });
   };
 
@@ -80,31 +82,31 @@ class ShoppingCart extends Component {
 const styles = StyleSheet.create({
   orderContainer: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center"
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   itemContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     paddingBottom: 30,
     width: 300
   },
   submitOrderButton: {
-    alignItems: "center",
-    backgroundColor: "rgba(175, 15, 103, 1)",
+    alignItems: 'center',
+    backgroundColor: 'rgba(175, 15, 103, 1)',
     width: 200,
     padding: 10,
     borderRadius: 5
   },
   buttonText: {
-    color: "white",
-    fontFamily: "BebasNeue-Regular",
+    color: 'white',
+    fontFamily: 'BebasNeue-Regular',
     fontSize: 20
   },
   text: {
-    color: "rgba(112, 150, 36, 1)",
-    fontFamily: "BebasNeue-Regular",
+    color: 'rgba(112, 150, 36, 1)',
+    fontFamily: 'BebasNeue-Regular',
     fontSize: 20
   }
 });

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   View,
   Text,
@@ -6,9 +6,10 @@ import {
   Switch,
   Dimensions,
   ScrollView
-} from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import * as api from "../utils/api";
+} from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import * as api from '../utils/api';
+let socket = require('socket.io-client')(`ws://stretfud.herokuapp.com:80`);
 
 class OrderCard extends Component {
   constructor() {
@@ -22,8 +23,11 @@ class OrderCard extends Component {
     const order = this.props.order;
     const orderStatus = order[0].status;
     const orderId = order[0].order_id;
+    const vendor = order[0].vendor_username;
+    const user = order[0].user_username;
     api.updateStatus(orderStatus, orderId).then(response => {
       this.props.refresh();
+      socket.emit('incoming', { vendor, user });
       console.log(response);
     });
   };
@@ -50,15 +54,15 @@ export default OrderCard;
 
 const styles = StyleSheet.create({
   menuCard: {
-    flexDirection: "column",
-    borderColor: "rgba(175, 15, 103, 1)",
+    flexDirection: 'column',
+    borderColor: 'rgba(175, 15, 103, 1)',
     borderRadius: 5,
     borderWidth: 4,
     marginBottom: 15,
     marginTop: 15
   },
   menuDetails: {
-    flexDirection: "row"
+    flexDirection: 'row'
   },
   detailsContainer: {
     flex: 2,
@@ -66,40 +70,40 @@ const styles = StyleSheet.create({
   },
   availabilityButtonContainer: {
     flex: 1,
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    alignItems: "center",
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
     paddingRight: 10
   },
   menuItemHeader: {
-    flexDirection: "row",
-    backgroundColor: "rgba(175, 15, 103, 1)",
-    justifyContent: "space-between",
-    alignItems: "center",
+    flexDirection: 'row',
+    backgroundColor: 'rgba(175, 15, 103, 1)',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     paddingRight: 5,
     paddingLeft: 5,
-    width: Dimensions.get("window").width - 30
+    width: Dimensions.get('window').width - 30
   },
   menuItemHeaderText: {
-    color: "white",
-    fontFamily: "BebasNeue-Regular",
+    color: 'white',
+    fontFamily: 'BebasNeue-Regular',
     fontSize: 25
   },
   descriptionText: {
-    fontFamily: "BebasNeue-Regular",
+    fontFamily: 'BebasNeue-Regular',
     fontSize: 17,
-    color: "rgba(175, 15, 103, 1)"
+    color: 'rgba(175, 15, 103, 1)'
   },
   vendorStatusContainer: {
     flex: 1,
-    flexDirection: "column",
-    justifyContent: "space-evenly",
-    alignItems: "center",
+    flexDirection: 'column',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
     height: 50
   },
   availabilityText: {
-    fontFamily: "BebasNeue-Regular",
+    fontFamily: 'BebasNeue-Regular',
     fontSize: 17,
-    color: "rgba(175, 15, 103, 1)"
+    color: 'rgba(175, 15, 103, 1)'
   }
 });
