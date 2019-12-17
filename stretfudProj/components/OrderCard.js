@@ -35,6 +35,7 @@ class OrderCard extends Component {
   render() {
     const order = this.props.order;
     const orderStatus = order[0].status;
+    if (orderStatus === 'collected') return null;
     return (
       <View style={styles.orderCard}>
         <TouchableOpacity onPress={this.handleStatus}>

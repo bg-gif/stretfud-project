@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React from 'react';
 import { View, Text, Button } from 'react-native';
 import SignOut from './SignOut';
@@ -9,17 +8,6 @@ import ErrorAlerter from '../components/ErrorAlerter';
 import UserOrderCard from '../components/UserOrderCard';
 import { ScrollView } from 'react-native-gesture-handler';
 let socket = require('socket.io-client')(`ws://stretfud.herokuapp.com:80`);
-=======
-import React from "react";
-import { View, SafeAreaView } from "react-native";
-import SignOut from "./SignOut";
-import BackMover from "../components/BackMover";
-import * as api from "../utils/api";
-import { withUserHOC } from "../components/UserContext";
-import ErrorAlerter from "../components/ErrorAlerter";
-import UserOrderCard from "../components/UserOrderCard";
-import { ScrollView } from "react-native-gesture-handler";
->>>>>>> cd564bcfc816033bff1b306d6364cbe8c472d7ad
 
 class UserOrders extends React.Component {
   static navigationOptions = ({ navigation }) => {
