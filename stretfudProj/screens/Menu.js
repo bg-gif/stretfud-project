@@ -20,6 +20,10 @@ class Menu extends Component {
   };
 
   componentDidMount() {
+    this.fetchMenuItems();
+  }
+
+  fetchMenuItems = () => {
     api
       .fetchMenuItemsByVendor(this.props.navigation.state.params.username)
       .then(menuItems => {
@@ -28,7 +32,7 @@ class Menu extends Component {
       .catch(err => {
         ErrorAlerter('Menu items could not be found');
       });
-  }
+  };
 
   handleSwitch = (username, menu_item_id, available) => {
     let newStatus = !available;
@@ -47,12 +51,28 @@ class Menu extends Component {
       });
   };
 
-  handleDeleteItem = menu_Item_id => {
-    console.log('delete confirmed: ', +menu_Item_id);
+  handleDeleteItem = menu_item_id => {
+    const username = this.props.navigation.state.params.username;
+    return api
+      .deleteMenuItem(username, menu_item_id)
+      .then(({ msg }) => {
+        this.fetchMenuItems();
+      })
+      .catch(err => {
+        ErrorAlerter(
+          'deleting Menu Items isnt working right now, please try again later'
+        );
+      });
+  };
+
+  handleAddItem = newMenuItem => {
+    const { menuItems } = this.state;
+    this.setState({ menuItems: [newMenuItem, ...menuItems] });
   };
 
   render() {
     const { menuItems, isLoading } = this.state;
+    const username = this.props.navigation.state.params.username;
 
     if (isLoading) return <Loader />;
     return (
@@ -62,7 +82,7 @@ class Menu extends Component {
             {menuItems.map(item => {
               return (
                 <VendorMenuCard
-                  key={item.name}
+                  key={item.menu_item_id}
                   menuItem={item}
                   handleSwitch={this.handleSwitch}
                   handleDeleteItem={this.handleDeleteItem}
@@ -70,7 +90,10 @@ class Menu extends Component {
               );
             })}
           </View>
-          <MenuItemAdder />
+          <MenuItemAdder
+            username={username}
+            handleAddItem={this.handleAddItem}
+          />
         </ScrollView>
       </SafeAreaView>
     );

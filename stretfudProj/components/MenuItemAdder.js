@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { TouchableOpacity, Text, View } from 'react-native';
+import NewItemForm from './NewItemForm';
 
 class MenuItemAdder extends Component {
   state = {
@@ -12,12 +13,15 @@ class MenuItemAdder extends Component {
 
   render() {
     const { showForm } = this.state;
+    const { username, handleAddItem } = this.props;
     return (
       <View>
         <TouchableOpacity onPress={this.toggleView}>
           <Text>Add Menu Item</Text>
         </TouchableOpacity>
-        {showForm && <Text>add menu item form</Text>}
+        {showForm && (
+          <NewItemForm username={username} handleAddItem={handleAddItem} />
+        )}
       </View>
     );
   }
