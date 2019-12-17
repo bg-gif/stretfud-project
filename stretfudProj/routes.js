@@ -1,3 +1,4 @@
+
 import React from "react";
 import { createStackNavigator } from "react-navigation-stack";
 import { Button } from "react-native";
@@ -15,6 +16,7 @@ import UserOrders from "./screens/UserOrders";
 import OrdersNavigator from "./components/OrdersNavigator";
 import HomeMover from "./components/HomeMover";
 import Orders from "./screens/Orders";
+
 export const UserStack = createStackNavigator(
   {
     Home: UserHome,
@@ -26,6 +28,7 @@ export const UserStack = createStackNavigator(
   {
     defaultNavigationOptions: ({ navigation }) => {
       return {
+
         title: "Home",
         headerRight: () => (
           <>
@@ -36,12 +39,14 @@ export const UserStack = createStackNavigator(
         headerStyle: { backgroundColor: "rgba(175, 15, 103, 1)" },
         headerTintColor: "rgb(237, 237, 237)",
         headerTitleStyle: { fontWeight: "bold" }
+
       };
     }
   },
   {
     navigationOptions: () => {
       return {
+
         title: "Home",
         headerLeft: () => <SignOut navigation={navigation} />,
         headerRight: () => <ShoppingCartViewer navigation={navigation} />
@@ -64,6 +69,7 @@ export const UserStack = createStackNavigator(
             <HomeMover navigation={navigation} />
           </>
         )
+
       };
     }
   }
@@ -78,18 +84,18 @@ export const VendorStack = createStackNavigator(
   {
     defaultNavigationOptions: ({ navigation }) => {
       return {
-        title: "Home",
+        title: 'Home',
         headerRight: () => <SignOut navigation={navigation} />,
-        headerStyle: { backgroundColor: "rgba(112, 150, 36, 1)" },
-        headerTintColor: "rgb(237, 237, 237)",
-        headerTitleStyle: { fontWeight: "bold" }
+        headerStyle: { backgroundColor: 'rgba(112, 150, 36, 1)' },
+        headerTintColor: 'rgb(237, 237, 237)',
+        headerTitleStyle: { fontWeight: 'bold' }
       };
     }
   },
   {
     navigationOptions: () => {
       return {
-        title: "Home"
+        title: 'Home'
       };
     }
   }
@@ -103,17 +109,20 @@ export const SignUpStack = createStackNavigator(
   {
     defaultNavigationOptions: () => {
       return {
-        title: "Stretfud",
-        headerStyle: { backgroundColor: "rgba(112, 150, 36, 1)" },
-        headerTintColor: "rgb(237, 237, 237)",
-        headerTitleStyle: { fontWeight: "bold" }
+        title: 'StrētFüd',
+        headerStyle: {
+          backgroundColor: 'rgba(112, 150, 36, 1)',
+          borderBottomWidth: 0
+        },
+        headerTintColor: 'rgb(237, 237, 237)',
+        headerTitleStyle: { fontWeight: 'bold' }
       };
     }
   },
   {
     navigationOptions: () => {
       return {
-        title: "Stretfud"
+        title: 'StrētFüd'
       };
     }
   }

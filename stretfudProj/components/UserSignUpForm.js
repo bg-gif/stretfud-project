@@ -1,29 +1,29 @@
-import React from "react";
+import React from 'react';
 import {
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
   ScrollView
-} from "react-native";
-import InputAdder from "./InputAdder";
-import * as api from "../utils/api";
-import ErrorAlerter from "./ErrorAlerter";
-import * as Crypto from "expo-crypto";
-import SignUpAlerter from "./SignUpAlerter";
+} from 'react-native';
+import InputAdder from './InputAdder';
+import * as api from '../utils/api';
+import ErrorAlerter from './ErrorAlerter';
+import * as Crypto from 'expo-crypto';
+import SignUpAlerter from './SignUpAlerter';
 
 class UserSignUpForm extends React.Component {
   state = {
-    username: "",
-    fullName: "",
-    businessName: "",
-    cuisine: "",
-    openingTimes: "",
-    email: "",
+    username: '',
+    fullName: '',
+    businessName: '',
+    cuisine: '',
+    openingTimes: '',
+    email: '',
     age: null,
-    phoneNumber: "",
-    password: "",
-    confirmPassword: "",
+    phoneNumber: '',
+    password: '',
+    confirmPassword: '',
     isEmpty: false
   };
 
@@ -47,30 +47,30 @@ class UserSignUpForm extends React.Component {
 
     const { signUpType } = this.props;
 
-    const isRequired = ["username", "fullName", "password"];
-    const isRequiredVendor = ["businesName", "cuisine", "openingTimes"];
+    const isRequired = ['username', 'fullName', 'password'];
+    const isRequiredVendor = ['businesName', 'cuisine', 'openingTimes'];
 
     let anyEmpty = false;
     for (let key in this.state) {
-      if (isRequired.includes(key) && this.state[key] === "") {
+      if (isRequired.includes(key) && this.state[key] === '') {
         anyEmpty = true;
       }
-      if (signUpType === "vendor") {
-        if (isRequiredVendor.includes(key) && this.state[key] === "") {
+      if (signUpType === 'vendor') {
+        if (isRequiredVendor.includes(key) && this.state[key] === '') {
           anyEmpty = true;
         }
       }
       this.setState({ isEmpty: anyEmpty });
     }
 
-    if (anyEmpty) return ErrorAlerter("Required fields missing");
+    if (anyEmpty) return ErrorAlerter('Required fields missing');
 
-    if (password !== confirmPassword || password === "") {
-      ErrorAlerter("Password inputs did not match");
+    if (password !== confirmPassword || password === '') {
+      ErrorAlerter('Password inputs did not match');
     } else {
-      Crypto.digestStringAsync("SHA-1", password).then(hashedPassword => {
+      Crypto.digestStringAsync('SHA-1', password).then(hashedPassword => {
         let userObj;
-        if (signUpType === "user") {
+        if (signUpType === 'user') {
           userObj = {
             username,
             realname: fullName,
@@ -94,15 +94,15 @@ class UserSignUpForm extends React.Component {
         api
           .addUser(`${signUpType}s`, userObj)
           .then(() => {
-            signUpType === "user"
-              ? SignUpAlerter("You have successfully signed up!")
+            signUpType === 'user'
+              ? SignUpAlerter('You have successfully signed up!')
               : SignUpAlerter(
                   "You have succesfully signed up! Please sign in to set your vans's location"
                 );
             this.props.navigation.goBack();
           })
           .catch(err => {
-            ErrorAlerter("Sign Up could not take place");
+            ErrorAlerter('Sign Up could not take place');
           });
       });
     }
@@ -138,7 +138,7 @@ class UserSignUpForm extends React.Component {
             handleTextChange={this.handleTextChange}
             value={fullName}
           />
-          {signUpType === "vendor" && (
+          {signUpType === 'vendor' && (
             <InputAdder
               isEmpty={isEmpty}
               name="businessName"
@@ -146,7 +146,7 @@ class UserSignUpForm extends React.Component {
               value={businessName}
             />
           )}
-          {signUpType === "vendor" && (
+          {signUpType === 'vendor' && (
             <InputAdder
               isEmpty={isEmpty}
               name="cuisine"
@@ -154,7 +154,7 @@ class UserSignUpForm extends React.Component {
               value={cuisine}
             />
           )}
-          {signUpType === "vendor" && (
+          {signUpType === 'vendor' && (
             <InputAdder
               isEmpty={isEmpty}
               name="openingTimes"
@@ -172,7 +172,7 @@ class UserSignUpForm extends React.Component {
             handleTextChange={this.handleTextChange}
             value={phoneNumber}
           />
-          {signUpType === "user" && (
+          {signUpType === 'user' && (
             <InputAdder
               name="age"
               handleTextChange={this.handleTextChange}
@@ -205,36 +205,36 @@ export default UserSignUpForm;
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    backgroundColor: "rgba(112, 150, 36, 1)"
+    backgroundColor: 'rgba(112, 150, 36, 1)'
   },
   inputContainer: {
     flex: 1,
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "space-around",
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'space-around',
     padding: 8
   },
   addButton: {
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     width: 100,
     padding: 10,
-    backgroundColor: "rgba(175, 15, 103, 1)",
+    backgroundColor: 'rgba(175, 15, 103, 1)',
     borderRadius: 5,
     margin: 10
   },
   buttonContent: {
-    fontFamily: "BebasNeue-Regular",
+    fontFamily: 'BebasNeue-Regular',
     fontSize: 20,
-    color: "rgb(237, 237, 237)"
+    color: 'rgb(237, 237, 237)'
   },
   missingTextWarning: {
-    fontFamily: "BebasNeue-Regular",
+    fontFamily: 'BebasNeue-Regular',
     fontSize: 20,
-    color: "rgba(198, 197, 185, 1)"
+    color: 'rgba(198, 197, 185, 1)'
   },
   emptyInput: {
-    borderColor: "rgba(175, 15, 103, 1)",
+    borderColor: 'rgba(175, 15, 103, 1)',
     borderBottomWidth: 2
   }
 });
