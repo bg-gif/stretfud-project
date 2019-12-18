@@ -80,6 +80,7 @@ class VendorHome extends Component {
       openingTimes,
       isLoading
     } = this.state;
+    this.props.user.username;
 
     if (isLoading) return <Loader />;
     return (
@@ -108,6 +109,14 @@ class VendorHome extends Component {
             }}
           >
             <Text style={styles.buttonText}>View/Edit Menu</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.editMenuButton}
+            onPress={() => {
+              navigation.navigate("Orders", { username: username });
+            }}
+          >
+            <Text style={styles.buttonText}>Orders</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.vendorStatusContainer}>

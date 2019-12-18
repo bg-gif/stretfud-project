@@ -1,10 +1,12 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Button } from 'react-native';
-import InputAdder from './InputAdder';
-import * as Crypto from 'expo-crypto';
-import UserContext, { UserProvider } from './UserContext';
-import * as api from '../utils/api';
-import ErrorAlerter from './ErrorAlerter';
+
+import React from "react";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import InputAdder from "./InputAdder";
+import * as Crypto from "expo-crypto";
+import UserContext, { UserProvider } from "./UserContext";
+import * as api from "../utils/api";
+import ErrorAlerter from "./ErrorAlerter";
+
 
 class SignInForm extends React.Component {
   state = {
