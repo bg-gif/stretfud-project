@@ -27,7 +27,6 @@ export const UserStack = createStackNavigator(
   {
     defaultNavigationOptions: ({ navigation }) => {
       return {
-        title: 'Home',
         headerRight: () => (
           <>
             <SignOut navigation={navigation} />
