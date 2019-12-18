@@ -108,7 +108,6 @@ exports.deleteMenuItem = (username, menu_item_id) => {
 
 exports.fetchVendors = () => {
   return axios.get(`${base_URL}/vendors`).then(({ data: { vendors } }) => {
-    console.log(vendors);
     return vendors;
   });
 };

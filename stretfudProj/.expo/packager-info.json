@@ -1,9 +1,9 @@
 {
   "devToolsPort": 19002,
-  "expoServerPort": null,
-  "packagerPort": null,
-  "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null
+  "expoServerPort": 19000,
+  "packagerPort": 19001,
+  "packagerPid": 7937,
+  "expoServerNgrokUrl": "https://hb-652.anonymous.stretfudproj.exp.direct",
+  "packagerNgrokUrl": "https://packager.hb-652.anonymous.stretfudproj.exp.direct",
+  "ngrokPid": 7945
 }

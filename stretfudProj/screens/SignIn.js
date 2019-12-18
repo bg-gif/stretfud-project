@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   StyleSheet,
   Text,
@@ -7,32 +7,33 @@ import {
   Image,
   TextInput,
   KeyboardAvoidingView
-} from 'react-native';
-import SignInForm from '../components/SignInForm';
-import { UserConsumer } from '../components/UserContext';
-import { withUserHOC } from '../components/UserContext';
-import * as Font from 'expo-font';
+} from "react-native";
+import SignInForm from "../components/SignInForm";
+import { UserConsumer } from "../components/UserContext";
+import { withUserHOC } from "../components/UserContext";
+import * as Font from "expo-font";
+import Loader from "../components/Loader";
 
 class SignIn extends React.Component {
   static contextType = UserConsumer;
   static navigationOptions = ({ navigationOptions }) => {
     return {
-      title: 'Stretfud'
+      title: "Stretfud"
     };
   };
 
   state = {
-    signInType: '',
-    textValue: '',
+    signInType: "",
+    textValue: "",
     errorMsg: false,
     fontLoad: false
   };
 
   componentDidMount() {
     Font.loadAsync({
-      'BebasNeue-Regular': require('../assets/fonts/BebasNeue-Regular.ttf')
+      "BebasNeue-Regular": require("../assets/fonts/BebasNeue-Regular.ttf")
     }).then(() => {
-      this.setState({ signInType: 'user', fontLoad: true });
+      this.setState({ signInType: "user", fontLoad: true });
     });
   }
 
@@ -41,13 +42,13 @@ class SignIn extends React.Component {
   };
 
   render() {
-    if (!this.state.fontLoad) return <Text>Loading</Text>;
+    if (!this.state.fontLoad) return <Loader />;
     return (
       <KeyboardAvoidingView style={styles.container} behavior="position">
         <View style={styles.container}>
           <View style={styles.logoView}>
             <Image
-              source={require('../assets/stretfud-logo.png')}
+              source={require("../assets/stretfud-logo.png")}
               style={styles.logo}
             />
             <Text style={styles.header}>StrētFüd</Text>
@@ -76,50 +77,50 @@ class SignIn extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'column',
-    backgroundColor: 'rgba(112, 150, 36, 1)',
-    alignItems: 'center',
-    justifyContent: 'space-around'
+    flexDirection: "column",
+    backgroundColor: "rgba(112, 150, 36, 1)",
+    alignItems: "center",
+    justifyContent: "space-around"
   },
   picker: {
     height: 75,
     width: 200,
     borderWidth: 1,
-    borderColor: 'black',
+    borderColor: "black",
     borderRadius: 25,
-    backgroundColor: 'rgb(237, 237, 237)'
+    backgroundColor: "rgb(237, 237, 237)"
   },
-  pickerItem: { height: 75, fontFamily: 'BebasNeue-Regular' },
+  pickerItem: { height: 75, fontFamily: "BebasNeue-Regular" },
   TextInput: {
     height: 40,
     width: 200,
-    borderColor: 'gray',
+    borderColor: "gray",
     borderWidth: 1
   },
   badText: {
     height: 40,
     width: 200,
-    borderColor: 'red',
+    borderColor: "red",
     borderWidth: 1
   },
   logo: {
     width: 200,
     height: 200,
     borderRadius: 100,
-    borderColor: 'rgba(175, 15, 103, 1)',
+    borderColor: "rgba(175, 15, 103, 1)",
     borderWidth: 16
   },
   header: {
-    color: 'rgb(237, 237, 237)',
+    color: "rgb(237, 237, 237)",
     fontSize: 65,
-    fontFamily: 'BebasNeue-Regular'
+    fontFamily: "BebasNeue-Regular"
   },
   logoView: {
     flex: 0.5,
-    flexDirection: 'column',
-    backgroundColor: 'rgba(112, 150, 36, 1)',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
+    flexDirection: "column",
+    backgroundColor: "rgba(112, 150, 36, 1)",
+    alignItems: "center",
+    justifyContent: "flex-end",
     marginTop: 20
   }
 });

@@ -1,11 +1,12 @@
-import React, { Component } from 'react';
-import { StyleSheet, Text, ScrollView, View, SafeAreaView } from 'react-native';
-import * as api from '../utils/api';
-import Loader from '../components/Loader';
-import ErrorAlerter from '../components/ErrorAlerter';
-import OrderCard from '../components/OrderCard';
-import Constants from 'expo-constants';
-let socket = require('socket.io-client')(`ws://stretfud.herokuapp.com:80`);
+import React, { Component } from "react";
+import { StyleSheet, Text, ScrollView, View, SafeAreaView } from "react-native";
+import * as api from "../utils/api";
+import Loader from "../components/Loader";
+import ErrorAlerter from "../components/ErrorAlerter";
+import OrderCard from "../components/OrderCard";
+import Constants from "expo-constants";
+
+let socket = require("socket.io-client")(`ws://stretfud.herokuapp.com:80`);
 
 class Orders extends Component {
   state = {
@@ -22,7 +23,7 @@ class Orders extends Component {
         this.setState({ orders });
       })
       .catch(err => {
-        ErrorAlerter('Orders could not be found');
+        ErrorAlerter("Orders could not be found");
       });
   }
 
@@ -44,10 +45,11 @@ class Orders extends Component {
   render() {
     const { orders, isLoading } = this.state;
     const orderNums = Object.keys(orders);
-    const username = this.props.navigation.state.params;
+    const username = this.props.navigation.state.params.username;
+
     let count = 0;
     if (isLoading) return <Loader />;
-    socket.on('outgoing', data => {
+    socket.on("outgoing", data => {
       if (data.vendor === username) {
         this.refresh();
       }
@@ -82,19 +84,19 @@ const styles = StyleSheet.create({
   },
   menuPageContainer: {
     // flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'space-around'
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "space-around"
   },
   headerContainer: {
-    backgroundColor: 'rgba(175, 15, 103, 1)',
+    backgroundColor: "rgba(175, 15, 103, 1)",
     borderRadius: 5,
     padding: 5,
     marginBottom: 10
   },
   headerText: {
-    color: 'white',
-    fontFamily: 'BebasNeue-Regular',
+    color: "white",
+    fontFamily: "BebasNeue-Regular",
     fontSize: 25
   }
 });
