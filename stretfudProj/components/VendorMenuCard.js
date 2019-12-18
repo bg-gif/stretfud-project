@@ -1,5 +1,12 @@
 import React from "react";
-import { View, Text, StyleSheet, Switch, Dimensions } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Switch,
+  Dimensions,
+  TouchableOpacity
+} from "react-native";
 
 const VendorMenuCard = ({ menuItem, handleSwitch, handleDeleteItem }) => {
   const handleAvailability = () => {
