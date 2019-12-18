@@ -11,17 +11,25 @@ import { withUserHOC } from "../components/UserContext";
 import Map from "../components/Map";
 import ToggleSwitch from "toggle-switch-react-native";
 import Loader from "../components/Loader";
+import OrdersNavigator from "../components/OrdersNavigator";
 
 class UserHome extends Component {
   state = {
     toggleVal: true,
     refresh: false,
-    isLoading: true
+    isLoading: true,
+    nearMe: true
   };
 
   static navigationOptions = ({ navigation }) => {
     return {
-      headerRight: () => <SignOut navigation={navigation} />,
+      headerLeft: () => <SignOut navigation={navigation} />,
+      headerRight: () => (
+        <OrdersNavigator
+          navigation={navigation}
+          user={this.props.user.username}
+        />
+      ),
       title: "Home",
       headerStyle: { backgroundColor: "#f56111" },
       headerTintColor: "#fff",
@@ -42,6 +50,8 @@ class UserHome extends Component {
           refresh={this.state.refresh}
           changeRefresh={this.changeRefresh}
           changeLoading={this.changeLoading}
+          changeRefresh={this.changeRefresh}
+          nearMe={this.state.nearMe}
         />
         <View style={styles.userOptionsContainer}>
           <TouchableOpacity
@@ -52,6 +62,19 @@ class UserHome extends Component {
           >
             <Text style={styles.buttonContent}>Refresh</Text>
           </TouchableOpacity>
+          <ToggleSwitch
+            isOn={this.state.nearMe}
+            onColor="green"
+            offColor="red"
+            label="Near Me"
+            labelStyle={styles.toggleSwitch}
+            size="small"
+            onToggle={() =>
+              this.setState(currentState => {
+                return { nearMe: !currentState.nearMe };
+              })
+            }
+          />
           <ToggleSwitch
             isOn={this.state.toggleVal}
             onColor="green"

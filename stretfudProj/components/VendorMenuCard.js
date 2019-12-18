@@ -1,13 +1,12 @@
-import React from 'react';
+import React from "react";
 import {
   View,
   Text,
   StyleSheet,
   Switch,
   Dimensions,
-  Alert
-} from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+  TouchableOpacity
+} from "react-native";
 
 const VendorMenuCard = ({ menuItem, handleSwitch, handleDeleteItem }) => {
   const handleAvailability = () => {
@@ -26,15 +25,15 @@ const VendorMenuCard = ({ menuItem, handleSwitch, handleDeleteItem }) => {
   } = menuItem;
 
   removeItem = () => {
-    Alert.alert('Delete Item', 'Are you sure you want to remove this item?', [
+    Alert.alert("Delete Item", "Are you sure you want to remove this item?", [
       {
-        text: 'Yes',
+        text: "Yes",
         onPress: () => {
           handleDeleteItem(menu_item_id);
         }
       },
       {
-        text: 'No'
+        text: "No"
       }
     ]);
   };
@@ -84,74 +83,51 @@ export default VendorMenuCard;
 
 const styles = StyleSheet.create({
   menuCard: {
-    flexDirection: 'column',
-    borderColor: 'rgba(175, 15, 103, 1)',
+    flexDirection: "column",
+    borderColor: "rgba(175, 15, 103, 1)",
     borderRadius: 5,
     borderWidth: 4,
     marginBottom: 15,
     marginTop: 15
   },
   menuDetails: {
-    flexDirection: 'row',
-    marginBottom: 10
+    flexDirection: "row"
   },
   detailsContainer: {
     flex: 2,
     padding: 5,
-    flexDirection: 'column',
-    justifyContent: 'space-between'
+    flexDirection: "column",
+    justifyContent: "space-between"
   },
   availabilityButtonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    alignItems: "center",
     paddingRight: 10
   },
   menuItemHeader: {
-    flexDirection: 'row',
-    backgroundColor: 'rgba(175, 15, 103, 1)',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    backgroundColor: "rgba(175, 15, 103, 1)",
+    justifyContent: "space-between",
+    alignItems: "center",
     paddingRight: 5,
     paddingLeft: 5,
-    width: Dimensions.get('window').width - 30
+    width: Dimensions.get("window").width - 30
   },
   menuItemHeaderText: {
-    color: 'white',
-    fontFamily: 'BebasNeue-Regular',
+    color: "white",
+    fontFamily: "BebasNeue-Regular",
     fontSize: 25
   },
   descriptionText: {
-    fontFamily: 'BebasNeue-Regular',
+    fontFamily: "BebasNeue-Regular",
     fontSize: 17,
-    color: 'rgba(175, 15, 103, 1)',
-    paddingBottom: 5
+    color: "rgba(175, 15, 103, 1)"
   },
   availabilityText: {
-    fontFamily: 'BebasNeue-Regular',
+    fontFamily: "BebasNeue-Regular",
     fontSize: 17,
-    color: 'rgba(175, 15, 103, 1)'
-  },
-  optionsContainer: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'space-around',
-    height: 90
-  },
-  vendorButton: {
-    alignItems: 'center',
-    backgroundColor: 'rgba(112, 150, 36, 1)',
-    width: 100,
-    padding: 5,
-    borderRadius: 5
-  },
-  vendorButtonText: {
-    color: 'white',
-    fontFamily: 'BebasNeue-Regular',
-    fontSize: 18
-  },
-  dietaryRequirementsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start'
+    color: "rgba(175, 15, 103, 1)"
   }
 });

@@ -1,5 +1,5 @@
-const axios = require('axios');
-const base_URL = 'https://stretfud.herokuapp.com/api';
+const axios = require("axios");
+const base_URL = "https://stretfud.herokuapp.com/api";
 
 exports.fetchVendor = username => {
   return axios.get(`${base_URL}/vendors/${username}`).then(({ data }) => {
@@ -29,7 +29,7 @@ exports.postLoginAuth = (loginObj, destination) => {
 
 exports.fetchVendorsByLocation = (lat, long) => {
   return axios
-    .get(`${base_URL}/vendors?=${lat},${long}`)
+    .get(`${base_URL}/vendors?location=${lat},${long}`)
     .then(({ data: { vendors } }) => {
       return vendors;
     });
@@ -53,6 +53,35 @@ exports.updateMenuItem = ({ username, menu_item_id, available }) => {
     });
 };
 
+exports.fetchVendorOrders = (username, status) => {
+  return status
+    ? axios.get(`${base_URL}/vendors/${username}/orders?status=${status}`)
+    : axios
+        .get(`${base_URL}/vendors/${username}/orders`)
+        .then(({ data: { orders } }) => {
+          const sortedOrders = orders.reduce((acc, currVal) => {
+            const id = currVal.order_id;
+            if (!acc[id]) {
+              acc[id] = [currVal];
+            } else {
+              acc[id].push(currVal);
+            }
+            return acc;
+          }, {});
+          return sortedOrders;
+        });
+};
+
+exports.updateStatus = (status, order_id) => {
+  const send = { status: "", order_id };
+  if (status === "pending") send.status = "confirmed";
+  if (status === "confirmed") send.status = "ready for collection";
+  if (status === "ready for collection") send.status = "collected";
+  return axios.patch(`${base_URL}/orders`, send).then(({ data: order }) => {
+    return order;
+  });
+};
+
 exports.addUser = (destination, userObj) => {
   return axios
     .post(`${base_URL}/${destination}`, userObj)
@@ -73,6 +102,27 @@ exports.deleteMenuItem = (username, menu_item_id) => {
   return axios
     .delete(`${base_URL}/vendors/${username}/menu/${menu_item_id}`)
     .then(() => {
-      return { msg: 'Item Deleted' };
+      return { msg: "Item Deleted" };
+    });
+};
+
+exports.fetchVendors = () => {
+  return axios.get(`${base_URL}/vendors`).then(({ data: { vendors } }) => {
+    return vendors;
+  });
+};
+exports.postOrder = orderObj => {
+  return axios
+    .post(`${base_URL}/orders`, JSON.parse(orderObj))
+    .then(({ data: { msg } }) => {
+      return msg;
+    });
+};
+
+exports.fetchUserOrders = username => {
+  return axios
+    .get(`${base_URL}/users/${username}/orders`)
+    .then(({ data: { orders } }) => {
+      return orders;
     });
 };
