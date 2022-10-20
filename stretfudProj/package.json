@@ -28,7 +28,7 @@
     "react-native-maps": "^0.26.1",
     "react-native-navigation": "^4.0.4",
     "react-native-pinch-zoom-image": "0.0.10",
-    "react-native-reanimated": "~1.2.0",
+    "react-native-reanimated": "~2.10.0",
     "react-native-screens": "~1.0.0-alpha.23",
     "react-native-web": "^0.11.7",
     "react-navigation": "^4.0.10",
